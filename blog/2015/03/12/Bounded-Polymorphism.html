@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Bounded Polymorphism</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Bounded Polymorphism" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/blog/2015/03/12/Bounded-Polymorphism.html">
+    
+    <meta property='og:type' content='article'>
+    <meta property='article:author' content="https://www.facebook.com/chaudhuri.avik">
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          
+            class="active"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  <section>
+    <h3>Recent Posts</h3>
+    <ul>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2016/02/02/Version-0.21.0.html">
+            Version 0.21.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/12/01/Version-0.19.0.html">
+            Version 0.19.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/11/09/Generators.html">
+            Generators
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/10/07/Version-0.17.0.html">
+            Version 0.17.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/22/Version-0.16.0.html">
+            Version 0.16.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/10/Version-0.15.0.html">
+            Version 0.15.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/29/Version-0.14.0.html">
+            Version 0.14.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/03/Disjoint-Unions.html">
+            Disjoint Unions
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+             class="active" 
+            href="/blog/2015/03/12/Bounded-Polymorphism.html">
+            Bounded Polymorphism
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/02/20/Flow-Comments.html">
+            Flow Comments
+          </a>
+        </li>
+      
+      <li><a 
+        
+        href="/blog/all.html">All posts ...</a></li>
+    </ul>
+  <section>
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Bounded Polymorphism
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/_posts/2015-03-12-Bounded-Polymorphism.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p class="meta">March 12, 2015 by Avik Chaudhuri</p>
+
+    <h3>Announcing Bounded Polymorphism</h3>
+
+<p>As of Flow 0.5.0, you can define polymorphic functions and classes with bounds on their type parameters. This is extremely useful for writing functions and classes that need some constraints on their type parameters. Flow&#39;s bounded polymorphism syntax looks like</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">class BagOfBones&lt;T: Bone&gt; { ... }
+function eat&lt;T: Food&gt;(meal: T): Indigestion&lt;T&gt; { ... }
+</code></pre></div>
+<h3>The problem</h3>
+
+<p>Consider the following code that defines a polymorphic function in Flow:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function fooBad&lt;T&gt;(obj: T): T { 
+  console.log(Math.abs(obj.x)); 
+  return obj;
+}
+</code></pre></div>
+<p>This code does not (and should not!) type check. Not all values <code>obj: T</code> have a property <code>x</code>, let alone a property <code>x</code> that is a <code>number</code>, given the additional requirement imposed by <code>Math.abs()</code>.</p>
+
+<!--truncate-->
+
+<p>But what if you wanted <code>T</code> to not range over all types, but instead over only the types of objects with an <code>x</code> property that has the type <code>number</code>? Intuitively, given that condition, the body should type check. Unfortunately, the only way you could enforce this condition prior to Flow 0.5.0 was by giving up on polymorphism entirely! For example you could write:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">// Old lame workaround
+function fooStillBad(obj: { x: number }): {x: number } { 
+  console.log(Math.abs(obj.x)); 
+  return obj; 
+}
+</code></pre></div>
+<p>But while this change would make the body type check, it would cause Flow to lose information across call sites. For example:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">// The return type of fooStillBad() is {x: number}
+// so Flow thinks result has the type {x: number}
+var result = fooStillBad({x: 42, y: "oops"});
+
+// This will be an error since result's type
+// doesn't have a property "y"
+var test: {x: number; y: string} = result;
+</code></pre></div>
+<h3>The solution</h3>
+
+<p>As of version 0.5.0, such typing problems can be solved elegantly using bounded polymorphism. Type parameters such as <code>T</code> can specify bounds that constrain the types that the type parameters range over. For example, we can write:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function fooGood&lt;T: { x: number }&gt;(obj: T): T { 
+  console.log(Math.abs(obj.x)); 
+  return obj; 
+}
+</code></pre></div>
+<p>Now the body type checks under the assumption that <code>T</code> is a subtype of <code>{ x: number }</code>. Furthermore, no information is lost across call sites. Using the example from above:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">// With bounded polymorphism, Flow knows the return
+// type is {x: number; y: string}
+var result = fooGood({x: 42, y: "yay"});
+
+// This works!
+var test: {x: number; y: string} = result;
+</code></pre></div>
+<p>Of course, polymorphic classes may also specify bounds. For example, the following code type checks:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">class Store&lt;T: { x: number }&gt; {
+  obj: T;
+  constructor(obj: T) { this.obj = obj; }
+  foo() { console.log(Math.abs(this.obj.x)); }
+}
+</code></pre></div>
+<p>Instantiations of the class are appropriately constrained. If you write</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">var store = new Store({x: 42, y: "hi"});
+</code></pre></div>
+<p>Then <code>store.obj</code> has type <code>{x: number; y: string}</code>.</p>
+
+<p>Any type may be used as a type parameter&#39;s bound. The type does not need to be an object type (as in the examples above). It may even be another type parameter that is in scope. For example, consider adding the following method to the above <code>Store</code> class:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">class Store&lt;T: { x: number }&gt; {
+  ...
+  bar&lt;U: T&gt;(obj: U): U { 
+    this.obj = obj; 
+    console.log(Math.abs(obj.x)); 
+    return obj; 
+  }
+}
+</code></pre></div>
+<p>Since <code>U</code> is a subtype of <code>T</code>, the method body type checks (as you may expect, <code>U</code> must also satisfy <code>T</code>&#39;s bound, by transitivity of subtyping). Now the following code type checks:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">  // store is a Store&lt;{x: number; y: string}&gt;
+  var store = new Store({x: 42, y: "yay"});
+
+  var result = store.bar({x: 0, y: "hello", z: "world"});
+
+  // This works!
+  var test: {x: number; y: string; z: string } = result;
+</code></pre></div>
+<p>Also, in a polymorphic definition with multiple type parameters, any type parameter may appear in the bound of any following type parameter. This is useful for type checking examples like the following:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function copyArray&lt;T, S: T&gt;(from: Array&lt;S&gt;, to: Array&lt;T&gt;) { 
+  from.forEach(elem =&gt; to.push(elem));
+}
+</code></pre></div>
+<h3>Why we built this</h3>
+
+<p>The addition of bounded polymorphism significantly increases the expressiveness of Flow&#39;s type system, by enabling signatures and definitions to specify relationships between their type parameters, without having to sacrifice the benefits of generics. We expect that the increased expressiveness will be particularly useful to library writers, and will also allow us to write better declarations for framework APIs such as those provided by React.</p>
+
+<h3>Transformations</h3>
+
+<p>Like type annotations and other Flow features, polymorphic function and class definitions need to be transformed before the code can be run. The transforms are available in react-tools <code>0.13.0</code>, which was recently released</p>
+
+
+    <a 
+  href="https://twitter.com/share" 
+  class="twitter-share-button" 
+  data-url="http://flowtype.org/blog/2015/03/12/Bounded-Polymorphism.html" 
+  data-text="Flow | Bounded Polymorphism" 
+  data-hashtags="flowtype">Tweet</a>
+<div 
+  class="fb-like" 
+  data-href="http://flowtype.org/blog/2015/03/12/Bounded-Polymorphism.html" 
+  data-layout="standard" 
+  data-action="like"
+  data-show-faces="true"
+  data-share="true"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

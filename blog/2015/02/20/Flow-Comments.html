@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Flow Comments</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Flow Comments" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/blog/2015/02/20/Flow-Comments.html">
+    
+    <meta property='og:type' content='article'>
+    <meta property='article:author' content="https://www.facebook.com/Gabe">
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          
+            class="active"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  <section>
+    <h3>Recent Posts</h3>
+    <ul>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2016/02/02/Version-0.21.0.html">
+            Version 0.21.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/12/01/Version-0.19.0.html">
+            Version 0.19.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/11/09/Generators.html">
+            Generators
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/10/07/Version-0.17.0.html">
+            Version 0.17.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/22/Version-0.16.0.html">
+            Version 0.16.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/10/Version-0.15.0.html">
+            Version 0.15.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/29/Version-0.14.0.html">
+            Version 0.14.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/03/Disjoint-Unions.html">
+            Disjoint Unions
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/03/12/Bounded-Polymorphism.html">
+            Bounded Polymorphism
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+             class="active" 
+            href="/blog/2015/02/20/Flow-Comments.html">
+            Flow Comments
+          </a>
+        </li>
+      
+      <li><a 
+        
+        href="/blog/all.html">All posts ...</a></li>
+    </ul>
+  <section>
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Flow Comments
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/_posts/2015-02-20-Flow-Comments.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p class="meta">February 20, 2015 by Gabe Levi</p>
+
+    <h3>Announcing Flow Comments</h3>
+
+<p>As of Flow 0.4.0, you can put your Flow-specific syntax in special comments. If you use these special comments then you do not need to transform away Flow-specific syntax before running your code. While we strongly recommend that you write your code without the special comments, this feature will help people who can&#39;t fit a Flow-stripping transformation into their setup. This was one of our <a href="https://github.com/facebook/flow/issues/3">most requested features</a> and hopefully it will enable even more people to use Flow!</p>
+
+<p>This feature introduces 3 special comments: <code>/*:</code>, <code>/*::</code>, and <code>/*flow-include</code>. Flow will read the code inside these special comments and treat the code as if the special comment tokens didn&#39;t exist. These special comments are valid JavaScript block comments, so your JavaScript engine will ignore the code inside the comments.</p>
+
+<!--truncate-->
+
+<h3>The Flow Comment Syntax</h3>
+
+<p>There are 3 special comments that Flow currently supports. You may recognize this syntax from <a href="https://github.com/jareware">Jarno Rantanen</a>&#39;s excellent project, <a href="https://github.com/jareware/flotate">flotate</a>.</p>
+
+<h4>1. <code>/*:</code></h4>
+
+<p><code>/*: &lt;your code&gt; */</code> is interpreted by Flow as <code>: &lt;your code&gt;</code></p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function foo(x/*: number*/)/* : string */ { ... } 
+</code></pre></div>
+<p>is interpreted by Flow as </p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function foo(x: number): string { ... }
+</code></pre></div>
+<p>but appears to the JavaScript engine (ignoring comments) as</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function foo(x) { ... }
+</code></pre></div>
+<h4>2. <code>/*::</code></h4>
+
+<p><code>/*:: &lt;your code&gt; */</code> is interpreted by Flow as <code>&lt;your code&gt;</code></p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">/*:: type foo = number; */
+</code></pre></div>
+<p>is interpreted by Flow as</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">type foo = number;
+</code></pre></div>
+<p>but appears to the runtime (ignoring comments) as</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">
+</code></pre></div>
+<h4>3. <code>/*flow-include</code></h4>
+
+<p><code>/*flow-include &lt;your code&gt; */</code> is interpreted by Flow as <code>&lt;your code&gt;</code>. It behaves the same as <code>/*::</code></p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">/*flow-include type foo = number; */
+</code></pre></div>
+<p>is interpreted by Flow as</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">type foo = number;
+</code></pre></div>
+<p>but appears to the runtime (ignoring comments) as</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">
+</code></pre></div>
+<p>Note: whitespace is ignored after the <code>/*</code> but before the <code>:</code>, <code>::</code>, or <code>flow-include</code>. So you can write things like </p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">/* : number */
+/* :: type foo = number */
+/* flow-include type foo = number */
+</code></pre></div>
+<h3>Future Work</h3>
+
+<p>We plan to update our Flow transformation to wrap Flow syntax with these special comments, rather than stripping it away completely. This will help people write Flow code but publish code that works with or without Flow.</p>
+
+<h3>Thanks</h3>
+
+<p>Special thanks to <a href="https://github.com/jareware">Jarno Rantanen</a> for building <a href="https://github.com/jareware/flotate">flotate</a> and supporting us merging his syntax upstream into Flow.</p>
+
+
+    <a 
+  href="https://twitter.com/share" 
+  class="twitter-share-button" 
+  data-url="http://flowtype.org/blog/2015/02/20/Flow-Comments.html" 
+  data-text="Flow | Flow Comments" 
+  data-hashtags="flowtype">Tweet</a>
+<div 
+  class="fb-like" 
+  data-href="http://flowtype.org/blog/2015/02/20/Flow-Comments.html" 
+  data-layout="standard" 
+  data-action="like"
+  data-show-faces="true"
+  data-share="true"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

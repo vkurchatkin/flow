@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Destructuring</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Destructuring" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/destructuring.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          
+          class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Walkthroughs</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/react-example.html#_">
+              A Flux & React demo
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/underscore.html#_">
+              Flow, meet Underscore
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Coming Soon</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/coming-soon.html#_">
+              Future plans
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/variables.html#_">
+              Variables
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_" class="active">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/operators.html#_">
+              Operators
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/primitives.html#_">
+              Primitives
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>CLI</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Destructuring
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/01-destructuring.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    <p>Flow supports the JavaScript construct of destructuring, which allows 
+you to extract data from structured values. Here is a simple example:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="kc">true</span><span class="p">];</span>
+<span class="kd">var</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">;</span>
+<span class="c1">// a: number (1), b: string (''), c : boolean (true)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The canonical example of destructuring is swapping:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="p">];</span>
+<span class="c1">// a = 2, b = 1</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<h2>Destructuring and Type Checks</h2>
+
+<p>Flow can verify that any destructuring in your code is type-safe.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="s1">'Hello'</span><span class="p">,</span> <span class="kc">true</span><span class="p">];</span>
+<span class="c1">// If you only care about some of the return values, you can skip some</span>
+<span class="c1">// elements with , ,</span>
+<span class="kd">var</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="p">,</span><span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">;</span>
+<span class="c1">// a: number (1), b: string (''), c : boolean (true)</span>
+<span class="kd">var</span> <span class="nx">z</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">*</span> <span class="nx">c</span><span class="p">;</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+ 
+
+<p>Above we have a four (4) element array <code>arr</code> (actually a 
+<a href="http://flowtype.org/docs/arrays.html#tuples"><code>tuple</code></a>)
+. And then we destructure that array into three (3) variables, <code>a</code>, <code>b</code>,  <code>c</code>. 
+However, we then try to multiply <code>a</code> (a <code>number</code>), and <code>c</code> (a <code>boolean</code>). Flow 
+catches this.</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">/tmp/flow/f.js:2:28,31: boolean
+This type is incompatible with
+  /tmp/flow/f.js:5:17,21: number
+
+Found 1 error
+</code></pre></div>
+<h2>Another Example</h2>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">var</span> <span class="p">{</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="p">...</span><span class="nx">o</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="na">x</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">o</span><span class="p">:</span> <span class="p">{</span><span class="na">z</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span> <span class="p">}</span>
+<span class="c1">// x: string, y: number, o: {z: boolean}</span>
+<span class="kd">var</span> <span class="na">z</span><span class="p">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">o</span><span class="p">;</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">/tmp/flow/f.js:3:5,16: object pattern
+This type is incompatible with
+  /tmp/flow/f.js:5:8,13: number
+
+Found 1 errors
+</code></pre></div>
+<p><code>o</code> has been destructed as an object that contains a boolean value. That 
+cannot be assigned to a number.</p>
+
+
+    <div class="docs-prevnext">
+      
+        <a href="/docs/nullable-types.html#_">&larr; Prev</a>
+      
+      
+        <a class="right" href="/docs/union-intersection-types.html#_">Next &rarr;</a>
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

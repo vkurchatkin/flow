@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Advanced Configuration</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Advanced Configuration" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/advanced-configuration.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          
+          class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_" class="active">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Walkthroughs</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/react-example.html#_">
+              A Flux & React demo
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/underscore.html#_">
+              Flow, meet Underscore
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Coming Soon</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/coming-soon.html#_">
+              Future plans
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/variables.html#_">
+              Variables
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/operators.html#_">
+              Operators
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/primitives.html#_">
+              Primitives
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>CLI</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Advanced Configuration
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/02-advanced-configuration.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    <p>This section discusses some of the advanced configuration options available 
+for customizing how <code>flow</code> runs.</p>
+
+<h2><code>.flowconfig</code></h2>
+
+<p>Many times it is enough to create an empty <code>.flowconfig</code> file via <code>flow init</code> 
+and just have <code>.flowconfig</code> simply be the token that tells flow to &quot;start type 
+checking here&quot;.</p>
+
+<p>However, <code>.flowconfig</code> does provide some configuration options that can be 
+used to customize what files <code>flow</code> accesses and what files it ignores.</p>
+
+<h3><code>[include]</code></h3>
+
+<p>The <code>[include]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the 
+specified files or directories when type checking your code.</p>
+
+<h3><code>[ignore]</code></h3>
+
+<p>Conversely, the <code>[ignore]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to ignore files matching the specified regular expressions when type checking your code.</p>
+
+<blockquote>
+<p>WARNING</p>
+
+<p>The specified regular expressions in the [ignore] section apply to absolute paths, 
+so make sure you use repeated wildcards <code>.*</code> at the beginning if you&#39;re specifying relative paths. 
+Also, relative paths that begin with <code>.</code> or <code>..</code> won&#39;t work, since the regular expression parser
+would confuse them with wildcards.</p>
+</blockquote>
+
+<h3><code>[libs]</code></h3>
+
+<p>The <code>[libs]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the 
+specified <a href="http://flowtype.org/docs/declarations.html">declarations</a> when type checking your code. Multiple libraries can be specified.</p>
+
+<h3><code>[options]</code></h3>
+
+<p>The <code>[options]</code> heading in a <code>.flowconfig</code> file can contain several key-value pairs:</p>
+
+<ul>
+<li><code>log.file</code> (string): the path to the log file (defaults to <code>/tmp/flow/&lt;escaped root path&gt;.log</code>)</li>
+<li><p><code>module.name_mapper</code> (regex -&gt; string): specify a regular expression to match against module names, and a replacement value, separated by a <code>-&gt;</code>.</p>
+
+<p>For example:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">module.name_mapper= '^image![a-zA-Z0-9$_]+$' -&gt; 'ImageStub'
+</code></pre></div>
+<p>makes Flow treat <code>require(&#39;image!foo.jpg&#39;)</code> as if it was <code>require(&#39;ImageStub&#39;)</code>.</p>
+
+<p>(<strong>note:</strong> you can specify <code>module.name_mapper</code> multiple times)</p></li>
+<li><p><code>module.system</code> (<code>node</code> | <code>haste</code>): the module system to use to resolve <code>import</code> and <code>require</code>. <a href="https://github.com/facebook/node-haste">Haste</a> is used in React-Native.</p></li>
+<li><p><code>munge_underscores</code> (boolean): set this to <code>true</code> to have Flow treat underscore-prefixed class properties and methods as private. This should be used in conjunction with <a href="https://github.com/facebook/jstransform/blob/master/visitors/es6-class-visitors.js"><code>jstransform</code>&#39;s ES6 class transform</a>, which enforces the same privacy at runtime.</p></li>
+<li><p><code>server.max_workers</code> (integer): The maximum number of workers the Flow server can start. By default, the server will use all available cores.</p></li>
+<li><p><code>traces</code> (integer): enables traces on all error output (showing additional details about the flow of types through the system), to the depth specified. This can be very expensive, so is disabled by default.</p></li>
+<li><p><code>strip_root</code> (boolean): set this to <code>true</code> to always strip the root directory from file paths in error messages</p></li>
+<li><p><code>suppress_comment</code> (regex): defines a magical comment that suppresses any Flow errors on the following line. For example:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+</code></pre></div>
+<p>will match a comment like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">// $FlowFixMe: suppressing this error until we can refactor
+var x : string = 123;
+</code></pre></div>
+<p>and suppress the error. If there is no error on the next line (the suppresion is unnecessary), an &quot;Unused suppression&quot; error will be shown instead.</p>
+
+<p><strong>Note:</strong> you can specify <code>suppress_comment</code> multiple times. We recommend defining something like <code>$FlowFixMe</code> (for type errors that need to be fixed) in addition to <code>$FlowIssue</code> (to suppress errors caused by bugs in Flow).</p></li>
+<li><p><code>esproposal.class_static_fields</code> (&#39;enable&#39;|&#39;ignore&#39;|&#39;warn&#39;): set this to <code>enable</code> to indicate that Flow should interpret static <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">class fields</a> per the pending spec. You may also set this to <code>ignore</code> to indicate that Flow should simply ignore the syntax (i.e. Flow will not use this syntax to indicate the presence of a static property on the class). The default value of this option is <code>warn</code>, which gives a warning on use since this proposal is still very early-stage.</p></li>
+<li><p><code>esproposal.class_instance_fields</code> (&#39;enable&#39;|&#39;ignore&#39;|&#39;warn&#39;): set this to <code>enable</code> to indicate that Flow should interpret instance <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">class fields</a> per the pending spec. You may also set this to <code>ignore</code> to indicate that Flow should simply ignore the syntax (i.e. Flow will not use this syntax to indicate the presence of a property on instances of the class). The default value of this option is <code>warn</code>, which gives a warning on use since this proposal is still very early-stage.</p></li>
+</ul>
+
+<h3>Example</h3>
+
+<p>Say you have the following directory structure, with your <code>.flowconfig</code> in 
+<code>mydir</code>:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">otherdir
+└── src
+    ├── othercode.js 
+mydir
+├── .flowconfig
+├── build
+│   ├── first.js
+│   └── shim.js
+├── lib
+│   └── flow
+├── node_modules
+│   └── es6-shim
+└── src
+    ├── first.js
+    └── shim.js
+</code></pre></div>
+<p>Here is an example of how you could use the <code>.flowconfig</code> directives. </p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">[include]
+/home/otherdir/src
+
+[ignore]
+.*/build/.*
+
+[libs]
+./lib
+</code></pre></div>
+<p>Now <code>flow</code> will include a directory outside the <code>.flowconfig</code> path in its 
+check, ignore the <code>build</code> directory and use the declarations in  <code>lib</code>.</p>
+
+
+    <div class="docs-prevnext">
+      
+        <a href="/docs/troubleshooting.html#_">&larr; Prev</a>
+      
+      
+        <a class="right" href="/docs/react-example.html#_">Next &rarr;</a>
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

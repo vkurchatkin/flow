@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Using the CLI</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Using the CLI" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/cli.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          
+          class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Walkthroughs</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/react-example.html#_">
+              A Flux & React demo
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/underscore.html#_">
+              Flow, meet Underscore
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Coming Soon</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/coming-soon.html#_">
+              Future plans
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/variables.html#_">
+              Variables
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/operators.html#_">
+              Operators
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/primitives.html#_">
+              Primitives
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>CLI</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/cli.html#_" class="active">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Using the CLI
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/04-cli.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    <p>The flow command line tool is made to be easy-to-use for the simple case.</p>
+
+<p>Just using the command <code>flow</code> will type-check your current directory if the <code>.flowconfig</code> file is present.
+A flow server will automatically be started if needed.</p>
+
+<p>The CLI tool also provides several other options and commands that allow you to control the server and build tools that integrate with Flow. For example, this is how the <a href="http://nuclide.io">Nuclide</a> editor integrates with Flow to provide autocompletion, type errors, etc. in it&#39;s UI.</p>
+
+<p>To find out more about the CLI just type:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">flow --help
+</code></pre></div>
+<p>This will give you information about everything that flow can do. Running this command should print something like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Usage: flow [COMMAND]
+
+Valid values for COMMAND:
+  ast             Print the AST
+  autocomplete    Queries autocompletion information
+  check           Does a full Flow check and prints the results
+  check-contents  Run typechecker on contents from stdin
+  find-module     Shows filenames for one or more modules
+  get-def         Gets the definition location of a variable or property
+  get-importers   Gets a list of all importers for one or more given modules
+  get-imports     Get names of all modules imported by one or more given modules
+  init            Initializes a directory to be used as a flow root directory
+  port            Shows ported type annotations for given files
+  search          Searches a pattern
+  server          Runs a Flow server in the foreground
+  single          Does a single-threaded check (testing)
+  start           Starts a Flow server
+  status          (default) Shows current Flow errors by asking the Flow server
+  stop            Stops a Flow server
+  suggest         Shows type annotation suggestions for given files
+  type-at-pos     Shows the type at a given file and position
+
+Default values if unspecified:
+  COMMAND   status
+
+Status command options:
+  --color            Display terminal output in color. never, always, auto (default: auto)
+  --from             Specify client (for use by editor plugins)
+  --help             This list of options
+  --json             Output results in JSON format
+  --no-auto-start    If the server if it is not running, do not start it; just exit
+  --one-line         Escapes newlines so that each error prints on one line
+  --retries          Set the number of retries. (default: 3)
+  --retry-if-init    retry if the server is initializing (default: true)
+  --show-all-errors  Print all errors (the default is to truncate after 50 errors)
+  --timeout          Maximum time to wait, in seconds
+  --version          Print version number and exit
+</code></pre></div>
+<p>You can then, further dig into particular COMMANDs by adding the <code>--help</code> flag.</p>
+
+<p>So, for example, if you want to know more about how the autocomplete works, you can use this command:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">flow autocomplete --help
+</code></pre></div>
+
+    <div class="docs-prevnext">
+      
+        <a href="/docs/declarations.html#_">&larr; Prev</a>
+      
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

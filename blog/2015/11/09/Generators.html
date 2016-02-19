@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Generators</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Generators" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/blog/2015/11/09/Generators.html">
+    
+    <meta property='og:type' content='article'>
+    <meta property='article:author' content="https://www.facebook.com/samuel.w.goldman">
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          
+            class="active"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  <section>
+    <h3>Recent Posts</h3>
+    <ul>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2016/02/02/Version-0.21.0.html">
+            Version 0.21.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/12/01/Version-0.19.0.html">
+            Version 0.19.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+             class="active" 
+            href="/blog/2015/11/09/Generators.html">
+            Generators
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/10/07/Version-0.17.0.html">
+            Version 0.17.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/22/Version-0.16.0.html">
+            Version 0.16.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/10/Version-0.15.0.html">
+            Version 0.15.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/29/Version-0.14.0.html">
+            Version 0.14.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/03/Disjoint-Unions.html">
+            Disjoint Unions
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/03/12/Bounded-Polymorphism.html">
+            Bounded Polymorphism
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/02/20/Flow-Comments.html">
+            Flow Comments
+          </a>
+        </li>
+      
+      <li><a 
+        
+        href="/blog/all.html">All posts ...</a></li>
+    </ul>
+  <section>
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Generators
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/_posts/2015-11-09-Generators.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p class="meta">November  9, 2015 by Sam Goldman</p>
+
+    <h3>Typing Generators with Flow</h3>
+
+<p>Flow 0.14.0 included support for generator functions. Generator functions provide a unique ability to JavaScript programs: the abilty to suspend and resume execution. This kind of control paves the way for async/await, an <a href="https://github.com/tc39/ecmascript-asyncawait">upcoming feature</a> already supported by Flow.</p>
+
+<!--truncate-->
+
+<p>So much wonderful material has already been produced describing generators. I am going to focus on the interaction of static typing with generators. Please refer to the following materials for information about generators:</p>
+
+<ul>
+<li>Jafar Husain gave an <a href="https://www.youtube.com/watch?v=DqMFX91ToLw#t=970">incredibly lucid and well-illustrated talk</a> that covers genrators. I have linked to the point where he gets into generators, but I highly recommend the entire talk.</li>
+<li>Exploring ES6, a comprehensive book by Axel Rauschmayer, who has generously made the contents available for free online, has a <a href="http://exploringjs.com/es6/ch_generators.html">chapter on generators</a>.</li>
+<li>The venerable MDN has a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">useful page</a> describing the <code>Iterator</code> interface and generators.</li>
+</ul>
+
+<p>In Flow, the <code>Generator</code> interface has three type parameters: <code>Yield</code>, <code>Return</code>, and <code>Next</code>. <code>Yield</code> is the type of values which are yielded from the generator function. <code>Return</code> is the type of the value which is returned from the generator function. <code>Next</code> is the type of values which are passed into the generator via the <code>next</code> method on the <code>Generator</code> itself. For example, a generator value of type <code>Generator&lt;string,number,boolean&gt;</code> will yield <code>string</code>s, return a <code>number</code>, and will receive <code>boolean</code>s from its caller.</p>
+
+<p>For any type <code>T</code>, a <code>Generator&lt;T,void,void&gt;</code> is both an <code>Iterable&lt;T&gt;</code> and an <code>Iterator&lt;T&gt;</code>.</p>
+
+<p>The unique nature of generators allows us to represent infinite sequences naturally. Consider the infinite sequence of natural numbers:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">nats</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Because generators are also iterators, we can manually iterate the generator:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">nats</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span> <span class="c1">// { done: false, value: 0 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span> <span class="c1">// { done: false, value: 1 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span> <span class="c1">// { done: false, value: 2 }</span>
+</code></pre></div>
+<p>When <code>done</code> is false, <code>value</code> will have the generator&#39;s <code>Yield</code> type. When <code>done</code> is true, <code>value</code> will have the generator&#39;s <code>Return</code> type or <code>void</code> if the consumer iterates past the completion value.</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">return</span> <span class="s2">"complete"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">test</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span> <span class="c1">// { done: false, value: 1 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span> <span class="c1">// { done: true, value: "complete" }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span> <span class="c1">// { done: true, value: undefined }</span>
+</code></pre></div>
+<p>Because of this behavior, manually iterating poses typing difficulties. Let&#39;s try to take the first 10 values from the <code>nats</code> generator through manual iteration:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">nats</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">take10</span><span class="err">:</span> <span class="nx">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">done</span><span class="p">,</span> <span class="nx">value</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">take10</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// error!</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">test.js:13
+ 13:   const { done, value } = gen.next();
+                               ^^^^^^^^^^ call of method `next`
+ 17:     take10.push(value); // error!
+                     ^^^^^ undefined. This type is incompatible with
+ 11: const take10: number[] = [];
+                   ^^^^^^ number
+</code></pre></div>
+<p>Flow is complaining that <code>value</code> might be <code>undefined</code>. This is because the type of <code>value</code> is <code>Yield | Return | void</code>, which simplifies in the instance of <code>nats</code> to <code>number | void</code>. We can introduce a dynamic type test to convince Flow of the invariant that <code>value</code> will always be <code>number</code> when <code>done</code> is false.</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">nats</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">take10</span><span class="err">:</span> <span class="nx">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">done</span><span class="p">,</span> <span class="nx">value</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">===</span> <span class="s2">"undefined"</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">"`value` must be a number."</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">take10</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// no error</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>There is an <a href="https://github.com/facebook/flow/issues/577">open issue</a> which would make the dynamic type test above unnecessary, by using the <code>done</code> value as a sentinel to refine a tagged union. That is, when <code>done</code> is <code>true</code>, Flow would know that <code>value</code> is always of type <code>Yield</code> and otherwise of type <code>Return | void</code>.</p>
+
+<p>Even without the dynamic type test, this code is quite verbose and it&#39;s hard to see the intent. Because generators are also iterable, we can also use <code>for...of</code> loops:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">take10</span><span class="err">:</span> <span class="nx">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">nat</span> <span class="nx">of</span> <span class="nx">nats</span><span class="p">())</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">===</span> <span class="mi">10</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+  <span class="nx">take10</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">nat</span><span class="p">);</span>
+  <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>That&#39;s much better. The <code>for...of</code> looping construct ignores completion values, so Flow understands that <code>nat</code> will always be <code>number</code>. Let&#39;s generalize this pattern further using generator functions:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">take</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">n</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">xs</span><span class="err">:</span> <span class="nx">Iterable</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span><span class="err">:</span> <span class="nx">Iterable</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="nx">of</span> <span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="nx">x</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">++</span><span class="nx">i</span> <span class="o">===</span> <span class="nx">n</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">n</span> <span class="nx">of</span> <span class="nx">take</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nx">nats</span><span class="p">()))</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span> <span class="c1">// 0, 1, 2, 3, 4, 5, 6, 7, 8, 9</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Note that we explicitly annotated the parameters and return type of the <code>take</code> generator. This is necessary to ensure Flow understands the fully generic type. This is because Flow does not currently infer a fully generic type, but instead accumulates lower bounds, resulting in a union type.</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">identity</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">identity</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span> <span class="c1">// error</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">identity</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>  <span class="c1">// error</span>
+</code></pre></div>
+<p>The above code produces errors because Flow adds <code>string</code> and <code>number</code> as lower bounds to the type variable describing the type of the value bound by <code>x</code>. That is, Flow believes the type of <code>identity</code> is <code>(x: string | number) =&gt; string | number</code> because those are the types which actually passed through the function.</p>
+
+<p>Another important feature of generators is the ability to pass values into the generator from the consumer. Let&#39;s consider a generator <code>scan</code>, which reduces values passed into the generator using a provided function. Our <code>scan</code> is similar to <code>Array.prototype.reduce</code>, but it returns each intermediate value and the values are provided imperatively via <code>next</code>.</p>
+
+<p>As a first pass, we might write this:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">scan</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span><span class="nx">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">init</span><span class="err">:</span> <span class="nx">U</span><span class="p">,</span> <span class="nx">f</span><span class="err">:</span> <span class="p">(</span><span class="nx">acc</span><span class="err">:</span> <span class="nx">U</span><span class="p">,</span> <span class="nx">x</span><span class="err">:</span> <span class="nx">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">U</span><span class="p">)</span><span class="err">:</span> <span class="nx">Generator</span><span class="o">&lt;</span><span class="nx">U</span><span class="p">,</span><span class="k">void</span><span class="p">,</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">acc</span> <span class="o">=</span> <span class="nx">init</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">next</span> <span class="o">=</span> <span class="k">yield</span> <span class="nx">acc</span><span class="p">;</span>
+    <span class="nx">acc</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">acc</span><span class="p">,</span> <span class="nx">next</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>We can use this definition to implement an imperative sum procedure:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">scan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span>  <span class="c1">// { done: false, value: 0 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span> <span class="c1">// { done: false, value: 1 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span> <span class="c1">// { done: false, value: 3 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// { done: false, value: 6 }</span>
+</code></pre></div>
+<p>However, when we try to check the above definition of <code>scan</code>, Flow complains:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">test.js:7
+  7:     acc = f(acc, next);
+               ^^^^^^^^^^^^ function call
+  7:     acc = f(acc, next);
+                      ^^^^ undefined. This type is incompatible with
+  3: function *scan&lt;T,U&gt;(init: U, f: (acc: U, x: T) =&gt; U): Generator&lt;U,void,T&gt; {
+     ^ some incompatible instantiation of T
+</code></pre></div>
+<p>Flow is complaining that our value, <code>next</code>, may be <code>void</code> instead of the expected <code>T</code>, which is <code>number</code> in the <code>sum</code> example. This behavior is necessary to ensure type safety. In order to prime the generator, our consumer must first call <code>next</code> without an argument. To accomodate this, Flow understands the argument to <code>next</code> to be optional. This means Flow will allow the following code:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">scan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span>  <span class="c1">// first call primes the generator</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">next</span><span class="p">());</span>  <span class="c1">// we should pass a value, but don't need to</span>
+</code></pre></div>
+<p>In general, Flow doesn&#39;t know which invocation is &quot;first.&quot; While it should be an error to pass a value to the first <code>next</code>, and an error to <em>not</em> pass a value to subsequent <code>next</code>s, Flow compromises and forces your generator to deal with a potentially <code>void</code> value. In short, given a generator of type <code>Generator&lt;Y,R,N&gt;</code> and a value <code>x</code> of type <code>Y</code>, the type of the expression <code>yield x</code> is <code>N | void</code>.</p>
+
+<p>We can update our definition to use a dynamic type test that enforces the non-<code>void</code> invariant at runtime:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">scan</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span><span class="nx">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">init</span><span class="err">:</span> <span class="nx">U</span><span class="p">,</span> <span class="nx">f</span><span class="err">:</span> <span class="p">(</span><span class="nx">acc</span><span class="err">:</span> <span class="nx">U</span><span class="p">,</span> <span class="nx">x</span><span class="err">:</span> <span class="nx">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">U</span><span class="p">)</span><span class="err">:</span> <span class="nx">Generator</span><span class="o">&lt;</span><span class="nx">U</span><span class="p">,</span><span class="k">void</span><span class="p">,</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">acc</span> <span class="o">=</span> <span class="nx">init</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">next</span> <span class="o">=</span> <span class="k">yield</span> <span class="nx">acc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">next</span> <span class="o">===</span> <span class="s2">"undefined"</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">"Caller must provide an argument to `next`."</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">acc</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">acc</span><span class="p">,</span> <span class="nx">next</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>There is one more important caveat when dealing with typed generators. Every value yielded from the generator must be described by a single type. Similarly, every value passed to the generator via <code>next</code> must be described by a single type.</p>
+
+<p>Consider the following generator:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">yield</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">yield</span> <span class="s2">""</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span> <span class="c1">// error</span>
+<span class="kr">const</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span> <span class="c1">// error</span>
+</code></pre></div>
+<p>This is perfectly legal JavaScript and the values <code>a</code> and <code>b</code> do have the correct types at runtime. However, Flow rejects this program. Our generator&#39;s <code>Yield</code> type parameter has a concrete type of <code>number | string</code>. The <code>value</code> property of the iterator result object has the type <code>number | string | void</code>.</p>
+
+<p>We can observe similar behavior for values passed into the generator:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">function *bar() {
+  var a = yield;
+  var b = yield;
+  return {a,b};
+}
+
+const gen = bar();
+gen.next(); // prime the generator
+gen.next(0);
+const ret: { a: number, b: string } = gen.next("").value; // error
+</code></pre></div>
+<p>The value <code>ret</code> has the annotated type at runtime, but Flow also rejects this program. Our generator&#39;s <code>Next</code> type parameter has a concrete type of <code>number | string</code>. The <code>value</code> property of the iterator result object thus has the type <code>void | { a: void | number | string, b: void | number | string }</code>.</p>
+
+<p>While it may be possible to use dynamic type tests to resolve these issues, another practical option is to use <code>any</code> to take on the type safety responsibility yourself.</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="o">*</span><span class="nx">bar</span><span class="p">()</span><span class="err">:</span> <span class="nx">Generator</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">yield</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">yield</span><span class="p">;</span>
+  <span class="k">return</span> <span class="p">{</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">();</span>
+<span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="c1">// prime the generator</span>
+<span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">ret</span><span class="err">:</span> <span class="k">void</span> <span class="o">|</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="nx">string</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="s2">""</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span> <span class="c1">// OK</span>
+</code></pre></div>
+<p>(Note that the annotation <code>Generator</code> is equivalent to <code>Generator&lt;any,any,any&gt;</code>.)</p>
+
+<p>Phew! I hope that this will help you use generators in your own code. I also hope this gave you a little insight into the difficulties of applying static analysis to a highly dynamic language such as JavaScript.</p>
+
+<p>To summarize, here are some of the lessons we&#39;ve learned for using generators in statically typed JS:</p>
+
+<ul>
+<li>Use generators to implement custom iterables.</li>
+<li>Use dynamic type tests to unpack the optional return type of yield expressions.</li>
+<li>Avoid generators that yield or receive values of multiple types, or use <code>any</code>.</li>
+</ul>
+
+
+    <a 
+  href="https://twitter.com/share" 
+  class="twitter-share-button" 
+  data-url="http://flowtype.org/blog/2015/11/09/Generators.html" 
+  data-text="Flow | Generators" 
+  data-hashtags="flowtype">Tweet</a>
+<div 
+  class="fb-like" 
+  data-href="http://flowtype.org/blog/2015/11/09/Generators.html" 
+  data-layout="standard" 
+  data-action="like"
+  data-show-faces="true"
+  data-share="true"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

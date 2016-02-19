@@ -1,21 +1,24 @@
+
+
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset='utf-8'>
-    <title>Flow | Blog</title>
+    <title>Flow | Version 0.19.0</title>
     <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
     <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
     <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
     <link rel='shortcut icon' href='/static/favicon.png'>
     <meta name='viewport' content='width=480'>
-    <meta property="og:title" content="Blog" />
+    <meta property="og:title" content="Version 0.19.0" />
     <meta property="og:site_name" content="flowtype">
     <meta property='og:description' content='Flow is a static type checker for
     JavaScript.'>
     <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
-    <meta property='og:url' content="http://flowtype.org/blog/">
+    <meta property='og:url' content="http://flowtype.org/blog/2015/12/01/Version-0.19.0.html">
     
-    <meta property='og:type' content='website'>
+    <meta property='og:type' content='article'>
+    <meta property='article:author' content="https://www.facebook.com/Gabe">
     
     <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
     <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
@@ -78,7 +81,7 @@
       
         <li>
           <a 
-            
+             class="active" 
             href="/blog/2015/12/01/Version-0.19.0.html">
             Version 0.19.0
           </a>
@@ -165,83 +168,13 @@
 
 
 <article class='withtoc'>
-    <p></p>
+    <h1>
+      Version 0.19.0
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/_posts/2015-12-01-Version-0.19.0.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p class="meta">December  1, 2015 by Gabe Levi</p>
 
-    <!-- Pagination links - copied from http://jekyllrb.com/docs/pagination/ -->
-
-<br />
-<div class="pagination">
-  
-    <span>&laquo; Prev</span>
-  
-
-  
-    
-      <em>1</em>
-    
-  
-    
-      <a href="/blog/page2/">2</a>
-    
-  
-    
-      <a href="/blog/page3/">3</a>
-    
-  
-
-  
-    <a href="/blog/page2/">Next &raquo;</a>
-  
-</div>
-<br />
-
-
-
-
-<div class="posts">
-  
-    
-    <article class="post">
-      
-      <h1><a href="/blog/2016/02/02/Version-0.21.0.html">Version 0.21.0</a></h1>
-        <p class="meta">February  2, 2016 by Gabe Levi</p>
-
-      <div class="entry">
-        
-          <h3>Flow v0.21.0</h3>
-
-<p>Yesterday we deployed Flow v0.21.0! As always, we&#39;ve listed out the most interesting changes in the <a href="https://github.com/facebook/flow/blob/master/Changelog.md#v0210">Changelog</a>. However, since I&#39;m on a plane and can&#39;t sleep, I thought it might be fun to dive into a couple of the changes! Hope this blog post turns out interesting and legible!</p>
-
-<h4>JSX Intrinsics</h4>
-
-<p>If you&#39;re writing JSX, it&#39;s probably a mix of your own React Components and some intrinsics. For example, you might write</p>
-<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">render() {
-  return &lt;div&gt;&lt;FluffyBunny name="Fifi" /&gt;&lt;/div&gt;;
-}
-</code></pre></div>
-<p>In this example, <code>FluffyBunny</code> is a React Component you wrote and <code>div</code> is a JSX intrinsic. Lower-cased JSX elements are assumed to be intrinsics by React and by Flow. Up until Flow v0.21.0, Flow ignored intrinsics and gave them the type <code>any</code>. This meant Flow let you set any property on JSX intrinsics. Flow v0.21.0 will, by default, do the same thing as v0.20.0, However now you can also configure Flow to properly type your JSX intrinsics!</p>
-
-
-          <div class="read-more">
-            <a href="/blog/2016/02/02/Version-0.21.0.html" >
-              ...read the rest of this truncated post
-            </a>
-          </div>
-        
-      </div>
-      
-      <hr class="blogpostend" >
-    </article>
-  
-    
-    <article class="post">
-      
-      <h1><a href="/blog/2015/12/01/Version-0.19.0.html">Version 0.19.0</a></h1>
-        <p class="meta">December  1, 2015 by Gabe Levi</p>
-
-      <div class="entry">
-        
-          <h3>Flow v0.19.0</h3>
+    <h3>Flow v0.19.0</h3>
 
 <p>Flow v0.19.0 was deployed today! It has a ton of changes, which the <a href="https://github.com/facebook/flow/blob/master/Changelog.md#v0190">Changelog</a> summarizes. The Changelog can be a little concise, though, so here are some longer explanations for some of the changes. Hope this helps!</p>
 
@@ -255,126 +188,79 @@
 
 <p>We imagine two main ways people will use <code>.flow</code> files.</p>
 
+<!--truncate-->
 
-          <div class="read-more">
-            <a href="/blog/2015/12/01/Version-0.19.0.html" >
-              ...read the rest of this truncated post
-            </a>
-          </div>
-        
-      </div>
-      
-      <hr class="blogpostend" >
-    </article>
-  
-    
-    <article class="post">
-      
-      <h1><a href="/blog/2015/11/09/Generators.html">Generators</a></h1>
-        <p class="meta">November  9, 2015 by Sam Goldman</p>
+<ol>
+<li><p>As interface files. Maybe you have some library <code>coolLibrary.js</code> that is really hard to type with inline Flow types. You could put <code>coolLibrary.js.flow</code> next to it and declare the types that <code>coolLibrary.js</code> exports. </p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">// coolLibrary.js.flow
+declare export var coolVar: number;
+declare export function coolFunction(): void;
+declare export class coolClass {}
+</code></pre></div></li>
+<li><p>As the original source. Maybe you want to ship the minified, transformed version of <code>awesomeLibrary.js</code>, but people who use <code>awesomeLibrary.js</code> also use Flow. Well you could do something like</p>
+<div class="highlight"><pre><code class="language-Bash" data-lang="Bash">cp awesomeLibraryOriginalCode.js awesomeLibrary.js.flow
+babel awesomeLibraryOriginalCode --out-file awesomeLibrary.js
+</code></pre></div></li>
+</ol>
 
-      <div class="entry">
-        
-          <h3>Typing Generators with Flow</h3>
+<h4><strong>Order of precedence for lib files</strong></h4>
 
-<p>Flow 0.14.0 included support for generator functions. Generator functions provide a unique ability to JavaScript programs: the abilty to suspend and resume execution. This kind of control paves the way for async/await, an <a href="https://github.com/tc39/ecmascript-asyncawait">upcoming feature</a> already supported by Flow.</p>
+<p>Now your local lib files will override the builtin lib files. Is one of the builtin flow libs wrong? Send a pull request! But then while you&#39;re waiting for the next release, you can use your own definition! The order of precedence is as follows:</p>
 
+<ol>
+<li>Any paths supplied on the command line via --lib</li>
+<li>The files found in the paths specified in the .flowconfig <a href="in%20listing%20order">libs</a></li>
+<li>The Flow core library files</li>
+</ol>
 
-          <div class="read-more">
-            <a href="/blog/2015/11/09/Generators.html" >
-              ...read the rest of this truncated post
-            </a>
-          </div>
-        
-      </div>
-      
-      <hr class="blogpostend" >
-    </article>
-  
-    
-    <article class="post">
-      
-      <h1><a href="/blog/2015/10/07/Version-0.17.0.html">Version 0.17.0</a></h1>
-        <p class="meta">October  7, 2015 by Gabe Levi</p>
+<p>For example, if I want to override the builtin definition of Array and instead use my own version, I could update my <code>.flowconfig</code> to contain</p>
+<div class="highlight"><pre><code class="language-" data-lang="">// .flowconfig
+[libs]
+myArray.js
+</code></pre></div><div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">// myArray.js
+declare class Array&lt;T&gt; {
+  // Put whatever you like in here!
+}
+</code></pre></div>
+<h4><strong>Deferred initialization</strong></h4>
 
-      <div class="entry">
-        
-          <h3>Flow v0.17.0</h3>
+<p>Previously the following code was an error, because the initialization of <code>myString</code> happens later. Now Flow is fine with it.</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">function foo(someFlag: boolean): string {
+  var myString:string;
+  if (someFlag) {
+    myString = "yup";
+  } else {
+    myString = "nope";
+  }
+  return myString;
+}
+</code></pre></div>
 
-<p>Today we released Flow v0.17.0! The first thing you may notice is that we changed the way we display errors at the command line. The new errors look like this:</p>
+    <a 
+  href="https://twitter.com/share" 
+  class="twitter-share-button" 
+  data-url="http://flowtype.org/blog/2015/12/01/Version-0.19.0.html" 
+  data-text="Flow | Version 0.19.0" 
+  data-hashtags="flowtype">Tweet</a>
+<div 
+  class="fb-like" 
+  data-href="http://flowtype.org/blog/2015/12/01/Version-0.19.0.html" 
+  data-layout="standard" 
+  data-action="like"
+  data-show-faces="true"
+  data-share="true"></div>
 
-<p><img src="/static/new_error_format_v0_17_0.png" alt="New error format"></p>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-<p>This should hopefully help our command line users understand many errors without having to refer to their source code. We&#39;ll keep iterating on this format, so tell us what you like and what you don&#39;t like! Thanks to <a href="https://github.com/frantic">@frantic</a> for building this feature!</p>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
-<p>There are a whole bunch of other features and fixes in this release! Head on over to our <a href="https://github.com/facebook/flow/releases/tag/v0.17.0">Release</a> for the full list!</p>
-
-        
-      </div>
-      
-      <hr class="blogpostend" >
-    </article>
-  
-    
-    <article class="post">
-      
-      <h1><a href="/blog/2015/09/22/Version-0.16.0.html">Version 0.16.0</a></h1>
-        <p class="meta">September 22, 2015 by Jeff Morrison</p>
-
-      <div class="entry">
-        
-          <h3>Flow v0.16.0</h3>
-
-<p>On Friday we released Flow v0.16.0! We had some major perf improvements that we wanted to get into a release, plus let/const support was ready (thanks again <a href="https://github.com/samwgoldman">@samwgoldman</a>)!</p>
-
-<p>As always, the <a href="https://github.com/facebook/flow/blob/master/Changelog.md#v0160">Changelog</a> is best at summing up the big changes.</p>
-
-        
-      </div>
-      
-      <hr class="blogpostend" >
-    </article>
-  
-</div>
-
-<!-- Pagination links - copied from http://jekyllrb.com/docs/pagination/ -->
-
-<br />
-<div class="pagination">
-  
-    <span>&laquo; Prev</span>
-  
-
-  
-    
-      <em>1</em>
-    
-  
-    
-      <a href="/blog/page2/">2</a>
-    
-  
-    
-      <a href="/blog/page3/">3</a>
-    
-  
-
-  
-    <a href="/blog/page2/">Next &raquo;</a>
-  
-</div>
-<br />
-
-
-
-
-
-    <div class="docs-prevnext">
-      
-      
-    </div>
-
-    <a id="_"></a>
 </article>
 
 </div></section>

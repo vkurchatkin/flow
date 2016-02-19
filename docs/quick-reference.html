@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Quick Reference</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Quick Reference" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/quick-reference.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          
+          class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Walkthroughs</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/react-example.html#_">
+              A Flux & React demo
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/underscore.html#_">
+              Flow, meet Underscore
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Coming Soon</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/coming-soon.html#_">
+              Future plans
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_" class="active">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/variables.html#_">
+              Variables
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/operators.html#_">
+              Operators
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/primitives.html#_">
+              Primitives
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>CLI</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Quick Reference
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/01-quick-reference.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    <h3>Built-in Primitive Types</h3>
+
+<p>• <a href="#the-any-primitive-type"><strong><code>any</code></strong></a> - Describes <em>any</em> possible type<br />
+• <a href="#the-boolean-primitive-type"><strong><code>boolean</code></strong></a> - Describes <code>true</code> or <code>false</code> values<br />
+• <a href="#the-mixed-primitive-type"><strong><code>mixed</code></strong></a> - Describes the supertype of <em>all</em> types<br />
+• <a href="#the-number-primitive-type"><strong><code>number</code></strong></a> - Describes literal number values<br />
+• <a href="#the-string-primitive-type"><strong><code>string</code></strong></a> - Describes literal string values<br />
+• <a href="#the-void-primitive-type"><strong><code>void</code></strong></a> - Describes <code>undefined</code> values<br /></p>
+
+<h3>Built-in Class Types</h3>
+
+<p>• <a href="#the-array-t-constructor"><strong><code>Array&lt;T&gt;</code></strong></a> - Describes <code>Array</code> objects with elements of type <code>T</code><br />
+• <a href="#the-boolean-constructor"><strong><code>Boolean</code></strong></a> - Describes <code>Boolean</code> objects (but not <code>boolean</code> literal values!)<br />
+• <a href="#the-class-t-constructor"><strong><code>Class&lt;T&gt;</code></strong></a> - Describes the type of the class object that would instantiate an instance of class <code>T</code><br />
+• <a href="#the-function-constructor"><strong><code>Function</code></strong></a> - Describes <em>any</em> function<br />
+• <a href="#the-number-constructor"><strong><code>Number</code></strong></a> - Describes <code>Number</code> objects (but not <code>number</code> literal values!)<br />
+• <a href="#the-object-constructor"><strong><code>Object</code></strong></a> - Describes <em>any</em> object<br /> 
+• <a href="#the-string-constructor"><strong><code>String</code></strong></a> - Describes <code>String</code> objects (but not <code>string</code> literal values!)<br /></p>
+
+<h3>Built-in Syntactic Types</h3>
+
+<p>• <a href="#the-object-signature-type">Object Signature: <strong><code>{prop1: number, prop2: string}</code></strong></a> - Describes the type of objects that match a specified signature <br />
+• <a href="#the-function-signature-type">Function Signature: <strong><code>(p1: number, p2: string) =&gt; boolean</code></strong></a> - Describes the type of functions that match a specified signature <br />
+• <a href="#the-callable-object-function-object-type">Callable-Object/Function-Object Signature: <strong><code>{ (p1: number, p2: string): boolean, prop2: number }</code></strong></a> - Describes the type of functions that may have additional &quot;static&quot; properties on them <br /></p>
+
+<h3>Other Built-In Types</h3>
+
+<p>Flow comes with a <a href="https://github.com/facebook/flow/blob/master/lib/core.js">large interface definition</a> that describes all of the other language built-ins for JavaScript. It is included for you by default when you run Flow.</p>
+
+<h3>User Defined Constructor Types</h3>
+
+<p>User-defined class names and function names can be used as a named type annotation as well. This kind of annotation describes the type of the <strong>instance</strong> the class/function would instantiate if <code>new</code>-ed.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">MyClass</span> <span class="p">{</span>
+  <span class="nx">myMethod</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">MyConstructorFunc</span><span class="p">()</span> <span class="p">{}</span>
+<span class="nx">MyConstructorFunc</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">myMethod</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">myMethod</span><span class="p">();</span> <span class="c1">// Valid!</span>
+
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">MyConstructorFunc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyConstructorFunc</span><span class="p">();</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">myMethod</span><span class="p">();</span> <span class="c1">// Valid!</span>
+</code></pre></div>
+<h2>Notes And Caveats</h2>
+
+<ul>
+<li>The <code>+</code> operator works on numbers <strong>and</strong> strings in JavaScript. In the case of a using <code>+</code> on a <code>number</code> and <code>string</code>, the <code>number</code> is implicitly converted to a <code>string</code> via <code>toString()</code> and a concatenation takes place. Flow recognizes and allows this behavior.</li>
+<li><code>Date</code> objects implicitly convert to <code>number</code> when used in arithmetic operations.
+Flow supports this behavior.</li>
+<li>Use <code>mixed</code> to annotate a location that can take anything, but do not use <code>Object</code> instead! It is confusing to view everything as an object, and if by any chance you do mean &quot;any object&quot;, there is a better way to specify that, just as there is a way to specify &quot;any function&quot;. Also, be aware of the difference between <code>mixed</code> and <code>any</code>: <code>mixed</code> is a taint that propagates quickly, since no useful operation can be performed on it.</li>
+</ul>
+
+<p><hr /></p>
+
+<h2>• The <code>any</code> primitive type</h2>
+
+<p>This is a special type that represents <em>any</em> value. An <code>any</code> type may flow into any other type, and all other types may flow into an <code>any</code> type.</p>
+
+<p>This type can be useful when you don&#39;t want Flow to check the type of a value. Sometimes this is desirable if you&#39;re not sure what the type should be (i.e. it comes from a 3rd party library and isn&#39;t easily described) or if Flow is giving you an error for some code that you&#39;re certain is safe -- despite the fact that it doesn&#39;t typecheck.</p>
+
+<p>Using this &quot;backdoor&quot; is dangerous and not recommended, but it is sometimes necessary because of the gradual nature of Flow. <code>any</code> allows you to model code where Flow does not have knowledge (i.e. when you reference something in a non-Flow file or library).</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="s1">'some string'</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Valid!</span>
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nx">any</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Valid! ('any' may flow into any other type!)</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>Array&lt;T&gt;</code> constructor</h2>
+
+<p>This type describes JavaScript array objects and the type of the elements contained within the array. Flow assumes that arrays are not sparse and that any element access on a value of type <code>Array&lt;T&gt;</code> will result in a type <code>T</code>.</p>
+
+<p>For arrays that have a fixed size and/or elements whose types aren&#39;t homogenous, consider using a <a href="arrays.html#tuples">tuple annotation</a> for more accurate typechecking.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">];</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'some string'</span><span class="p">];</span> <span class="c1">// Type error!</span>
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="s1">'some string'</span><span class="p">];</span> <span class="c1">// Type error!</span>
+
+<span class="kd">var</span> <span class="nx">myNumbers</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">myNumbers</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// Valid!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>boolean</code> primitive type</h2>
+
+<p>This type describes a boolean value in JavaScript. The possible values of this type are <code>true</code> and <code>false</code>.</p>
+
+<p>Note that there are many implicit conversions to <code>boolean</code> in JavaScript. Flow understands this and allows it when it is safe to do so. For example, any expression can be used as a conditional in an if-statement or as an operand to <code>&amp;&amp;</code>.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>Boolean</code> constructor</h2>
+
+<p>This type describes objects created from JavaScript&#39;s built-in <code>Boolean</code> constructor. Note that this is distinct from literal <code>true</code> or <code>false</code> values! (although the methods of <code>Boolean</code> are also available on the primitive <code>boolean</code> type as well).</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Boolean</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Boolean</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>Class&lt;T&gt;</code> constructor</h2>
+
+<p>This type describes the type of the class object that one would use to instantiate an instance of class <code>T</code>.</p>
+
+<p>Normally when you specify the name of a class in a type annotation, this would refer to the type of <strong>instances</strong> of that class. However, sometimes it&#39;s useful to describe the type of the class object iself; So this type allows you to do this.</p>
+
+<p>This is similar to a <a href="typeof.html"><code>typeof</code> annotation</a> except that it is limited to usage for classes rather than all values.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">MyClass</span> <span class="p">{</span>
+  <span class="nx">myMethod</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">MyClass</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">a</span><span class="p">();</span> <span class="c1">// Valid!</span>
+
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// Type error!</span>
+
+<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">e</span><span class="err">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">d</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">;</span> <span class="c1">// Error! 'd' is a runtime value, not a type!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>Function</code> constructor</h2>
+
+<p>This type describes <em>any</em> function. Any kind of function may flow into it, and any interface that specifies any kind of function (no matter how specific) may receive it. This type works exactly like the <a href="#the-any-primitive-type"><code>any</code></a> type except that it is restricted to function types.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Function</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{};</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Function</span> <span class="o">=</span> <span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nb">Function</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+
+<span class="c1">// Valid! (`Function` may flow into any function type)</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nb">Function</span> <span class="p">{</span> 
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="p">(</span><span class="nx">str</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Valid!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>mixed</code> primitive type</h2>
+
+<p>This is a special type that represents the supertype of all values. Any other type may flow into a <code>mixed</code> type, but <code>mixed</code> may only flow into other <code>mixed</code> types.</p>
+
+<p>Beware of the difference between <code>mixed</code> and <code>any</code>; <code>mixed</code> is a taint that ensures the type doesn&#39;t flow into a well-typed interface but allows any other type to flow into it. If you wish to flow a <code>mixed</code> variable into a well-typed interface, you must first <a href="dynamic-type-tests.html">refine</a> the type before using it.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">mixed</span> <span class="o">=</span> <span class="s1">'some string'</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">mixed</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">mixed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Valid!</span>
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nx">mixed</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Error! ('mixed' may not flow to any other type!)</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>number</code> primitive type</h2>
+
+<p>This type describes a number in JavaScript.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="s1">'str'</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>Number</code> constructor</h2>
+
+<p>This type describes objects created from JavaScript&#39;s built-in <code>Number</code> constructor. Note that this is distinct from number literal values! (although the methods of <code>Number</code> are also available on the primitive <code>number</code> type as well).</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Number</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Number</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>Object</code> constructor</h2>
+
+<p>This type describes <em>any</em> object. Any kind of object may flow into it, and any interface that specifies any kind of object (no matter how specific) may receive it. This type works exactly like the <a href="#the-any-primitive-type"><code>any</code></a> type except that it is restricted to object types.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Object</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Object</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">();</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nb">Object</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nb">Object</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">e</span><span class="err">:</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Valid! (`Object` may flow into any object type)</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>string</code> primitive type</h2>
+
+<p>This type describes a string in JavaScript.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">'some string'</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>String</code> constructor</h2>
+
+<p>This type describes objects created from JavaScript&#39;s built-in <code>String</code> constructor. Note that this is distinct from string literal values! (although the methods of <code>String</code> are also available on the primitive <code>string</code> type as well).</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">String</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="s1">'hai!'</span><span class="p">);</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">String</span> <span class="o">=</span> <span class="s1">'hai!'</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The <code>void</code> primitive type</h2>
+
+<p>This type describes an <code>undefined</code> value in JavaScript. </p>
+
+<p>Normally you only want to use this type to describe the return type of functions that return nothing. The only values that have type <code>void</code> are <code>undefined</code> and the results of the <code>void()</code> operator in JavaScript. Flow is fairly strict about things that <code>void</code> may flow into.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="k">void</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="k">void</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+</code></pre></div>
+<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+
+<h2>• The object signature type</h2>
+
+<p>This type describes any object values that match the specified interface.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="p">{</span><span class="nl">prop1</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">prop2</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">prop1</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="na">prop2</span><span class="p">:</span> <span class="s1">'asdf'</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">// Type error! Missing a `prop2` property</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="p">{</span><span class="nl">prop1</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">prop2</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">prop1</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">// Type error! `prop2 property types don't match!</span>
+<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="p">{</span><span class="nl">prop1</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">prop2</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">prop1</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="na">prop2</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="c1">// Type error!</span>
+<span class="p">};</span>
+</code></pre></div>
+<p><sub><a href="#built-in-syntactic-types">Back To Top</a></sub></p>
+
+<h2>• The function signature type</h2>
+
+<p>This type describes any function values that match the specified parameters/return signature.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Valid!</span>
+<span class="kd">var</span> <span class="nx">add</span><span class="err">:</span> <span class="p">((</span><span class="nx">num1</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">num2</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Type error! Parameter types don't match!</span>
+<span class="kd">var</span> <span class="nx">badTypeAnnotation</span><span class="err">:</span> <span class="p">((</span><span class="nx">num1</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">num2</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">str1</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">str2</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">str1</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="nx">str2</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div>
+<p><sub><a href="#built-in-syntactic-types">Back To Top</a></sub></p>
+
+<h2>• The callable-object/function-object type</h2>
+
+<p>This type describes function values that might have additional static properties set on them.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Valid!</span>
+<span class="kd">function</span> <span class="nx">getStrProcessor</span><span class="p">(</span><span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="p">{</span> <span class="p">(</span><span class="nx">str</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">processor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="s1">'&lt;&lt;PROCESSED&gt;&gt;'</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="nx">processor</span><span class="p">.</span><span class="nx">token</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">processor</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Type error! Note that the returned function is missing a `token` property</span>
+<span class="kd">function</span> <span class="nx">getStrProcessor</span><span class="p">(</span><span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="p">{</span> <span class="p">(</span><span class="nx">str</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="s1">'&lt;&lt;PROCESSED&gt;&gt;'</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><sub><a href="#built-in-syntactic-types">Back To Top</a></sub></p>
+
+
+    <div class="docs-prevnext">
+      
+        <a href="/docs/coming-soon.html#_">&larr; Prev</a>
+      
+      
+        <a class="right" href="/docs/type-annotations.html#_">Next &rarr;</a>
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Disjoint Unions</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Disjoint Unions" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/blog/2015/07/03/Disjoint-Unions.html">
+    
+    <meta property='og:type' content='article'>
+    <meta property='article:author' content="https://www.facebook.com/chaudhuri.avik">
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          
+            class="active"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  <section>
+    <h3>Recent Posts</h3>
+    <ul>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2016/02/02/Version-0.21.0.html">
+            Version 0.21.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/12/01/Version-0.19.0.html">
+            Version 0.19.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/11/09/Generators.html">
+            Generators
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/10/07/Version-0.17.0.html">
+            Version 0.17.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/22/Version-0.16.0.html">
+            Version 0.16.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/10/Version-0.15.0.html">
+            Version 0.15.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/29/Version-0.14.0.html">
+            Version 0.14.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+             class="active" 
+            href="/blog/2015/07/03/Disjoint-Unions.html">
+            Disjoint Unions
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/03/12/Bounded-Polymorphism.html">
+            Bounded Polymorphism
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/02/20/Flow-Comments.html">
+            Flow Comments
+          </a>
+        </li>
+      
+      <li><a 
+        
+        href="/blog/all.html">All posts ...</a></li>
+    </ul>
+  <section>
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Disjoint Unions
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/_posts/2015-07-03-Disjoint-Unions.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p class="meta">July  3, 2015 by Avik Chaudhuri</p>
+
+    <h3>Announcing Disjoint Unions</h3>
+
+<p>Sometimes programs need to deal with different kinds of data all at once, where the shape of the data can be different based on what kind of data the code is looking at. This kind of programming is so common in functional programming languages that almost all such languages come with a way of:</p>
+
+<ul>
+<li>Specifying such data by a set of disjoint cases, distinguished by “tags”, where each tag is associated with a different “record” of properties. (These descriptions are called “disjoint union” or “variant” types.) </li>
+<li>Doing case analysis on such data, by checking tags and then directly accessing the associated record of properties. (The common way to do such case analysis is by pattern matching.)</li>
+</ul>
+
+<p>Examples of programs that analyze or transform such data range from compilers working with abstract syntax trees, to operations that may return exceptional values,  with much more in between!</p>
+
+<p>As of Flow 0.13.1 it is now possible to program in this style in JavaScript in a type-safe manner. You can define a disjoint union of object types and do case analysis on objects of that type by switching on the value of some common property (called a &quot;sentinel&quot;) in those object types.</p>
+
+<p>Flow&#39;s syntax for disjoint unions looks like:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">type</span> <span class="nx">BinaryTree</span> <span class="o">=</span>
+  <span class="p">{</span> <span class="na">kind</span><span class="p">:</span> <span class="s2">"leaf"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">number</span> <span class="p">}</span> <span class="o">|</span>
+  <span class="p">{</span> <span class="na">kind</span><span class="p">:</span> <span class="s2">"branch"</span><span class="p">,</span> <span class="na">left</span><span class="p">:</span> <span class="nx">BinaryTree</span><span class="p">,</span> <span class="na">right</span><span class="p">:</span> <span class="nx">BinaryTree</span> <span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">sumLeaves</span><span class="p">(</span><span class="nx">tree</span><span class="err">:</span> <span class="nx">BinaryTree</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">tree</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="s2">"leaf"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tree</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sumLeaves</span><span class="p">(</span><span class="nx">tree</span><span class="p">.</span><span class="nx">left</span><span class="p">)</span> <span class="o">+</span> <span class="nx">sumLeaves</span><span class="p">(</span><span class="nx">tree</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<!--truncate-->
+
+<h3>The problem</h3>
+
+<p>Consider the following function that returns different objects depending on the data passed into it:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">type</span> <span class="nx">Result</span> <span class="o">=</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">errorCode</span><span class="p">?:</span> <span class="nx">number</span> <span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">getResult</span><span class="p">(</span><span class="nx">op</span><span class="p">)</span><span class="err">:</span> <span class="nx">Result</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">statusCode</span> <span class="o">=</span> <span class="nx">op</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="s1">'done'</span> <span class="p">};</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="s1">'error'</span><span class="p">,</span> <span class="na">errorCode</span><span class="p">:</span> <span class="nx">statusCode</span> <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The result contains a <code>status</code> property that is either <code>&#39;done&#39;</code> or <code>&#39;error&#39;</code>,
+and an optional <code>errorCode</code> property that holds a numeric status code when the
+<code>status</code> is <code>&#39;error&#39;</code>.</p>
+
+<p>One may now try to write another function that gets the error code from a result:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">getErrorCode</span><span class="p">(</span><span class="nx">result</span><span class="err">:</span> <span class="nx">Result</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s1">'error'</span><span class="err">:</span>
+      <span class="k">return</span> <span class="nx">result</span><span class="p">.</span><span class="nx">errorCode</span><span class="p">;</span>
+    <span class="nl">default</span><span class="p">:</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Unfortunately, this code does not typecheck. The <code>Result</code> type does not precisely 
+capture the relationship between the <code>status</code> property and the <code>errorCode</code> property.
+Namely it doesn&#39;t capture that when the <code>status</code> property is <code>&#39;error&#39;</code>, the <code>errorCode</code>
+property will be present and defined on the object. As a result, Flow thinks that
+<code>result.errorCode</code> in the above function may return <code>undefined</code> instead of <code>number</code>.</p>
+
+<p>Prior to version 0.13.1 there was no way to express this relationship, which meant
+that it was not possible to check the type safety of this simple, familiar idiom!</p>
+
+<h3>The solution</h3>
+
+<p>As of version 0.13.1 it is possible to write a more precise type for <code>Result</code>
+that better captures the intent and helps Flow narrow down the possible shapes
+of an object based on the outcome of a dynamic <code>===</code> check. Now, we can write:</p>
+<div class="highlight"><pre><code class="language-javaScript" data-lang="javaScript">type Result = Done | Error
+type Done = { status: 'done' }
+type Error = { status: 'error', errorCode: number }
+</code></pre></div>
+<p>In other words, we can explicitly list out the possible shapes of results. These
+cases are distinguished by the value of the <code>status</code> property. Note that here
+we use the string literal types <code>&#39;done&#39;</code> and <code>&#39;error&#39;</code>. These match exactly the strings
+<code>&#39;done&#39;</code> and <code>&#39;error&#39;</code>, which means that <code>===</code> checks on those values are enough for
+Flow to narrow down the corresponding type cases. With this additional reasoning, the
+function <code>getErrorCode</code> now typechecks, without needing any changes to the code!</p>
+
+<p>In addition to string literals, Flow also supports number literals as singleton types
+so they can also be used in disjoint unions and case analyses.</p>
+
+<h3>Why we built this</h3>
+
+<p>Disjoint unions are at the heart of several good programming practices pervasive in functional programming languages. Supporting them in Flow means that JavaScript can use these practices in a type-safe manner. For example, disjoint unions can be used to write type-safe <a href="https://facebook.github.io/flux/docs/dispatcher.html">Flux dispatchers</a>. They are also heavily used in a recently released <a href="https://github.com/graphql/graphql-js">reference implementation of GraphQL</a>.</p>
+
+
+    <a 
+  href="https://twitter.com/share" 
+  class="twitter-share-button" 
+  data-url="http://flowtype.org/blog/2015/07/03/Disjoint-Unions.html" 
+  data-text="Flow | Disjoint Unions" 
+  data-hashtags="flowtype">Tweet</a>
+<div 
+  class="fb-like" 
+  data-href="http://flowtype.org/blog/2015/07/03/Disjoint-Unions.html" 
+  data-layout="standard" 
+  data-action="like"
+  data-show-faces="true"
+  data-share="true"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

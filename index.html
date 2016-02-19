@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Flow | A static type checker for JavaScript</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Flow | A static type checker for JavaScript" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+
+  <header class='hero'><div class='width'>
+    <div class='flow-header'></div>
+    <div>
+      <p>A static type checker for JavaScript</p>
+      <div class="buttons-unit">
+        <a href="/docs/getting-started.html#_" class="button">Get Started</a>
+      </div>
+    </div>
+</div></header>
+
+
+
+<section class='content'><div class='width'>
+
+<article>
+
+<h2>What is Flow?</h2>
+
+<p>Flow is a static type checker, designed to find type errors in JavaScript programs:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello, world!'</span><span class="p">);</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
+</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">hello.js:5:5,19: string
+This type is incompatible with
+  hello.js:3:10,15: number
+</code></pre></div>
+<p>Flow also lets you gradually evolve JavaScript code into typed code:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">y</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
+</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">hello.js:3:10,21: number
+This type is incompatible with
+  hello.js:2:37,42: string
+</code></pre></div>
+<p>Typed Flow code easily transforms down to regular JavaScript, so it runs anywhere.</p>
+
+<h2>Why Flow?</h2>
+
+<p>The goal of Flow is to find errors in JavaScript code with little programmer effort. Flow relies heavily on <strong>type inference</strong> to find type errors even when the program has not been annotated - it precisely tracks the types of variables as they flow through the program.</p>
+
+<p>At the same time, Flow is a <strong>gradual</strong> type system. Any parts of your program that are dynamic in nature can easily bypass the type checker, so you can mix statically typed code with dynamic code.</p>
+
+<p>Flow also supports a highly <strong>expressive</strong> type language. Flow types can express much more fine-grained distinctions than traditional type systems. For example, Flow helps you catch errors involving <code>null</code>, unlike most type systems.</p>
+
+<p>We first introduced Flow at the <a href="https://www.facebook.com/atscale2014">@Scale Conference</a> in September:</p>
+
+<iframe frameborder="0" allowfullscreen width="100%" height="320" src="http://www.youtube.com/embed/M8x0bc81smU?start=768&showinfo=0&modestbranding =1&rel=0&theme=light"></iframe>
+
+<h2>Using Flow</h2>
+
+<p>Start with our <a href="/docs/getting-started.html">Getting Started</a> guide to download and try Flow yourself. Flow is open-source, so you can also start with the code on the <a href="https://github.com/facebook/flow">GitHub repo</a>.</p>
+
+<p>Flow is still evolving: it is already used within Facebook, and we want to continue to develop it in the open. We hope it will be useful for other JavaScript projects, so please try it out, join the community and give us feedback!</p>
+
+
+</article>
+
+</div></section>
+
+
+
+
+  <header class='hero'><div class='width'>
+    <div class="buttons-unit">
+      <a href="/docs/getting-started.html#_" class="button">Get Started</a>
+    </div>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+
+  </div></header>
+
+

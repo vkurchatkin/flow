@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Flow, meet Underscore</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Flow, meet Underscore" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/underscore.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          
+          class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Walkthroughs</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/react-example.html#_">
+              A Flux & React demo
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/underscore.html#_" class="active">
+              Flow, meet Underscore
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Coming Soon</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/coming-soon.html#_">
+              Future plans
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/variables.html#_">
+              Variables
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/operators.html#_">
+              Operators
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/primitives.html#_">
+              Primitives
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>CLI</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Flow, meet Underscore
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/02-underscore.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    <h2>Introduction</h2>
+
+<p><a href="http://underscorejs.org/">Underscore</a> is a well-established JavaScript library that provides a number of useful functions for client- and server-side developers alike.</p>
+
+<p>Running Flow on existing code can sometimes be a <a href="existing.html">daunting experience</a> due to the volume of notices and warnings generated. It&#39;s also possible to use <a href="third-party.html">type definitions</a> to make it easy to write typed new code <em>against</em> legacy libraries like Underscore.</p>
+
+<p>But for the purposes of understanding how Flow works, it&#39;s an interesting exercise to see what it takes to be able to type check such a library itself cleanly.</p>
+
+<h2>Assessment</h2>
+
+<p>Firstly, check out a clean Underscore repo:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>git clone https://github.com/jashkenas/underscore.git
+</code></pre></div>
+<p>We need to initialize this repo folder as a Flow project, and start up the server</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span><span class="nb">cd </span>underscore
+<span class="gp">$&gt; </span>flow init
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
+</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">Flow server launched for underscore
+Spawned flow server (child pid=78756)
+Logs will go to underscore.log
+The flow server will be ready in a moment
+No errors!
+</code></pre></div>
+<p>The main target file for this exercise is going to be <code>underscore.js</code> in the root directory. It&#39;s not advisable to try checking the whole repo, since it contains minified versions of the script, JSON files and unit test scripts that we&#39;re not interested in. We&#39;re also going to use weak mode - which assumes that all un-annotated variable are of type <code>any</code> - and which dramatically reduces the number of daunting warnings.</p>
+
+<p>Opt the file in to be weakly checked with the declaration:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3</pre></td><td class="code"><pre><span class="c1">// @flow weak</span>
+<span class="c1">// Underscore.js 1.7.0</span>
+<span class="p">...</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Now when we run Flow again, we get a small page of errors:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">...
+Found 18 errors
+</code></pre></div>
+<p>This seems quite manageable. Let&#39;s look at each of these errors in turn and modify the file as required. (Note that the line numbers in this article may not match your own results as Underscore itself may have been updated since it was written).</p>
+
+<h2>Global objects</h2>
+
+<p>Our first two warnings are early on in the file, because Underscore tries to associate itself with the global object passed in to the self-executing anonymous function.</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:16:28,33: property _
+Property cannot be accessed on global object
+
+underscore.js:51:5,14: assignment of property _
+Property cannot be assigned on global object
+</code></pre></div>
+<p>We can easily mitigate Flow&#39;s warnings about the <code>_</code> property on this object by declaring that the <code>root</code> variable is of type <code>any</code>:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// ...`window` in the browser, or `exports` on the server.</span>
+<span class="kd">var</span> <span class="nx">root</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></code></pre></figure>
+
+<p>The final error message (where Underscore is trying to see if RequireJS is present) fails similarly:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:1475:7,48: identifier define
+Unknown global name
+</code></pre></div>
+<p>We can add a declaration just ahead of the usage to show that this too is of type <code>any</code>:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">declare</span> <span class="kd">var</span> <span class="nx">define</span><span class="err">:</span> <span class="nx">any</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">define</span> <span class="o">===</span> <span class="s1">'function'</span> <span class="o">&amp;&amp;</span> <span class="nx">define</span><span class="p">.</span><span class="nx">amd</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span></code></pre></figure>
+
+<p>We&#39;re three errors down already.</p>
+
+<h2>Instantiation</h2>
+
+<p>Another common type of error reported is this:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:674:36,81: function call
+Callable signature not found in
+  [LIB] core.js:235:1,236:1: statics of TypeError
+</code></pre></div>
+<p>This is simply the instantiation of the TypeError class without the <code>new</code> keyword. We simply update from:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">length</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">TypeError</span><span class="p">(</span><span class="nx">reduceError</span><span class="p">);</span></code></pre></figure>
+
+<p>to</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">length</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="nx">reduceError</span><span class="p">);</span></code></pre></figure>
+
+<h2>Type inference in conditions</h2>
+
+<p>Another type of common issue reported by Flow on Underscore (and indeed many concisely-written JavaScript libraries) is that encountered when a variable is both used as, and assigned in, conditions. In these instances a variable&#39;s type is typically deduced to be either a boolean <code>false</code> or an assigned value of another type. Subsequent code then assumes this hybrid type. For example, in several places in Underscore, Flow encounters code like this:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">_</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">),</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="p">(</span><span class="nx">keys</span> <span class="o">||</span> <span class="nx">obj</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span>
+    <span class="p">...</span>
+  <span class="nx">currentKey</span> <span class="o">=</span> <span class="nx">keys</span> <span class="p">?</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">:</span> <span class="nx">index</span><span class="p">;</span>
+</code></pre></div>
+<p>Here, the variable <code>keys</code> could be a boolean (if the first part of the condition is false), or it could be an array. At run time in the former case, the <code>length</code> variable will then take its value from <code>obj</code> - which is fine - and in the latter case, from <code>keys</code>, which is also fine (since that variable is an array in that case). The later <code>currentKey</code> assignment here is also relying on <code>keys</code> being either falsy or an array.</p>
+
+<p>Unfortunately Flow is not currently able to deduce the type of <code>keys</code> in complex situations like this, and will report that the <code>length</code> condition is not available on booleans.</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:124:19,37: property length
+Property not found in
+  [LIB] core.js:47:1,65: Boolean
+</code></pre></div>
+<p>To resolve this, we have a few options. We can rework this logic to be more explicit, so that Flow can correctly infer the types in play. This is one alternative:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">useKeys</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="nx">keys</span> <span class="o">=</span> <span class="nx">useKeys</span> <span class="p">?</span> <span class="nx">_</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">:</span> <span class="p">[],</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="nx">useKeys</span> <span class="p">?</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span> <span class="p">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="p">...</span>
+  <span class="nx">currentKey</span> <span class="o">=</span> <span class="nx">useKeys</span> <span class="p">?</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">:</span> <span class="nx">index</span><span class="p">;</span>
+</code></pre></div>
+<p>Another is to demonstrate that we are paying more attention to the type at run time by using the type itself in the subsequent ternary conditions:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">_</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">),</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="p">(</span><span class="nx">keys</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span> <span class="p">?</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span> <span class="p">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="p">...</span>
+  <span class="nx">currentKey</span> <span class="o">=</span> <span class="p">(</span><span class="nx">keys</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span> <span class="p">?</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">:</span> <span class="nx">index</span><span class="p">;</span>
+</code></pre></div>
+<p>Suffice to say, when making changes like this, it&#39;s worth checking the unit tests to make sure you&#39;ve updated the behavior correctly.</p>
+
+<p>If rewriting this logic seems like too much work, we can also just tell Flow that we know this local variable can be of multiple types and that it shouldn&#39;t check the validity of any properties accessed on it. To do this, simply annotate the variable&#39;s first declaration to be <code>any</code>:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">keys</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">_</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">),</span>
+</code></pre></div>
+<p>At the time of writing, there are five examples of this pattern in use. Fixing them brings down our error count to just two outstanding issues.</p>
+
+<h2>Final nits</h2>
+
+<p>One of our remaining issues is this simple error:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:851:16,42: call of method apply
+Method cannot be called on possibly null value
+  underscore.js:853:30,33: null
+</code></pre></div>
+<p>This is a simple case of needing to ensure that a function is callable, by turning:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="nx">times</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">memo</span> <span class="o">=</span> <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>into</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="nx">times</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">func</span> <span class="k">instanceof</span> <span class="nb">Function</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">memo</span> <span class="o">=</span> <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Similarly this final error is alerting us to calling a variable that may not represent a function. Underscore&#39;s authors do indeed check as much in this case, but Flow is not able to determine that that is what the <code>_.isFunction</code> is doing.</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:1310:34,51: call of method call
+Method cannot be called on possibly undefined value
+  underscore.js:1306:34,39: undefined
+</code></pre></div>
+<p>To placate Flow, we can be explicit and just turn:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">?</span> <span class="nx">value</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">:</span> <span class="nx">value</span><span class="p">;</span>
+</code></pre></div>
+<p>into</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">return</span> <span class="p">(</span><span class="nx">value</span> <span class="k">instanceof</span> <span class="nb">Function</span><span class="p">)</span> <span class="p">?</span> <span class="nx">value</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">:</span> <span class="nx">value</span><span class="p">;</span>
+</code></pre></div>
+<p>One to go. The final error is:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">underscore.js:677:33,37: identifier bound
+Unknown global name
+</code></pre></div>
+<p>This is actually a known issue with Flow, caused by a returned function being given a name and the innards of the function not recognizing that variable. This takes place in <code>_.bind</code>:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">return</span> <span class="kd">function</span> <span class="nx">bound</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">executeBound</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span> <span class="nx">bound</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)));</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>For now, this is easily fixed by assigning the function to a variable more explicitly:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">bound</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">executeBound</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span> <span class="nx">bound</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)));</span>
+<span class="p">};</span>
+<span class="k">return</span> <span class="nx">bound</span><span class="p">;</span>
+</code></pre></div>
+<p>(The same pattern is used in <code>_.partial</code> too.)</p>
+
+<h2>All done</h2>
+
+<p>With those small changes, we now have a clean bill of health in weak mode:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">Found 0 errors
+</code></pre></div>
+<p>For reference, here is the relatively small diff for all the changes made in this walkthrough.</p>
+<div class="highlight"><pre><code class="language-diff" data-lang="diff"><span class="gu">@@ -0,0 +1 @@
+</span><span class="gi">+// @flow weak
+</span><span class="gu">@@ -12 +13 @@
+</span><span class="gd">-  var root = this;
+</span><span class="gi">+  var root: any = this;
+</span><span class="gu">@@ -120 +121 @@
+</span><span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys: any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gu">@@ -138 +139 @@
+</span><span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys: any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gu">@@ -156 +157 @@
+</span><span class="gd">-    var keys = obj.length !== + obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys: any = obj.length !== + obj.length &amp;&amp; _.keys(obj),
+</span><span class="gu">@@ -203 +204 @@
+</span><span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys: any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gu">@@ -218 +219 @@
+</span><span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys: any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gu">@@ -673 +674 @@
+</span><span class="gd">-    if (!_.isFunction(func)) throw TypeError('Bind must be called on a function');
+</span><span class="gi">+    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
+</span><span class="gu">@@ -849 +850 @@
+</span><span class="gd">-      if (--times &gt; 0) {
+</span><span class="gi">+      if (--times &gt; 0 &amp;&amp; func instanceof Function) {
+</span><span class="gu">@@ -1309 +1310 @@
+</span><span class="gd">-    return _.isFunction(value) ? value.call(object) : value;
+</span><span class="gi">+    return (value instanceof Function) ? value.call(object) : value;
+</span><span class="gu">@@ -1473,0 +1475 @@
+</span><span class="gi">+  declare var define: any;
+</span></code></pre></div>
+<p>Hopefully this article has provided an insight into the sort of things that Flow is checking for, and some of the idioms used in popular JavaScript libraries that Flow finds harder to type check. Good luck!</p>
+
+<h3>Epilogue</h3>
+
+<p>At this point you are probably tempted to remove the <code>weak</code> declaration and start to work on some of the more detailed type issues that Flow asserts with a full type check. It is important to understand though that this will appear a somewhat daunting task until you actually start adding annotations on both the arguments and return types of Underscore&#39;s many functions.</p>
+
+<p>But to give you a hint the meantime, here is another diff that shows how to get the error count down to zero errors after turning off weak mode. You may notice a number of Flow features in use in this diff, including type aliases, function types, object types, union types, tuple types, and generics.</p>
+<div class="highlight"><pre><code class="language-diff" data-lang="diff"><span class="gu">@@ -1,7 +1,11 @@
+</span><span class="gi">+/* @flow */
+</span> //     Underscore.js 1.7.0
+ //     http://underscorejs.org
+ //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp;
+ Editors
+ //     Underscore may be freely distributed under the MIT license.
+<span class="gi">+declare var define: any;
++type FUNCTION = (...args:Array&lt;any&gt;)=&gt;any;
++type PREDICATE = (_:any)=&gt;boolean;
+</span>
+ (function() {
+
+<span class="gu">@@ -9,7 +13,7 @@
+</span>   // --------------
+
+   // Establish the root object, `window` in the browser, or `exports` on the serv
+er.
+<span class="gd">-  var root = this;
+</span><span class="gi">+  var root:any = this;
+</span>
+   // Save the previous value of the `_` variable.
+   var previousUnderscore = root._;
+<span class="gu">@@ -33,10 +37,10 @@
+</span>     nativeBind         = FuncProto.bind;
+
+   // Create a safe reference to the Underscore object for use below.
+<span class="gd">-  var _ = function(obj) {
+</span><span class="gi">+  var _ = function(obj:any):any {
+</span>     if (obj instanceof _) return obj;
+     if (!(this instanceof _)) return new _(obj);
+<span class="gd">-    this._wrapped = obj;
+</span><span class="gi">+        var _this:any = this; _this._wrapped = obj;
+</span>   };
+
+   // Export the Underscore object for **Node.js**, with
+<span class="gu">@@ -57,19 +61,19 @@
+</span>   // Internal function that returns an efficient (for current engines) version
+   // of the passed-in callback, to be repeatedly applied in other Underscore
+   // functions.
+<span class="gd">-  var createCallback = function(func, context, argCount) {
+</span><span class="gi">+  var createCallback = function(func:any, context, argCount?) {
+</span>     if (context === void 0) return func;
+     switch (argCount == null ? 3 : argCount) {
+       case 1: return function(value) {
+         return func.call(context, value);
+       };
+<span class="gd">-      case 2: return function(value, other) {
+</span><span class="gi">+      case 2: return function(value, other?) {
+</span>         return func.call(context, value, other);
+       };
+<span class="gd">-      case 3: return function(value, index, collection) {
+</span><span class="gi">+      case 3: return function(value, index?, collection?) {
+</span>         return func.call(context, value, index, collection);
+       };
+<span class="gd">-      case 4: return function(accumulator, value, index, collection) {
+</span><span class="gi">+      case 4: return function(accumulator, value?, index?, collection?) {
+</span>         return func.call(context, accumulator, value, index, collection);
+       };
+     }
+<span class="gu">@@ -81,7 +85,7 @@
+</span>   // A mostly-internal function to generate callbacks that can be applied
+   // to each element in a collection, returning the desired result — either
+   // identity, an arbitrary callback, a property matcher, or a property accessor.
+<span class="gd">-  _.iteratee = function(value, context, argCount) {
+</span><span class="gi">+  _.iteratee = function(value, context?, argCount?): any {
+</span>     if (value == null) return _.identity;
+     if (_.isFunction(value)) return createCallback(value, context, argCount);
+     if (_.isObject(value)) return _.matches(value);
+<span class="gu">@@ -94,7 +98,7 @@
+</span>   // The cornerstone, an `each` implementation, aka `forEach`.
+   // Handles raw objects in addition to array-likes. Treats all
+   // sparse array-likes as if they were dense.
+<span class="gd">-  _.each = _.forEach = function(obj, iteratee, context) {
+</span><span class="gi">+  _.each = _.forEach = function(obj:any, iteratee:any, context?):any {
+</span>     if (obj == null) return obj;
+     iteratee = createCallback(iteratee, context);
+     var i, length = obj.length;
+<span class="gu">@@ -112,12 +116,12 @@
+</span>   };
+
+   // Return the results of applying the iteratee to each element.
+<span class="gd">-  _.map = _.collect = function(obj, iteratee, context) {
+</span><span class="gi">+  _.map = _.collect = function(obj:Array&lt;any&gt;, iteratee, context?):Array&lt;any&gt; {
+</span>     if (obj == null) return [];
+     iteratee = _.iteratee(iteratee, context);
+<span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys:any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span>         length = (keys || obj).length,
+<span class="gd">-        results = Array(length),
+</span><span class="gi">+        results = new Array(length),
+</span>         currentKey;
+     for (var index = 0; index &lt; length; index++) {
+       currentKey = keys ? keys[index] : index;
+<span class="gu">@@ -130,10 +134,10 @@
+</span>
+   // **Reduce** builds up a single result from a list of values, aka `inject`,
+   // or `foldl`.
+<span class="gd">-  _.reduce = _.foldl = _.inject = function(obj, iteratee, memo, context) {
+</span><span class="gi">+  _.reduce = _.foldl = _.inject = function&lt;T&gt;(obj:?Array&lt;T&gt;, iteratee:(memo:T,v
+</span>alue:T,key:number,obj:Array&lt;T&gt;)=&gt;T, memo:T, context:any):T {
+     if (obj == null) obj = [];
+     iteratee = createCallback(iteratee, context, 4);
+<span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys:any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span>         length = (keys || obj).length,
+         index = 0, currentKey;
+     if (arguments.length &lt; 3) {
+<span class="gu">@@ -148,10 +152,10 @@
+</span>   };
+
+   // The right-associative version of reduce, also known as `foldr`.
+<span class="gd">-  _.reduceRight = _.foldr = function(obj, iteratee, memo, context) {
+</span><span class="gi">+  _.reduceRight = _.foldr = function&lt;T&gt;(obj:?Array&lt;T&gt;, iteratee:(memo:T,value:T
+</span>,key:number,obj:Array&lt;T&gt;)=&gt;T, memo:T, context:any):T {
+     if (obj == null) obj = [];
+     iteratee = createCallback(iteratee, context, 4);
+<span class="gd">-    var keys = obj.length !== + obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys:any = obj.length !== + obj.length &amp;&amp; _.keys(obj),
+</span>         index = (keys || obj).length,
+         currentKey;
+     if (arguments.length &lt; 3) {
+<span class="gu">@@ -166,10 +170,10 @@
+</span>   };
+
+   // Return the first value which passes a truth test. Aliased as `detect`.
+<span class="gd">-  _.find = _.detect = function(obj, predicate, context) {
+</span><span class="gi">+  _.find = _.detect = function&lt;T&gt;(obj:?Array&lt;T&gt;, predicate:PREDICATE, context?)
+</span>:?T {
+     var result;
+     predicate = _.iteratee(predicate, context);
+<span class="gd">-    _.some(obj, function(value, index, list) {
+</span><span class="gi">+    _.some(obj, function(value, index?, list?) {
+</span>       if (predicate(value, index, list)) {
+         result = value;
+         return true;
+<span class="gu">@@ -180,7 +184,7 @@
+</span>
+   // Return all the elements that pass a truth test.
+   // Aliased as `select`.
+<span class="gd">-  _.filter = _.select = function(obj, predicate, context) {
+</span><span class="gi">+  _.filter = _.select = function&lt;T&gt;(obj:?Array&lt;T&gt;, predicate:PREDICATE, context
+</span>?):Array&lt;T&gt; {
+     var results = [];
+     if (obj == null) return results;
+     predicate = _.iteratee(predicate, context);
+<span class="gu">@@ -191,16 +195,16 @@
+</span>   };
+
+   // Return all the elements for which a truth test fails.
+<span class="gd">-  _.reject = function(obj, predicate, context) {
+</span><span class="gi">+  _.reject = function&lt;T&gt;(obj:?Array&lt;T&gt;, predicate:PREDICATE, context?):Array&lt;T&gt;
+</span> {
+     return _.filter(obj, _.negate(_.iteratee(predicate)), context);
+   };
+
+   // Determine whether all of the elements match a truth test.
+   // Aliased as `all`.
+<span class="gd">-  _.every = _.all = function(obj, predicate, context) {
+</span><span class="gi">+  _.every = _.all = function&lt;T&gt;(obj:?Array&lt;T&gt;, predicate:PREDICATE, context?):b
+</span>oolean {
+     if (obj == null) return true;
+     predicate = _.iteratee(predicate, context);
+<span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys:any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span>         length = (keys || obj).length,
+         index, currentKey;
+     for (index = 0; index &lt; length; index++) {
+<span class="gu">@@ -212,10 +216,10 @@
+</span>
+   // Determine if at least one element in the object matches a truth test.
+   // Aliased as `any`.
+<span class="gd">-  _.some = _.any = function(obj, predicate, context) {
+</span><span class="gi">+  _.some = _.any = function&lt;T&gt;(obj:?Array&lt;T&gt;, predicate:PREDICATE, context?):bo
+</span>olean {
+     if (obj == null) return false;
+     predicate = _.iteratee(predicate, context);
+<span class="gd">-    var keys = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span><span class="gi">+    var keys:any = obj.length !== +obj.length &amp;&amp; _.keys(obj),
+</span>         length = (keys || obj).length,
+         index, currentKey;
+     for (index = 0; index &lt; length; index++) {
+<span class="gu">@@ -227,14 +231,14 @@
+</span>
+   // Determine if the array or object contains a given value (using `===`).
+   // Aliased as `include`.
+<span class="gd">-  _.contains = _.include = function(obj, target) {
+</span><span class="gi">+  _.contains = _.include = function(obj, target):boolean {
+</span>     if (obj == null) return false;
+     if (obj.length !== +obj.length) obj = _.values(obj);
+     return _.indexOf(obj, target) &gt;= 0;
+   };
+
+   // Invoke a method (with arguments) on every item in a collection.
+<span class="gd">-  _.invoke = function(obj, method) {
+</span><span class="gi">+  _.invoke = function(obj:Array&lt;any&gt;, method):Array&lt;any&gt; {
+</span>     var args = slice.call(arguments, 2);
+     var isFunc = _.isFunction(method);
+     return _.map(obj, function(value) {
+<span class="gu">@@ -243,24 +247,24 @@
+</span>   };
+
+   // Convenience version of a common use case of `map`: fetching a property.
+<span class="gd">-  _.pluck = function(obj, key) {
+</span><span class="gi">+  _.pluck = function(obj:Array&lt;any&gt;, key):Array&lt;any&gt; {
+</span>     return _.map(obj, _.property(key));
+   };
+
+   // Convenience version of a common use case of `filter`: selecting only objects
+   // containing specific `key:value` pairs.
+<span class="gd">-  _.where = function(obj, attrs) {
+</span><span class="gi">+  _.where = function&lt;T&gt;(obj:Array&lt;T&gt;, attrs):Array&lt;T&gt; {
+</span>     return _.filter(obj, _.matches(attrs));
+   };
+
+   // Convenience version of a common use case of `find`: getting the first object
+   // containing specific `key:value` pairs.
+<span class="gd">-  _.findWhere = function(obj, attrs) {
+</span><span class="gi">+  _.findWhere = function&lt;T&gt;(obj:Array&lt;T&gt;, attrs):?T {
+</span>     return _.find(obj, _.matches(attrs));
+   };
+
+   // Return the maximum element (or element-based computation).
+<span class="gd">-  _.max = function(obj, iteratee, context) {
+</span><span class="gi">+  _.max = function(obj, iteratee:any, context?):any {
+</span>     var result = -Infinity, lastComputed = -Infinity,
+         value, computed;
+     if (iteratee == null &amp;&amp; obj != null) {
+<span class="gu">@@ -300,7 +304,7 @@
+</span>       iteratee = _.iteratee(iteratee, context);
+       _.each(obj, function(value, index, list) {
+         computed = iteratee(value, index, list);
+<span class="gd">-        if (computed &lt; lastComputed || computed === Infinity &amp;&amp; result === Infini
+</span>ty) {
+<span class="gi">+        if ((computed &lt; lastComputed) || computed === Infinity &amp;&amp; result === In
+</span>finity) {
+           result = value;
+           lastComputed = computed;
+         }
+<span class="gu">@@ -311,10 +315,10 @@
+</span>
+   // Shuffle a collection, using the modern version of the
+   // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+<span class="gd">-  _.shuffle = function(obj) {
+</span><span class="gi">+  _.shuffle = function(obj):Array&lt;any&gt; {
+</span>     var set = obj &amp;&amp; obj.length === +obj.length ? obj : _.values(obj);
+     var length = set.length;
+<span class="gd">-    var shuffled = Array(length);
+</span><span class="gi">+    var shuffled = new Array(length);
+</span>     for (var index = 0, rand; index &lt; length; index++) {
+       rand = _.random(0, index);
+       if (rand !== index) shuffled[index] = shuffled[rand];
+<span class="gu">@@ -326,7 +330,7 @@
+</span>   // Sample **n** random values from a collection.
+   // If **n** is not specified, returns a single random element.
+   // The internal `guard` argument allows it to work with `map`.
+<span class="gd">-  _.sample = function(obj, n, guard) {
+</span><span class="gi">+  _.sample = function&lt;T&gt;(obj:Array&lt;T&gt;, n?:number, guard?:boolean):T|Array&lt;T&gt; {
+</span>     if (n == null || guard) {
+       if (obj.length !== +obj.length) obj = _.values(obj);
+       return obj[_.random(obj.length - 1)];
+<span class="gu">@@ -335,7 +339,7 @@
+</span>   };
+
+   // Sort the object's values by a criterion produced by an iteratee.
+<span class="gd">-  _.sortBy = function(obj, iteratee, context) {
+</span><span class="gi">+  _.sortBy = function&lt;T&gt;(obj:Array&lt;T&gt;, iteratee:FUNCTION, context?:any):Array&lt;T
+</span>&gt; {
+     iteratee = _.iteratee(iteratee, context);
+     return _.pluck(_.map(obj, function(value, index, list) {
+       return {
+<span class="gu">@@ -388,7 +392,7 @@
+</span>
+   // Use a comparator function to figure out the smallest index at which
+   // an object should be inserted so as to maintain order. Uses binary search.
+<span class="gd">-  _.sortedIndex = function(array, obj, iteratee, context) {
+</span><span class="gi">+  _.sortedIndex = function(array:Array&lt;any&gt;, obj, iteratee?, context?):number {
+</span>     iteratee = _.iteratee(iteratee, context, 1);
+     var value = iteratee(obj);
+     var low = 0, high = array.length;
+<span class="gu">@@ -400,7 +404,7 @@
+</span>   };
+
+   // Safely create a real, live array from anything iterable.
+<span class="gd">-  _.toArray = function(obj) {
+</span><span class="gi">+  _.toArray = function(obj:any):Array&lt;any&gt; {
+</span>     if (!obj) return [];
+     if (_.isArray(obj)) return slice.call(obj);
+     if (obj.length === +obj.length) return _.map(obj, _.identity);
+<span class="gu">@@ -408,14 +412,14 @@
+</span>   };
+
+   // Return the number of elements in an object.
+<span class="gd">-  _.size = function(obj) {
+</span><span class="gi">+  _.size = function(obj):number {
+</span>     if (obj == null) return 0;
+     return obj.length === +obj.length ? obj.length : _.keys(obj).length;
+   };
+
+   // Split a collection into two arrays: one whose elements all satisfy the given
+   // predicate, and one whose elements all do not satisfy the predicate.
+<span class="gd">-  _.partition = function(obj, predicate, context) {
+</span><span class="gi">+  _.partition = function&lt;T&gt;(obj:Array&lt;T&gt;, predicate:PREDICATE, context?:any):[A
+</span>rray&lt;T&gt;,Array&lt;T&gt;] {
+     predicate = _.iteratee(predicate, context);
+     var pass = [], fail = [];
+     _.each(obj, function(value, key, obj) {
+<span class="gu">@@ -430,7 +434,7 @@
+</span>   // Get the first element of an array. Passing **n** will return the first N
+   // values in the array. Aliased as `head` and `take`. The **guard** check
+   // allows it to work with `_.map`.
+<span class="gd">-  _.first = _.head = _.take = function(array, n, guard) {
+</span><span class="gi">+  _.first = _.head = _.take = function&lt;T&gt;(array:?Array&lt;T&gt;, n?:number, guard?:bo
+</span>olean):?T|Array&lt;T&gt; {
+     if (array == null) return void 0;
+     if (n == null || guard) return array[0];
+     if (n &lt; 0) return [];
+<span class="gu">@@ -441,13 +445,13 @@
+</span>   // the arguments object. Passing **n** will return all the values in
+   // the array, excluding the last N. The **guard** check allows it to work with
+   // `_.map`.
+<span class="gd">-  _.initial = function(array, n, guard) {
+</span><span class="gi">+  _.initial = function(array:Array&lt;any&gt;, n?:number, guard?:boolean):Array&lt;any&gt;
+</span>{
+     return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ?
+1 : n)));
+   };
+
+   // Get the last element of an array. Passing **n** will return the last N
+   // values in the array. The **guard** check allows it to work with `_.map`.
+<span class="gd">-  _.last = function(array, n, guard) {
+</span><span class="gi">+  _.last = function&lt;T&gt;(array:?Array&lt;T&gt;, n?:number, guard?:boolean):?T|Array&lt;T&gt;
+</span>{
+     if (array == null) return void 0;
+     if (n == null || guard) return array[array.length - 1];
+     return slice.call(array, Math.max(array.length - n, 0));
+<span class="gu">@@ -457,17 +461,17 @@
+</span>   // Especially useful on the arguments object. Passing an **n** will return
+   // the rest N values in the array. The **guard**
+   // check allows it to work with `_.map`.
+<span class="gd">-  _.rest = _.tail = _.drop = function(array, n, guard) {
+</span><span class="gi">+  _.rest = _.tail = _.drop = function(array:Array&lt;any&gt;, n?:number, guard?:boole
+</span>an):Array&lt;any&gt; {
+     return slice.call(array, n == null || guard ? 1 : n);
+   };
+
+   // Trim out all falsy values from an array.
+<span class="gd">-  _.compact = function(array) {
+</span><span class="gi">+  _.compact = function&lt;T&gt;(array:Array&lt;T&gt;):Array&lt;T&gt; {
+</span>     return _.filter(array, _.identity);
+   };
+
+   // Internal implementation of a recursive `flatten` function.
+<span class="gd">-  var flatten = function(input, shallow, strict, output) {
+</span><span class="gi">+  var flatten = function(input:Array&lt;any&gt;, shallow:boolean, strict:boolean, out
+</span>put:Array&lt;any&gt;):Array&lt;any&gt; {
+     if (shallow &amp;&amp; _.every(input, _.isArray)) {
+       return concat.apply(output, input);
+     }
+<span class="gu">@@ -485,19 +489,19 @@
+</span>   };
+
+   // Flatten out an array, either recursively (by default), or just one level.
+<span class="gd">-  _.flatten = function(array, shallow) {
+</span><span class="gi">+  _.flatten = function(array:Array&lt;any&gt;, shallow:boolean):Array&lt;any&gt; {
+</span>     return flatten(array, shallow, false, []);
+   };
+
+   // Return a version of the array that does not contain the specified value(s).
+<span class="gd">-  _.without = function(array) {
+</span><span class="gi">+  _.without = function&lt;T&gt;(array:Array&lt;T&gt;):Array&lt;T&gt; {
+</span>     return _.difference(array, slice.call(arguments, 1));
+   };
+
+   // Produce a duplicate-free version of the array. If the array has already
+   // been sorted, you have the option of using a faster algorithm.
+   // Aliased as `unique`.
+<span class="gd">-  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
+</span><span class="gi">+  _.uniq = _.unique = function(array:?Array&lt;any&gt;, isSorted?:boolean, iteratee?:
+</span>boolean, context?):Array&lt;any&gt; {
+     if (array == null) return [];
+     if (!_.isBoolean(isSorted)) {
+       context = iteratee;
+<span class="gu">@@ -527,13 +531,13 @@
+</span>
+   // Produce an array that contains the union: each distinct element from all of
+   // the passed-in arrays.
+<span class="gd">-  _.union = function() {
+</span><span class="gi">+  _.union = function():Array&lt;any&gt; {
+</span>     return _.uniq(flatten(arguments, true, true, []));
+   };
+
+   // Produce an array that contains every item shared between all the
+   // passed-in arrays.
+<span class="gd">-  _.intersection = function(array) {
+</span><span class="gi">+  _.intersection = function(array:?Array&lt;any&gt;):Array&lt;any&gt; {
+</span>     if (array == null) return [];
+     var result = [];
+     var argsLength = arguments.length;
+<span class="gu">@@ -550,7 +554,7 @@
+</span>
+   // Take the difference between one array and a number of other arrays.
+   // Only the elements present in just the first array will remain.
+<span class="gd">-  _.difference = function(array) {
+</span><span class="gi">+  _.difference = function&lt;T&gt;(array:Array&lt;T&gt;):Array&lt;T&gt; {
+</span>     var rest = flatten(slice.call(arguments, 1), true, true, []);
+     return _.filter(array, function(value){
+       return !_.contains(rest, value);
+<span class="gu">@@ -559,10 +563,10 @@
+</span>
+   // Zip together multiple lists into a single array -- elements that share
+   // an index go together.
+<span class="gd">-  _.zip = function(array) {
+</span><span class="gi">+  _.zip = function(array:?Array&lt;any&gt;):Array&lt;any&gt; {
+</span>     if (array == null) return [];
+     var length = _.max(arguments, 'length').length;
+<span class="gd">-    var results = Array(length);
+</span><span class="gi">+    var results = new Array(length);
+</span>     for (var i = 0; i &lt; length; i++) {
+       results[i] = _.pluck(arguments, i);
+     }
+<span class="gu">@@ -589,7 +593,7 @@
+</span>   // or -1 if the item is not included in the array.
+   // If the array is large and already in sort order, pass `true`
+   // for **isSorted** to use binary search.
+<span class="gd">-  _.indexOf = function(array, item, isSorted) {
+</span><span class="gi">+  _.indexOf = function&lt;T&gt;(array:Array&lt;T&gt;, item:T, isSorted?:boolean):number {
+</span>     if (array == null) return -1;
+     var i = 0, length = array.length;
+     if (isSorted) {
+<span class="gu">@@ -604,7 +608,7 @@
+</span>     return -1;
+   };
+
+<span class="gd">-  _.lastIndexOf = function(array, item, from) {
+</span><span class="gi">+  _.lastIndexOf = function&lt;T&gt;(array:Array&lt;T&gt;, item:T, from:number):number {
+</span>     if (array == null) return -1;
+     var idx = array.length;
+     if (typeof from == 'number') {
+<span class="gu">@@ -617,7 +621,7 @@
+</span>   // Generate an integer Array containing an arithmetic progression. A port of
+   // the native Python `range()` function. See
+   // [the Python documentation](http://docs.python.org/library/functions.html#ran
+ge).
+<span class="gd">-  _.range = function(start, stop, step) {
+</span><span class="gi">+  _.range = function(start:number, stop:number, step:number):Array&lt;number&gt; {
+</span>     if (arguments.length &lt;= 1) {
+       stop = start || 0;
+       start = 0;
+<span class="gu">@@ -625,7 +629,7 @@
+</span>     step = step || 1;
+
+     var length = Math.max(Math.ceil((stop - start) / step), 0);
+<span class="gd">-    var range = Array(length);
+</span><span class="gi">+    var range = new Array(length);
+</span>
+     for (var idx = 0; idx &lt; length; idx++, start += step) {
+       range[idx] = start;
+<span class="gu">@@ -643,17 +647,17 @@
+</span>   // Create a function bound to a given object (assigning `this`, and arguments,
+   // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
+   // available.
+<span class="gd">-  _.bind = function(func, context) {
+</span><span class="gi">+  _.bind = function(func, context) {
+</span>     var args, bound;
+     if (nativeBind &amp;&amp; func.bind === nativeBind) return nativeBind.apply(func, sli
+ce.call(arguments, 1));
+     if (!_.isFunction(func)) throw new TypeError('Bind must be called on a functi
+on');
+     args = slice.call(arguments, 2);
+<span class="gd">-    bound = function() {
+-      if (!(this instanceof bound)) return func.apply(context, args.concat(slice.
+</span>call(arguments)));
+<span class="gi">+    bound = function() {
++      if (!(this instanceof bound)) return func.apply(context, args &amp;&amp; args.conca
+</span>t(slice.call(arguments)));
+       Ctor.prototype = func.prototype;
+       var self = new Ctor;
+<span class="gd">-      Ctor.prototype = null;
+-      var result = func.apply(self, args.concat(slice.call(arguments)));
+</span><span class="gi">+      Ctor.prototype = {};
++      var result = func.apply(self, args &amp;&amp; args.concat(slice.call(arguments)));
+</span>       if (_.isObject(result)) return result;
+       return self;
+     };
+<span class="gu">@@ -703,16 +707,16 @@
+</span>
+   // Delays a function for the given number of milliseconds, and then calls
+   // it with the arguments supplied.
+<span class="gd">-  _.delay = function(func, wait) {
+</span><span class="gi">+  _.delay = function(func?:any, wait?=0) {
+</span>     var args = slice.call(arguments, 2);
+     return setTimeout(function(){
+<span class="gd">-      return func.apply(null, args);
+</span><span class="gi">+      return func &amp;&amp; func.apply(null, args);
+</span>     }, wait);
+   };
+
+   // Defers a function, scheduling it to run after the current call stack has
+   // cleared.
+<span class="gd">-  _.defer = function(func) {
+</span><span class="gi">+  _.defer = function(func:any) {
+</span>     return _.delay.apply(_, [func, 1].concat(slice.call(arguments, 1)));
+   };
+
+<span class="gu">@@ -721,7 +725,7 @@
+</span>   // as much as it can, without ever going more than once per `wait` duration;
+   // but if you'd like to disable the execution on the leading edge, pass
+   // `{leading: false}`. To disable execution on the trailing edge, ditto.
+<span class="gd">-  _.throttle = function(func, wait, options) {
+</span><span class="gi">+  _.throttle = function(func, wait:number, options:{ leading: boolean; trailing
+</span>: boolean }) {
+     var context, args, result;
+     var timeout = null;
+     var previous = 0;
+<span class="gu">@@ -755,11 +759,11 @@
+</span>   // be triggered. The function will be called after it stops being called for
+   // N milliseconds. If `immediate` is passed, trigger the function on the
+   // leading edge, instead of the trailing.
+<span class="gd">-  _.debounce = function(func, wait, immediate) {
+-  var timeout, args, context, timestamp, result;
+</span><span class="gi">+  _.debounce = function(func, wait:number, immediate?) {
++  var timeout, args, context, timestamp=0, result;
+</span>
+     var later = function() {
+<span class="gd">-      var last = _.now() - timestamp;
+</span><span class="gi">+      var last:number = _.now() - timestamp;
+</span>
+       if (last &lt; wait &amp;&amp; last &gt; 0) {
+         timeout = setTimeout(later, wait - last);
+<span class="gu">@@ -790,12 +794,12 @@
+</span>   // Returns the first function passed as an argument to the second,
+   // allowing you to adjust arguments, run code before and after, and
+   // conditionally execute the original function.
+<span class="gd">-  _.wrap = function(func, wrapper) {
+</span><span class="gi">+  _.wrap = function(func:FUNCTION, wrapper:FUNCTION):FUNCTION {
+</span>     return _.partial(wrapper, func);
+   };
+
+   // Returns a negated version of the passed-in predicate.
+<span class="gd">-  _.negate = function(predicate) {
+</span><span class="gi">+  _.negate = function(predicate:PREDICATE):PREDICATE {
+</span>     return function() {
+       return !predicate.apply(this, arguments);
+     };
+<span class="gu">@@ -803,7 +807,7 @@
+</span>
+   // Returns a function that is the composition of a list of functions, each
+   // consuming the return value of the function that follows.
+<span class="gd">-  _.compose = function() {
+</span><span class="gi">+  _.compose = function():(_:any)=&gt;any {
+</span>     var args = arguments;
+     var start = args.length - 1;
+     return function() {
+<span class="gu">@@ -815,7 +819,7 @@
+</span>   };
+
+   // Returns a function that will only be executed after being called N times.
+<span class="gd">-  _.after = function(times, func) {
+</span><span class="gi">+  _.after = function(times:number, func:FUNCTION):FUNCTION {
+</span>     return function() {
+       if (--times &lt; 1) {
+         return func.apply(this, arguments);
+<span class="gu">@@ -824,11 +828,11 @@
+</span>   };
+
+   // Returns a function that will only be executed before being called N times.
+<span class="gd">-  _.before = function(times, func) {
+</span><span class="gi">+  _.before = function(times?=0, func?:FUNCTION) {
+</span>     var memo;
+     return function() {
+       if (--times &gt; 0) {
+<span class="gd">-        memo = func.apply(this, arguments);
+</span><span class="gi">+        if (func != null) memo = func.apply(this, arguments);
+</span>       } else {
+         func = null;
+       }
+<span class="gu">@@ -845,7 +849,7 @@
+</span>
+   // Retrieve the names of an object's properties.
+   // Delegates to **ECMAScript 5**'s native `Object.keys`
+<span class="gd">-  _.keys = function(obj) {
+</span><span class="gi">+  _.keys = function(obj:any):Array&lt;string&gt; {
+</span>     if (!_.isObject(obj)) return [];
+     if (nativeKeys) return nativeKeys(obj);
+     var keys = [];
+<span class="gu">@@ -854,10 +858,10 @@
+</span>   };
+
+   // Retrieve the values of an object's properties.
+<span class="gd">-  _.values = function(obj) {
+</span><span class="gi">+  _.values = function&lt;T&gt;(obj:any):Array&lt;T&gt; {
+</span>     var keys = _.keys(obj);
+     var length = keys.length;
+<span class="gd">-    var values = Array(length);
+</span><span class="gi">+    var values = new Array(length);
+</span>     for (var i = 0; i &lt; length; i++) {
+       values[i] = obj[keys[i]];
+     }
+<span class="gu">@@ -865,10 +869,10 @@
+</span>   };
+
+   // Convert an object into a list of `[key, value]` pairs.
+<span class="gd">-  _.pairs = function(obj) {
+</span><span class="gi">+  _.pairs = function&lt;T&gt;(obj:any):Array&lt;[string,T]&gt; {
+</span>     var keys = _.keys(obj);
+     var length = keys.length;
+<span class="gd">-    var pairs = Array(length);
+</span><span class="gi">+    var pairs = new Array(length);
+</span>     for (var i = 0; i &lt; length; i++) {
+       pairs[i] = [keys[i], obj[keys[i]]];
+     }
+<span class="gu">@@ -876,7 +880,7 @@
+</span>   };
+
+   // Invert the keys and values of an object. The values must be serializable.
+<span class="gd">-  _.invert = function(obj) {
+</span><span class="gi">+  _.invert = function(obj) {
+</span>     var result = {};
+     var keys = _.keys(obj);
+     for (var i = 0, length = keys.length; i &lt; length; i++) {
+<span class="gu">@@ -887,7 +891,7 @@
+</span>
+   // Return a sorted list of the function names available on the object.
+   // Aliased as `methods`
+<span class="gd">-  _.functions = _.methods = function(obj) {
+</span><span class="gi">+  _.functions = _.methods = function(obj:any):Array&lt;string&gt; {
+</span>     var names = [];
+     for (var key in obj) {
+       if (_.isFunction(obj[key])) names.push(key);
+<span class="gu">@@ -971,7 +975,7 @@
+</span>   };
+
+   // Internal recursive comparison function for `isEqual`.
+<span class="gd">-  var eq = function(a, b, aStack, bStack) {
+</span><span class="gi">+  var eq = function(a:any, b:any, aStack:Array&lt;any&gt;, bStack:Array&lt;any&gt;):boolean
+</span> {
+     // Identical objects are equal. `0 === -0`, but they aren't identical.
+     // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=h
+armony:egal).
+     if (a === b) return a !== 0 || 1 / a === 1 / b;
+<span class="gu">@@ -1061,13 +1065,13 @@
+</span>   };
+
+   // Perform a deep comparison to check if two objects are equal.
+<span class="gd">-  _.isEqual = function(a, b) {
+</span><span class="gi">+  _.isEqual = function&lt;T,S&gt;(a:T, b:S):boolean {
+</span>     return eq(a, b, [], []);
+   };
+
+   // Is a given array, string, or object empty?
+   // An "empty" object has no enumerable own-properties.
+<span class="gd">-  _.isEmpty = function(obj) {
+</span><span class="gi">+  _.isEmpty = function(obj):boolean {
+</span>     if (obj == null) return true;
+     if (_.isArray(obj) || _.isString(obj) || _.isArguments(obj)) return obj.lengt
+h === 0;
+     for (var key in obj) if (_.has(obj, key)) return false;
+<span class="gu">@@ -1075,72 +1079,73 @@
+</span>   };
+
+   // Is a given value a DOM element?
+<span class="gd">-  _.isElement = function(obj) {
+</span><span class="gi">+  _.isElement = function(obj):boolean {
+</span>     return !!(obj &amp;&amp; obj.nodeType === 1);
+   };
+
+   // Is a given value an array?
+   // Delegates to ECMA5's native Array.isArray
+<span class="gd">-  _.isArray = nativeIsArray || function(obj) {
+</span><span class="gi">+  _.isArray = nativeIsArray || function(obj):boolean {
+</span>     return toString.call(obj) === '[object Array]';
+   };
+
+   // Is a given variable an object?
+<span class="gd">-  _.isObject = function(obj) {
+</span><span class="gi">+  _.isObject = function(obj):boolean {
+</span>     var type = typeof obj;
+     return type === 'function' || type === 'object' &amp;&amp; !!obj;
+   };
+
+   // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate
+, isRegExp.
+   _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'], functio
+n(name) {
+<span class="gd">-    _['is' + name] = function(obj) {
+</span><span class="gi">+    var __:any = _;
++    __['is' + name] = function(obj):boolean {
+</span>       return toString.call(obj) === '[object ' + name + ']';
+     };
+   });
+
+   // Define a fallback version of the method in browsers (ahem, IE), where
+   // there isn't any inspectable "Arguments" type.
+<span class="gd">-  if (!_.isArguments(arguments)) {
+-    _.isArguments = function(obj) {
+</span><span class="gi">+  if (!_.isArguments(arguments)) {
++    _.isArguments = function(obj):boolean {
+</span>       return _.has(obj, 'callee');
+     };
+   }
+
+   // Optimize `isFunction` if appropriate. Work around an IE 11 bug.
+   if (typeof /./ !== 'function') {
+<span class="gd">-    _.isFunction = function(obj) {
+</span><span class="gi">+    _.isFunction = function(obj):boolean {
+</span>       return typeof obj == 'function' || false;
+     };
+   }
+
+   // Is a given object a finite number?
+<span class="gd">-  _.isFinite = function(obj) {
+</span><span class="gi">+  _.isFinite = function(obj):boolean {
+</span>     return isFinite(obj) &amp;&amp; !isNaN(parseFloat(obj));
+   };
+
+   // Is the given value `NaN`? (NaN is the only number which does not equal itsel
+f).
+<span class="gd">-  _.isNaN = function(obj) {
+</span><span class="gi">+  _.isNaN = function(obj):boolean {
+</span>     return _.isNumber(obj) &amp;&amp; obj !== +obj;
+   };
+
+   // Is a given value a boolean?
+<span class="gd">-  _.isBoolean = function(obj) {
+</span><span class="gi">+  _.isBoolean = function(obj):boolean {
+</span>     return obj === true || obj === false || toString.call(obj) === '[object Boole
+an]';
+   };
+
+   // Is a given value equal to null?
+<span class="gd">-  _.isNull = function(obj) {
+</span><span class="gi">+  _.isNull = function(obj):boolean {
+</span>     return obj === null;
+   };
+
+   // Is a given variable undefined?
+<span class="gd">-  _.isUndefined = function(obj) {
+</span><span class="gi">+  _.isUndefined = function(obj):boolean {
+</span>     return obj === void 0;
+   };
+
+   // Shortcut function for checking if an object has a given property directly
+   // on itself (in other words, not on a prototype).
+<span class="gd">-  _.has = function(obj, key) {
+</span><span class="gi">+  _.has = function(obj, key:string):boolean {
+</span>     return obj != null &amp;&amp; hasOwnProperty.call(obj, key);
+   };
+
+<span class="gu">@@ -1190,14 +1195,14 @@
+</span>
+   // Run a function **n** times.
+   _.times = function(n, iteratee, context) {
+<span class="gd">-    var accum = Array(Math.max(0, n));
+</span><span class="gi">+    var accum = new Array(Math.max(0, n));
+</span>     iteratee = createCallback(iteratee, context, 1);
+     for (var i = 0; i &lt; n; i++) accum[i] = iteratee(i);
+     return accum;
+   };
+
+   // Return a random integer between min and max (inclusive).
+<span class="gd">-  _.random = function(min, max) {
+</span><span class="gi">+  _.random = function(min, max?) {
+</span>     if (max == null) {
+       max = min;
+       min = 0;
+<span class="gu">@@ -1206,7 +1211,7 @@
+</span>   };
+
+   // A (possibly faster) way to get the current timestamp as an integer.
+<span class="gd">-  _.now = Date.now || function() {
+</span><span class="gi">+  _.now = Date.now || function():number {
+</span>     return new Date().getTime();
+   };
+
+<span class="gu">@@ -1228,8 +1233,8 @@
+</span>     };
+     // Regexes for identifying a key that needs to be escaped
+     var source = '(?:' + _.keys(map).join('|') + ')';
+<span class="gd">-    var testRegexp = RegExp(source);
+-    var replaceRegexp = RegExp(source, 'g');
+</span><span class="gi">+    var testRegexp = new RegExp(source);
++    var replaceRegexp = new RegExp(source, 'g');
+</span>     return function(string) {
+       string = string == null ? '' : '' + string;
+       return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : s
+tring;
+<span class="gu">@@ -1293,7 +1298,7 @@
+</span>     settings = _.defaults({}, settings, _.templateSettings);
+
+     // Combine delimiters into one regular expression via alternation.
+<span class="gd">-    var matcher = RegExp([
+</span><span class="gi">+    var matcher = new RegExp([
+</span>       (settings.escape || noMatch).source,
+       (settings.interpolate || noMatch).source,
+       (settings.evaluate || noMatch).source
+<span class="gu">@@ -1363,9 +1368,10 @@
+</span>   };
+
+   // Add your own custom functions to the Underscore object.
+<span class="gd">-  _.mixin = function(obj) {
+-    _.each(_.functions(obj), function(name) {
+-      var func = _[name] = obj[name];
+</span><span class="gi">+  _.mixin = function(obj:any) {
++    _.each(_.functions(obj), function(name) {
++      var __:any = _;
++      var func = __[name] = obj[name];
+</span>       _.prototype[name] = function() {
+         var args = [this._wrapped];
+         push.apply(args, arguments);
+<span class="gu">@@ -1379,7 +1385,8 @@
+</span>
+   // Add all mutator Array functions to the wrapper.
+   _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], functi
+on(name) {
+<span class="gd">-    var method = ArrayProto[name];
+</span><span class="gi">+    var _ArrayProto:any = ArrayProto;
++    var method = _ArrayProto[name];
+</span>     _.prototype[name] = function() {
+       var obj = this._wrapped;
+       method.apply(obj, arguments);
+<span class="gu">@@ -1389,8 +1396,9 @@
+</span>   });
+
+   // Add all accessor Array functions to the wrapper.
+<span class="gd">-  _.each(['concat', 'join', 'slice'], function(name) {
+-    var method = ArrayProto[name];
+</span><span class="gi">+  _.each(['concat', 'join', 'slice'], function(name) {
++    var _ArrayProto:any = ArrayProto;
++    var method = _ArrayProto[name];
+</span>     _.prototype[name] = function() {
+       return result.call(this, method.apply(this._wrapped, arguments));
+     };
+</code></pre></div>
+
+    <div class="docs-prevnext">
+      
+        <a href="/docs/react-example.html#_">&larr; Prev</a>
+      
+      
+        <a class="right" href="/docs/coming-soon.html#_">Next &rarr;</a>
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+

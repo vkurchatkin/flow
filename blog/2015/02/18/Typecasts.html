@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Typecasts</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Typecasts" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/blog/2015/02/18/Typecasts.html">
+    
+    <meta property='og:type' content='article'>
+    <meta property='article:author' content="https://www.facebook.com/basil.hosmer">
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+          >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          
+            class="active"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  <section>
+    <h3>Recent Posts</h3>
+    <ul>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2016/02/02/Version-0.21.0.html">
+            Version 0.21.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/12/01/Version-0.19.0.html">
+            Version 0.19.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/11/09/Generators.html">
+            Generators
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/10/07/Version-0.17.0.html">
+            Version 0.17.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/22/Version-0.16.0.html">
+            Version 0.16.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/09/10/Version-0.15.0.html">
+            Version 0.15.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/29/Version-0.14.0.html">
+            Version 0.14.0
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/07/03/Disjoint-Unions.html">
+            Disjoint Unions
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/03/12/Bounded-Polymorphism.html">
+            Bounded Polymorphism
+          </a>
+        </li>
+      
+      
+        <li>
+          <a 
+            
+            href="/blog/2015/02/20/Flow-Comments.html">
+            Flow Comments
+          </a>
+        </li>
+      
+      <li><a 
+        
+        href="/blog/all.html">All posts ...</a></li>
+    </ul>
+  <section>
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Typecasts
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/_posts/2015-02-18-Typecasts.md" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p class="meta">February 18, 2015 by Basil Hosmer</p>
+
+    <h3>Announcing Typecasts</h3>
+
+<p>As of version 0.3.0, Flow supports typecast expression.</p>
+
+<p>A typecast expression is a simple way to type-annotate any JavaScript expression. Here are some examples of typecasts:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">(1 + 1 : number);
+var a = { name: (null: ?string) };
+([1, 'a', true]: Array&lt;mixed&gt;).map(fn);
+</code></pre></div>
+<p>For any JavaScript expression <code>&lt;expr&gt;</code> and any Flow type <code>&lt;type&gt;</code>, you can write</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">(&lt;expr&gt; : &lt;type&gt;)
+</code></pre></div>
+<p><strong>Note:</strong> the parentheses are necessary.</p>
+
+<!--truncate-->
+
+<h3>How Typecasts Work</h3>
+
+<p>To evaluate a typecast expression, Flow will first check that <code>&lt;expr&gt;</code> is a <code>&lt;type&gt;</code>. </p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">(1+1: number); // this is fine
+(1+1: string); // but this is is an error
+</code></pre></div>
+<p>Second, Flow will infer that the typecast expression <code>(&lt;expr&gt;: &lt;type&gt;)</code> has the type <code>&lt;type&gt;</code>. </p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">[(0: ?number)]; // Flow will infer the type Array&lt;?number&gt;
+[0];            // Without the typecast, Flow infers the type Array&lt;number&gt;
+</code></pre></div>
+<h3>Safety</h3>
+
+<p>Typecasts obey the same rules as other type annotations, so they provide the same safety guarantees. This means they are safe unless you explicitly use the <code>any</code> type to defeat Flow&#39;s typechecking. Here are examples of upcasting (which is allowed), downcasting (which is forbidden), and using <code>any</code>.</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">class Base {}
+class Child extends Base {}
+var child: Child = new Child();
+
+// Upcast from Child to Base, a more general type: OK
+var base: Base = new Child(); 
+
+// Upcast from Child to Base, a more general type: OK
+(child: Base); 
+
+// Downcast from Base to Child: unsafe, ERROR
+(base: Child); 
+
+// Upcast base to any then downcast any to Child.
+// Unsafe downcasting from any is allowed: OK
+((base: any): Child); 
+</code></pre></div>
+<h3>More examples</h3>
+
+<p>Typecasts are particularly useful to check assumptions and help Flow infer the types you intend. Here are some examples:</p>
+<div class="highlight"><pre><code class="language-JavaScript" data-lang="JavaScript">(x: number) // Make Flow check that x is a number
+(0: ?number) // Tells Flow that this expression is actually nullable.
+(null: ?number) // Tells Flow that this expression is a nullable number.
+</code></pre></div>
+<h3>Transformations</h3>
+
+<p>Like type annotations and other Flow features, typecasts need to be transformed away before the code can be run. The transforms will be available in react-tools <code>0.13.0</code> when it is published soon, but for now they&#39;re available in <code>0.13.0-beta.2</code>, which you can install with </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install react-tools@0.13.0-beta.2
+</code></pre></div>
+
+    <a 
+  href="https://twitter.com/share" 
+  class="twitter-share-button" 
+  data-url="http://flowtype.org/blog/2015/02/18/Typecasts.html" 
+  data-text="Flow | Typecasts" 
+  data-hashtags="flowtype">Tweet</a>
+<div 
+  class="fb-like" 
+  data-href="http://flowtype.org/blog/2015/02/18/Typecasts.html" 
+  data-layout="standard" 
+  data-action="like"
+  data-show-faces="true"
+  data-share="true"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+
