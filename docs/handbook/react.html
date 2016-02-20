@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | React</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="React" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/handbook/react.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49208336-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+           class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Walkthroughs</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/react-example.html#_">
+              A Flux & React demo
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/underscore.html#_">
+              Flow, meet Underscore
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Coming Soon</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/coming-soon.html#_">
+              Future plans
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/variables.html#_">
+              Variables
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/operators.html#_">
+              Operators
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/primitives.html#_">
+              Primitives
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>CLI</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      React
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/handbook-react.doc.js" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    
+
+
+<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">React</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">"react"</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre>
+
+<p>React applications are composed of nested components. As React-based
+applications grow, these component trees and the dependencies between them
+become increasingly complex.</p>
+
+<p>Flow&#39;s static analysis makes building large Web apps with React safe by
+tracking the types of props and state. Flow understands which props are
+required and also supports default props.</p>
+
+<p>Currently, Flow supports components defined using the <code>React.createClass</code>
+factory method and those defined using JavaScript classes inheriting from
+<code>React.Component</code>.</p>
+
+<p>Support for stateless functional components is coming soon.</p>
+
+<h2>Defining components with the <code>createClass</code> factory</h2>
+
+<h3>PropTypes</h3>
+
+<p>React ships with PropTypes, which verify the props provided to a component.
+Unlike the static analysis performed by Flow, PropTypes are only checked at
+runtime. If your testing doesn&#39;t trigger every code path that provides props
+to a component, you might not notice a type error in your program.</p>
+
+<p>Flow has built-in support for PropTypes. When Flow sees a <code>createClass</code>
+factory that specifies PropTypes, it is able to statically verify that all
+elements are constructed using valid props.</p>
+
+
+<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">Greeter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+  <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_IDENTIFIER">propTypes</span></span><span class="normal T_COLON">:</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">name</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">PropTypes</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">string</span></span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">isRequired</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">p</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">Hello, </span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">name</span><span class="normal T_RCURLY">}</span><span class="jsxChild T_JSX_TEXT">!</span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">p</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+<span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+
+<span class="error"data-error-id="E1" data-message-id="M1003"><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// Missing `name`</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// `name` should be a string</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"World"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// "Hello, World!"</span></pre>
+
+<h3>Default Props</h3>
+
+<p>Flow understands when a default value is specified via <code>getDefaultProps</code> and
+will not error when the prop is not provided.</p>
+
+<p>Note that it&#39;s still a good idea to specify <code>isRequired</code>, even when a default
+value is provided, to protect against <code>null</code> prop values. React will only use
+a default value if the prop value is <code>undefined</code>.</p>
+
+
+<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">DefaultGreeter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">propTypes</span><span class="normal T_COLON">:</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">name</span><span class="normal T_COLON">:</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">PropTypes</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">string</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">isRequired</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">getDefaultProps</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">name</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E3" data-message-id="M3003"><span class="normal T_STRING">"World"</span></span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">p</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">Hello, </span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">name</span><span class="normal T_RCURLY">}</span><span class="jsxChild T_JSX_TEXT">!</span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">p</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+<span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// "Hello, World!"</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// `name` should still be a string</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"Flow"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// "Hello, Flow!"</span></pre>
+
+<h3>State</h3>
+
+<p>Flow ensures that state reads and writes are consistent with the object
+returned from <code>getInitialState</code>.</p>
+
+
+<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">Counter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">getInitialState</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="error"data-error-id="E5" data-message-id="M5003"><span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">value</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E4" data-message-id="M4003"><span class="normal T_NUMBER">0</span></span><span class="normal T_COMMA">,</span>
+    <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span></span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">increment</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">value</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">value</span> <span class="normal T_PLUS">+</span> <span class="normal T_STRING">"oops!"</span></span><span class="normal T_COMMA">,</span>
+    <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">decrement</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="error"data-error-id="E5" data-message-id="M5001"><span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">valu</span><span class="normal T_COLON">:</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">value</span> <span class="normal T_MINUS">-</span> <span class="normal T_NUMBER">1</span><span class="normal T_COMMA">,</span>
+    <span class="normal T_RCURLY">}</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_LPAREN">(</span>
+      <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">div</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">
+        </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">button</span> <span class="jsxTag T_JSX_IDENTIFIER">onClick</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">increment</span><span class="normal T_RCURLY">}</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">+</span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">button</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">
+        </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">input</span> <span class="jsxTag T_JSX_IDENTIFIER">type</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"text"</span> <span class="jsxTag T_JSX_IDENTIFIER">size</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"2"</span> <span class="jsxTag T_JSX_IDENTIFIER">value</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">value</span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">
+        </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">button</span> <span class="jsxTag T_JSX_IDENTIFIER">onClick</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">decrement</span><span class="normal T_RCURLY">}</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">-</span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">button</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">
+      </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">div</span><span class="jsxTag T_GREATER_THAN">></span>
+    <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
+<span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre>
+
+<h2>Defining components as <code>React.Component</code> subclasses</h2>
+
+<p>While PropTypes are great, they are quite limited. For example, it&#39;s possible
+to specify that a prop is some kind of function, but not what parameters that
+function accepts or what kind of value it might return.</p>
+
+<p>Flow has a much richer type system which is able to express those constraints
+and more. With class-based components, you can specify the your components&#39;
+props, default props, and state using Flow&#39;s annotation syntax.</p>
+
+
+<pre class="code"><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Button</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">Component</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">props</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">title</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span>
+    <span class="normal T_IDENTIFIER">visited</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_COMMA">,</span>
+    <span class="normal T_IDENTIFIER">onClick</span><span class="type T_COLON">:</span> <span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span> <span class="type T_ARROW">=></span> <span class="type T_VOID_TYPE">void</span><span class="type T_COMMA">,</span>
+  <span class="type T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+
+  <span class="normal T_IDENTIFIER">state</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">display</span><span class="type T_COLON">:</span> <span class="type T_STRING">'static'</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING">'hover'</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING">'active'</span><span class="type T_SEMICOLON">;</span>
+  <span class="type T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+
+  <span class="error"data-error-id="E6" data-message-id="M6001"><span class="normal T_STATIC">static</span> <span class="normal T_IDENTIFIER">defaultProps</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">visited</span><span class="normal T_COLON">:</span> <span class="normal T_FALSE">false</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span></span>
+
+  <span class="error"data-error-id="E7" data-message-id="M7001"><span class="normal T_IDENTIFIER">onMouseEnter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=></span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">display</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">'hover'</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></span>
+
+  <span class="error"data-error-id="E8" data-message-id="M8001"><span class="normal T_IDENTIFIER">onMouseLeave</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=></span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">display</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">'static'</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></span>
+
+  <span class="error"data-error-id="E9" data-message-id="M9001"><span class="normal T_IDENTIFIER">onMouseDown</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=></span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">display</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">'active'</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></span>
+
+  <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_SUPER">super</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">display</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">'static'</span><span class="normal T_COMMA">,</span>
+    <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+
+  <span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">className</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_STRING">'button '</span> <span class="normal T_PLUS">+</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">display</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">visited</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">className</span> <span class="normal T_PLUS_ASSIGN">+=</span> <span class="normal T_STRING">' visited'</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span>
+
+    <span class="normal T_RETURN">return</span> <span class="normal T_LPAREN">(</span>
+      <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">div</span> <span class="jsxTag T_JSX_IDENTIFIER">className</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">className</span><span class="normal T_RCURLY">}</span>
+        <span class="jsxTag T_JSX_IDENTIFIER">onMouseEnter</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">onMouseEnter</span><span class="normal T_RCURLY">}</span>
+        <span class="jsxTag T_JSX_IDENTIFIER">onMouseLeave</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">onMouseLeave</span><span class="normal T_RCURLY">}</span>
+        <span class="jsxTag T_JSX_IDENTIFIER">onMouseDown</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">onMouseDown</span><span class="normal T_RCURLY">}</span>
+        <span class="jsxTag T_JSX_IDENTIFIER">onClick</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">onClick</span><span class="normal T_RCURLY">}</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">
+        </span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">title</span><span class="normal T_RCURLY">}</span><span class="jsxChild T_JSX_TEXT">
+      </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">div</span><span class="jsxTag T_GREATER_THAN">></span>
+    <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">renderButton</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">container</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">HTMLElement</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">visited</span><span class="normal T_PLING">?</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">element</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span>
+    <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Button</span>
+      <span class="jsxTag T_JSX_IDENTIFIER">title</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"Click me!"</span>
+      <span class="jsxTag T_JSX_IDENTIFIER">visited</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">visited</span><span class="normal T_RCURLY">}</span>
+      <span class="jsxTag T_JSX_IDENTIFIER">onClick</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=></span> <span class="normal T_LCURLY">{</span>
+        <span class="normal T_IDENTIFIER">renderButton</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">container</span><span class="normal T_COMMA">,</span> <span class="normal T_TRUE">true</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+      <span class="normal T_RCURLY">}</span><span class="normal T_RCURLY">}</span>
+    <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span>
+  <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">element</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">container</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span></pre>
+
+<h2>Higher-order components</h2>
+
+
+<pre class="code"><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Props</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_CLASS">class</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReactClass</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="type T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">config</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Promise</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="type T_COMMA">,</span>
+<span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
+
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">State</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">config</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_IDENTIFIER">Config</span><span class="type T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">loading</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_COMMA">,</span>
+<span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
+
+<span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">HOC</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">Component</span><span class="type T_LESS_THAN"><</span><span class="type T_VOID_TYPE">void</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">Props</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">State</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="type T_GREATER_THAN">></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">state</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">State</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span>
+
+  <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_SUPER">super</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">config</span><span class="normal T_COLON">:</span> <span class="normal T_NULL">null</span><span class="normal T_COMMA">,</span>
+      <span class="normal T_IDENTIFIER">loading</span><span class="normal T_COLON">:</span> <span class="normal T_FALSE">false</span><span class="normal T_COMMA">,</span>
+    <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+
+  <span class="normal T_IDENTIFIER">load</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">loading</span><span class="normal T_COLON">:</span> <span class="normal T_TRUE">true</span><span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">config</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">then</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">config</span> <span class="normal T_ARROW">=></span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">setState</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+      <span class="normal T_IDENTIFIER">loading</span><span class="normal T_COLON">:</span> <span class="normal T_FALSE">false</span><span class="normal T_COMMA">,</span>
+      <span class="normal T_IDENTIFIER">config</span>
+    <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+
+  <span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">config</span> <span class="normal T_EQUAL">==</span> <span class="normal T_NULL">null</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+      <span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">label</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">loading</span> <span class="normal T_PLING">?</span> <span class="normal T_STRING">"Loading..."</span> <span class="normal T_COLON">:</span> <span class="normal T_STRING">"Load"</span><span class="normal T_SEMICOLON">;</span>
+      <span class="normal T_RETURN">return</span> <span class="normal T_LPAREN">(</span>
+        <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">button</span> <span class="jsxTag T_JSX_IDENTIFIER">disabled</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">loading</span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_JSX_IDENTIFIER">onClick</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">load</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bind</span><span class="normal T_LPAREN">(</span><span class="normal T_THIS">this</span><span class="normal T_RPAREN">)</span><span class="normal T_RCURLY">}</span><span class="jsxTag T_GREATER_THAN">></span><span class="jsxChild T_JSX_TEXT">
+          </span><span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">label</span><span class="normal T_RCURLY">}</span><span class="jsxChild T_JSX_TEXT">
+        </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">button</span><span class="jsxTag T_GREATER_THAN">></span>
+      <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+      <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createElement</span><span class="normal T_LPAREN">(</span>
+        <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">props</span><span class="normal T_PERIOD">.</span><span class="normal T_CLASS">class</span><span class="normal T_COMMA">,</span>
+        <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">state</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">config</span><span class="normal T_COMMA">,</span>
+      <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
+<span class="normal T_EOF"></span></pre><script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"property `name`","start":{"line":42,"column":3,"offset":1360},"end":{"line":42,"column":12,"offset":1369}},{"id":"M1002","description":"Property not found in"},{"id":"M1003","description":"props of React element `Greeter`","start":{"line":50,"column":1,"offset":1491},"end":{"line":50,"column":12,"offset":1502}}]},{"id":"E2","messages":[{"id":"M2001","description":"null","start":{"line":51,"column":16,"offset":1537},"end":{"line":51,"column":20,"offset":1541}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":43,"column":11,"offset":1383},"end":{"line":43,"column":33,"offset":1405}}]},{"id":"E3","messages":[{"id":"M3001","description":"null","start":{"line":78,"column":23,"offset":2282},"end":{"line":78,"column":27,"offset":2286}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"string","start":{"line":70,"column":19,"offset":2138},"end":{"line":70,"column":26,"offset":2145}}]},{"id":"E4","messages":[{"id":"M4001","description":"string","start":{"line":96,"column":14,"offset":2655},"end":{"line":96,"column":40,"offset":2681}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"number","start":{"line":91,"column":14,"offset":2591},"end":{"line":91,"column":15,"offset":2592}}]},{"id":"E5","messages":[{"id":"M5001","description":"property `valu` of object literal","start":{"line":100,"column":19,"offset":2730},"end":{"line":102,"column":6,"offset":2771}},{"id":"M5002","description":"Property not found in"},{"id":"M5003","description":"object literal","start":{"line":89,"column":21,"offset":2563},"end":{"line":93,"column":4,"offset":2604}}]},{"id":"E6","messages":[{"id":"M6001","description":"Experimental class static field usage","start":{"line":138,"column":3,"offset":3708},"end":{"line":140,"column":5,"offset":3756}},{"id":"M6002","description":"Class static fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_static_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E7","messages":[{"id":"M7001","description":"Experimental class instance field usage","start":{"line":142,"column":3,"offset":3760},"end":{"line":144,"column":6,"offset":3824}},{"id":"M7002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E8","messages":[{"id":"M8001","description":"Experimental class instance field usage","start":{"line":146,"column":3,"offset":3828},"end":{"line":148,"column":6,"offset":3893}},{"id":"M8002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E9","messages":[{"id":"M9001","description":"Experimental class instance field usage","start":{"line":150,"column":3,"offset":3897},"end":{"line":152,"column":6,"offset":3961}},{"id":"M9002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]}])</script>
+
+    <div class="docs-prevnext">
+      
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-387204-12', 'facebook.github.io');
+  ga('send', 'pageview');
+
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+</body>
+</html>
+
