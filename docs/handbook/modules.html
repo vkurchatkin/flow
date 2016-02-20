@@ -2,18 +2,18 @@
 <html prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset='utf-8'>
-    <title>Flow | Running Flow on existing code</title>
+    <title>Flow | Modules</title>
     <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
     <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
     <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
     <link rel='shortcut icon' href='/static/favicon.png'>
     <meta name='viewport' content='width=480'>
-    <meta property="og:title" content="Running Flow on existing code" />
+    <meta property="og:title" content="Modules" />
     <meta property="og:site_name" content="flowtype">
     <meta property='og:description' content='Flow is a static type checker for
     JavaScript.'>
     <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
-    <meta property='og:url' content="http://flowtype.org/docs/existing.html">
+    <meta property='og:url' content="http://flowtype.org/docs/handbook/modules.html">
     
     <meta property='og:type' content='website'>
     
@@ -101,7 +101,7 @@
           </li>
         
           <li>
-            <a href="/docs/existing.html#_" class="active">
+            <a href="/docs/existing.html#_">
               Running Flow on existing code
             </a>
             
@@ -311,59 +311,71 @@
 
 <article class='withtoc'>
     <h1>
-      Running Flow on existing code
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/02-existing.md" target="_blank">Edit on GitHub</a>
+      Modules
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/gh-pages/docs/handbook-modules.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <h2>A word of warning</h2>
+    
 
-<p>Making previously-untyped code typecheck with Flow may take some time and work - and sometimes it may not be worth the effort in the short term. Flow supports <em>interface files</em> so you can use libraries in a typed way without having to run Flow on them at all. If your project just depends on third party libraries, check out our <a href="third-party.html">guide</a> on using Flow with external dependencies and consider using an interface file for the libraries. </p>
 
-<p>Why is typechecking existing code so hard? Libraries not written with types in mind often contain complex, highly dynamic code that confuses analysers such as Flow. The code may also have been written in a style that Flow deliberately chooses not to support in order to give the programmer more help. Some typical examples are:</p>
+<p>A JavaScript project is usually composed of encapsulated &quot;modules,&quot; which can
+interact with each other only via explicit &quot;exports&quot; and &quot;imports.&quot; Such a
+module system needs two mechanisms to work: (1) a syntax for expressing
+exports and imports of modules; (2) an algorithm to resolve module names to
+files that contain their code.</p>
 
-<ul>
-<li>Operations on primitive values: While JavaScript allows operations such as <code>true + 3</code>, Flow considers it a type error. This is by design, and is done to provide the programmer with more safety. While that&#39;s easily avoided for new code, it can sometimes be a lot of effort to eliminate such patterns from existing code.</li>
-<li>Nullability: Flow protects you against accessing properties on <code>null</code> by tracking null or undefined values throughout the program. In large existing codebases, though, this can require inserting some extra null checks in places where a value appears like it may be null, but actually isn&#39;t at runtime.</li>
-</ul>
 
-<p>It is typically a much larger effort, and requires much more programmer annotation, to get such code to typecheck. On the other hand, if you own a library and would like to benefit from Flow typechecking within the library itself, this guide is for you.</p>
+<p>For (1), Flow supports the standard ES6 module export/import syntax, as well
+as the popular CommonJS module export/import syntax. For (2), Flow supports
+the popular Node.js module resolution algorithm. In other words, you most
+probably don&#39;t have to learn or switch to a new module system just to
+typecheck your JavaScript project with Flow.</p>
 
-<h2>Weak mode</h2>
 
-<p>Flow has a special mode, known as <em>weak mode</em>, to get started with complex library code without having to pay the full cost up front. The difference between weak mode and regular mode is how Flow deals with missing type annotations. In regular mode Flow will infer types for all missing annotations, and produce errors whenever it detects a mismatch. In weak mode, Flow will do much less type inference. It will still infer types within functions, but will otherwise treat unannotated variables as having the <a href="base-types.html#any"><code>any</code></a> type - meaning no typechecking happens on them.</p>
+<p>In addition, Flow supports module &quot;declarations&quot; that can be used in lieu of
+actual code for typechecking other parts of a project that depend on them.
+Usually, modules are declared when we don&#39;t want to typecheck the code itself,
+or the code is not available for typechecking.</p>
 
-<p>A good first step towards typechecking existing library code is to use weak mode, rather than regular mode. Simply change the header declaration in the file you want to typecheck:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="cm">/* @flow weak */</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<h2>ES6 module export/import syntax</h2>
 
-<p>Weak mode can still point out type problems, and likely will, but there will be far fewer and they will be easier to fix. This should give you some benefit straight away without too much work. The typical errors you are likely to run into are:</p>
+<p>TODO: link</p>
 
-<ul>
-<li>Potentially <code>null</code> or <code>undefined</code> values, easily fixed by adding conditional checks.</li>
-<li>Primitive type issues, like <code>true + 3</code>. Fixing these requires more knowledge of the code but is usually a small, local fix.</li>
-<li>In cases where Flow just doesn&#39;t understand the code as written, <a href="/blog/2015/02/18/Typecasts.html">explicitly annotating values with <code>any</code></a> can help the typechecker.</li>
-</ul>
 
-<p>Weak mode typically produces a manageable number of errors, so you can get down to zero errors in weak mode with moderate effort.</p>
+<h2>CommonJS module export/import syntax</h2>
 
-<h2>Next steps</h2>
+<p>TODO: link</p>
 
-<p>Once your code typechecks with Flow&#39;s weak mode, you can start adding type annotations incrementally. Each type annotation you add will allow Flow to validate more code, and you can gradually increase Flow&#39;s coverage of your code.</p>
 
-<p>Once your code has more type annotations, you can consider switching it over to regular flow mode by switching the comment at the top of the file to</p>
+<h2>Node.js module resolution algorithm</h2>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="cm">/* @flow */</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>TODO: link</p>
 
+
+<h2>Module declarations</h2>
+
+<p>TODO: syntax, precedence rules, link to information on general declarations
+(e.g., <code>.flowconfig</code> setup)</p>
+
+
+<h2>Module declarations</h2>
+
+<p>TODO: declare module syntax, .js.flow, precedence rules, link to information
+on general declarations (e.g., <code>.flowconfig</code> setup),</p>
+
+
+<h2>Missing annotations</h2>
+
+<p>TODO: examples</p>
+
+
+<pre class="code"><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">example</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RCURLY">}</span>
+<span class="normal T_EOF"></span></pre><script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([])</script>
 
     <div class="docs-prevnext">
       
-        <a href="/docs/new-project.html#_">&larr; Prev</a>
-      
-      
-        <a class="right" href="/docs/third-party.html#_">Next &rarr;</a>
       
     </div>
 
