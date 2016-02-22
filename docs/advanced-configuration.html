@@ -331,29 +331,77 @@ used to customize what files <code>flow</code> accesses and what files it ignore
 <h3><code>[include]</code></h3>
 
 <p>The <code>[include]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the 
-specified files or directories when type checking your code.</p>
+specified files or directories when type checking your code. Including a
+directory includes all the files under that directory. Each line in the
+include section is a path to include. These paths can be relative to the root
+directory or absolute, and support both single and double star wildcards.</p>
+
+<p>The root directory (where your <code>.flowconfig</code> lives) is automatically included.</p>
+
+<p>For example, if <code>/path/to/root/.flowconfig</code> contains the following <code>[include]</code>
+section:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[include]
+../externalFile.js
+../externalDir/
+../otherProject/*.js
+../otherProject/**/coolStuff/
+</code></pre></div>
+<p>then when Flow checks the project in <code>/path/to/root</code>, it will read and watch</p>
+
+<ol>
+<li><code>/path/to/root/</code> (automatically included)</li>
+<li><code>/path/to/externalFile.js</code></li>
+<li><code>/path/to/externalDir/</code></li>
+<li>Any file in <code>/path/to/otherProject/</code> that ends in <code>.js</code></li>
+<li>Any directory under <code>/path/to/otherProject</code> named <code>coolStuff/</code></li>
+</ol>
 
 <h3><code>[ignore]</code></h3>
 
-<p>Conversely, the <code>[ignore]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to ignore files matching the specified regular expressions when type checking your code.</p>
+<p>The <code>[ignore]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to ignore files
+matching the specified regular expressions when type checking your code. By
+default, nothing is ignored.</p>
 
-<blockquote>
-<p>WARNING</p>
+<p>Things to keep in mind:</p>
 
-<p>The specified regular expressions in the [ignore] section apply to absolute paths, 
-so make sure you use repeated wildcards <code>.*</code> at the beginning if you&#39;re specifying relative paths. 
-Also, relative paths that begin with <code>.</code> or <code>..</code> won&#39;t work, since the regular expression parser
-would confuse them with wildcards.</p>
-</blockquote>
+<ol>
+<li>These are OCaml regular expressions.</li>
+<li>These regular expressions match against absolute paths. They probably should
+start with <code>.*</code></li>
+<li>Ignores are processed AFTER includes. If you include and ignore a file it
+will be ignored.</li>
+</ol>
+
+<p>An example <code>[ignore]</code> section might look like</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[ignore]
+.*/__tests__/.*
+.*/src/\(foo\|bar\)/.*
+.*\.ignore\.js
+</code></pre></div>
+<p>This <code>[ignore]</code> section will ignore</p>
+
+<ol>
+<li>Any file or directory under a directory named <code>__tests__</code></li>
+<li>Any file or directory under <code>.*/src/foo</code> or under <code>.*/src/bar</code></li>
+<li>Any file that ends with the extension `.ignore.js</li>
+</ol>
 
 <h3><code>[libs]</code></h3>
 
-<p>The <code>[libs]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the 
-specified <a href="http://flowtype.org/docs/declarations.html">declarations</a> when type checking your code. Multiple libraries can be specified.</p>
+<p>The <code>[libs]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the
+specified <a href="declarations.html">declarations</a> when type
+checking your code. Multiple libraries can be specified. By default, no
+additional libraries are included.</p>
+
+<p>Each line in the <code>[libs]</code> section is a path to the lib file or lib directory
+which you would like to include. These paths can be relative to the root
+directory or absolute.</p>
 
 <h3><code>[options]</code></h3>
 
-<p>The <code>[options]</code> heading in a <code>.flowconfig</code> file can contain several key-value pairs:</p>
+<p>The <code>[options]</code> heading in a <code>.flowconfig</code> file can contain several key-value
+pairs. Any options that are omitted will use their default values. Some options
+can be overridden with command line flags.</p>
 
 <ul>
 <li><code>log.file</code> (string): the path to the log file (defaults to <code>/tmp/flow/&lt;escaped root path&gt;.log</code>)</li>
@@ -365,11 +413,42 @@ specified <a href="http://flowtype.org/docs/declarations.html">declarations</a> 
 <p>makes Flow treat <code>require(&#39;image!foo.jpg&#39;)</code> as if it was <code>require(&#39;ImageStub&#39;)</code>.</p>
 
 <p>(<strong>note:</strong> you can specify <code>module.name_mapper</code> multiple times)</p></li>
-<li><p><code>module.system</code> (<code>node</code> | <code>haste</code>): the module system to use to resolve <code>import</code> and <code>require</code>. <a href="https://github.com/facebook/node-haste">Haste</a> is used in React-Native.</p></li>
-<li><p><code>munge_underscores</code> (boolean): set this to <code>true</code> to have Flow treat underscore-prefixed class properties and methods as private. This should be used in conjunction with <a href="https://github.com/facebook/jstransform/blob/master/visitors/es6-class-visitors.js"><code>jstransform</code>&#39;s ES6 class transform</a>, which enforces the same privacy at runtime.</p></li>
-<li><p><code>server.max_workers</code> (integer): The maximum number of workers the Flow server can start. By default, the server will use all available cores.</p></li>
-<li><p><code>traces</code> (integer): enables traces on all error output (showing additional details about the flow of types through the system), to the depth specified. This can be very expensive, so is disabled by default.</p></li>
-<li><p><code>strip_root</code> (boolean): set this to <code>true</code> to always strip the root directory from file paths in error messages</p></li>
+<li><p><code>module.system</code> (<code>node</code> | <code>haste</code>): the module system to use to resolve
+<code>import</code> and <code>require</code>. <a href="https://github.com/facebook/node-haste">Haste</a> is
+used in React Native. The default is <code>node</code>.</p></li>
+<li><p><code>module.system.node.resolve_dirname</code> (string): By default, Flow will look in
+directories named <code>node_modules</code> for node modules. You can configure this
+behavior with this option. For example, if you do</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[options]
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=custom_node_modules
+</code></pre></div>
+<p>then Flow will look in directories named <code>node_modules</code> or
+<code>custom_node_modules</code></p></li>
+<li><p><code>module.ignore_non_literal_requires</code> (boolean): set this to <code>true</code> and Flow
+will no longer complain when you use <code>require()</code> with something other than a
+string literal. The default value is <code>false</code></p></li>
+<li><p><code>module.file_ext</code> (string): By default, Flow will look for files with the extensions
+<code>.js</code>, <code>.jsx</code>, and <code>.json</code>. You can override this behavior with this option.
+For example, if you do</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[options]
+module.file_ext=.foo
+module.file_ext=.bar
+</code></pre></div>
+<p>then Flow will instead look for the file extensions <code>.foo</code> and <code>.bar</code>.</p></li>
+<li><p><code>munge_underscores</code> (boolean): Set this to <code>true</code> to have Flow treat
+underscore-prefixed class properties and methods as private. This should be
+used in conjunction with <a href="https://github.com/facebook/jstransform/blob/master/visitors/es6-class-visitors.js"><code>jstransform</code>&#39;s ES6 class
+transform</a>,
+which enforces the same privacy at runtime.</p></li>
+<li><p><code>server.max_workers</code> (integer): The maximum number of workers the Flow server
+can start. By default, the server will use all available cores.</p></li>
+<li><p><code>traces</code> (integer): enables traces on all error output (showing additional
+details about the flow of types through the system), to the depth specified.
+This can be very expensive, so is disabled by default.</p></li>
+<li><p><code>strip_root</code> (boolean): set this to <code>true</code> to always strip the root directory
+from file paths in error messages. Can be overridden with the command line
+flag <code>--strip-root</code>.</p></li>
 <li><p><code>suppress_comment</code> (regex): defines a magical comment that suppresses any Flow errors on the following line. For example:</p>
 <div class="highlight"><pre><code class="language-" data-lang="">suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
 </code></pre></div>
@@ -377,11 +456,66 @@ specified <a href="http://flowtype.org/docs/declarations.html">declarations</a> 
 <div class="highlight"><pre><code class="language-" data-lang="">// $FlowFixMe: suppressing this error until we can refactor
 var x : string = 123;
 </code></pre></div>
-<p>and suppress the error. If there is no error on the next line (the suppresion is unnecessary), an &quot;Unused suppression&quot; error will be shown instead.</p>
+<p>and suppress the error. If there is no error on the next line (the suppression is unnecessary), an &quot;Unused suppression&quot; error will be shown instead.</p>
 
 <p><strong>Note:</strong> you can specify <code>suppress_comment</code> multiple times. We recommend defining something like <code>$FlowFixMe</code> (for type errors that need to be fixed) in addition to <code>$FlowIssue</code> (to suppress errors caused by bugs in Flow).</p></li>
-<li><p><code>esproposal.class_static_fields</code> (&#39;enable&#39;|&#39;ignore&#39;|&#39;warn&#39;): set this to <code>enable</code> to indicate that Flow should interpret static <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">class fields</a> per the pending spec. You may also set this to <code>ignore</code> to indicate that Flow should simply ignore the syntax (i.e. Flow will not use this syntax to indicate the presence of a static property on the class). The default value of this option is <code>warn</code>, which gives a warning on use since this proposal is still very early-stage.</p></li>
-<li><p><code>esproposal.class_instance_fields</code> (&#39;enable&#39;|&#39;ignore&#39;|&#39;warn&#39;): set this to <code>enable</code> to indicate that Flow should interpret instance <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">class fields</a> per the pending spec. You may also set this to <code>ignore</code> to indicate that Flow should simply ignore the syntax (i.e. Flow will not use this syntax to indicate the presence of a property on instances of the class). The default value of this option is <code>warn</code>, which gives a warning on use since this proposal is still very early-stage.</p></li>
+<li><p><code>temp_dir</code> (string): Tell Flow which directory to use as a temp directory.
+Defaults to <code>/tmp/flow</code>. Can be overridden with the commandline flag
+<code>--temp-dir</code>.</p></li>
+<li><p><code>esproposal.class_static_fields</code> (<code>enable</code>|<code>ignore</code>|<code>warn</code>): set this to
+<code>enable</code> to indicate that Flow should interpret static <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">class
+fields</a> per
+the pending spec. You may also set this to <code>ignore</code> to indicate that Flow
+should simply ignore the syntax (i.e. Flow will not use this syntax to
+indicate the presence of a static property on the class). The default value
+of this option is <code>warn</code>, which gives a warning on use since this proposal is
+still very early-stage.</p></li>
+<li><p><code>esproposal.class_instance_fields</code> (<code>enable</code>|<code>ignore</code>|<code>warn</code>): set this to
+<code>enable</code> to indicate that Flow should interpret instance <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">class
+fields</a> per
+the pending spec. You may also set this to <code>ignore</code> to indicate that Flow
+should simply ignore the syntax (i.e. Flow will not use this syntax to
+indicate the presence of a property on instances of the class). The default
+value of this option is <code>warn</code>, which gives a warning on use since this
+proposal is still very early-stage.</p></li>
+<li><p><code>esproposal.decorators</code> (<code>ignore</code>|<code>warn</code>): set this to
+<code>ignore</code> to indicate that Flow should ignore decorators. The default
+value of this option is <code>warn</code>, which gives a warning on use since this
+proposal is still very early-stage.</p></li>
+<li><p><code>esproposal.export_star_as</code> (<code>enable</code>|<code>ignore</code>|<code>warn</code>): set this to
+<code>enable</code> to indicate that Flow should support the <code>export * as</code> syntax from
+<a href="https://github.com/leebyron/ecmascript-more-export-from">leebyron&#39;s proposal</a>.
+You may also set this to <code>ignore</code> to indicate that Flow
+should simply ignore the syntax. The default value of this option is <code>warn</code>,
+which gives a warning on use since this proposal is still very early-stage.</p></li>
+</ul>
+
+<h3>[version]</h3>
+
+<p>You can specify in the <code>.flowconfig</code> which version of Flow you expect to use.
+You do this with the <code>[version]</code> section. If this section is omitted or left
+blank, then any version is allowed. If a version is specified and not matched,
+then Flow will immediately error and exit.</p>
+
+<p>So if you have the following in your .flowconfig</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[version]
+0.22.0
+</code></pre></div>
+<p>and you try to use Flow v0.21.0, then Flow will immediately error with the
+message</p>
+
+<p><code>&quot;Wrong version of Flow. The config specifies version 0.22.0 but this is version
+0.21.0&quot;</code></p>
+
+<p>So far, we support the following ways to specify supported versions</p>
+
+<ul>
+<li>Explicit versions, (e.g. <code>0.22.0</code>, which only matches <code>0.22.0</code>).</li>
+<li>Intersection ranges, which are ANDed together, (e.g. <code>&gt;=0.13.0 &lt;0.14.0</code>,
+which matches <code>0.13.0</code> and <code>0.13.5</code> but not <code>0.14.0</code>).</li>
+<li>Caret ranges, which allow changes that do not modify the left-most non-zero
+digit (e.g.  <code>^0.13.0</code> expands into <code>&gt;=0.13.0 &lt;0.14.0</code>, and <code>^0.13.1</code> expands
+into <code>&gt;=0.13.1 &lt;0.14.0</code>, whereas &quot;^1.2.3&quot; expands into &quot;&gt;=1.2.3 &lt;2.0.0&quot;).</li>
 </ul>
 
 <h3>Example</h3>
@@ -406,7 +540,7 @@ mydir
 </code></pre></div>
 <p>Here is an example of how you could use the <code>.flowconfig</code> directives. </p>
 <div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">[include]
-/home/otherdir/src
+../otherdir/src
 
 [ignore]
 .*/build/.*
