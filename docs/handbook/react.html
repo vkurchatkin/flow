@@ -319,37 +319,48 @@
     
 
 
-<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">React</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">"react"</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">React</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">"react"</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <p>React applications are composed of nested components. As React-based
-applications grow, these component trees and the dependencies between them
-become increasingly complex.</p>
+ applications grow, these component trees and the dependencies between them
+ become increasingly complex.</p>
 
 <p>Flow&#39;s static analysis makes building large Web apps with React safe by
-tracking the types of props and state. Flow understands which props are
-required and also supports default props.</p>
+ tracking the types of props and state. Flow understands which props are
+ required and also supports default props.</p>
 
 <p>Currently, Flow supports components defined using the <code>React.createClass</code>
-factory method and those defined using JavaScript classes inheriting from
-<code>React.Component</code>.</p>
+ factory method and those defined using JavaScript classes inheriting from
+ <code>React.Component</code>.</p>
 
 <p>Support for stateless functional components is coming soon.</p>
 
-<h2>Defining components with the <code>createClass</code> factory</h2>
+<p>## Defining components with the <code>createClass</code> factory</p>
 
-<h3>PropTypes</h3>
+<p>### PropTypes</p>
 
 <p>React ships with PropTypes, which verify the props provided to a component.
-Unlike the static analysis performed by Flow, PropTypes are only checked at
-runtime. If your testing doesn&#39;t trigger every code path that provides props
-to a component, you might not notice a type error in your program.</p>
+ Unlike the static analysis performed by Flow, PropTypes are only checked at
+ runtime. If your testing doesn&#39;t trigger every code path that provides props
+ to a component, you might not notice a type error in your program.</p>
 
 <p>Flow has built-in support for PropTypes. When Flow sees a <code>createClass</code>
-factory that specifies PropTypes, it is able to statically verify that all
-elements are constructed using valid props.</p>
+ factory that specifies PropTypes, it is able to statically verify that all
+ elements are constructed using valid props.</p>
 
 
-<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">Greeter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">Greeter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
   <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_IDENTIFIER">propTypes</span></span><span class="normal T_COLON">:</span> <span class="normal T_LCURLY">{</span>
     <span class="normal T_IDENTIFIER">name</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">PropTypes</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">string</span></span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">isRequired</span><span class="normal T_COMMA">,</span>
   <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
@@ -358,21 +369,35 @@ elements are constructed using valid props.</p>
   <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
 <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="error"data-error-id="E1" data-message-id="M1003"><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// Missing `name`</span>
-<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// `name` should be a string</span>
-<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"World"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// "Hello, World!"</span></pre>
+<span class="error"data-error-id="E1" data-message-id="M1003"><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span></span><span class="normal T_SEMICOLON">;</span> <span class="comment block">// Missing `name`</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment block">// `name` should be a string</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"World"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// "Hello, World!"</span></pre></td></tr></tbody></table></figure>
 
-<h3>Default Props</h3>
+<p>### Default Props</p>
 
 <p>Flow understands when a default value is specified via <code>getDefaultProps</code> and
-will not error when the prop is not provided.</p>
+ will not error when the prop is not provided.</p>
 
 <p>Note that it&#39;s still a good idea to specify <code>isRequired</code>, even when a default
-value is provided, to protect against <code>null</code> prop values. React will only use
-a default value if the prop value is <code>undefined</code>.</p>
+ value is provided, to protect against <code>null</code> prop values. React will only use
+ a default value if the prop value is <code>undefined</code>.</p>
 
 
-<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">DefaultGreeter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">DefaultGreeter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">propTypes</span><span class="normal T_COLON">:</span> <span class="normal T_LCURLY">{</span>
     <span class="normal T_IDENTIFIER">name</span><span class="normal T_COLON">:</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">PropTypes</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">string</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">isRequired</span><span class="normal T_COMMA">,</span>
   <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
@@ -384,17 +409,42 @@ a default value if the prop value is <code>undefined</code>.</p>
   <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
 <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// "Hello, World!"</span>
-<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// `name` should still be a string</span>
-<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"Flow"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment">// "Hello, Flow!"</span></pre>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment block">// "Hello, World!"</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment block">// `name` should still be a string</span>
+<span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"Flow"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// "Hello, Flow!"</span></pre></td></tr></tbody></table></figure>
 
-<h3>State</h3>
+<p>### State</p>
 
 <p>Flow ensures that state reads and writes are consistent with the object
-returned from <code>getInitialState</code>.</p>
+ returned from <code>getInitialState</code>.</p>
 
 
-<pre class="code"><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">Counter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">Counter</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">createClass</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">getInitialState</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="error"data-error-id="E5" data-message-id="M5003"><span class="normal T_LCURLY">{</span>
     <span class="normal T_RETURN">return</span> <span class="normal T_LCURLY">{</span>
       <span class="normal T_IDENTIFIER">value</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E4" data-message-id="M4003"><span class="normal T_NUMBER">0</span></span><span class="normal T_COMMA">,</span>
@@ -419,20 +469,83 @@ returned from <code>getInitialState</code>.</p>
       </span><span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_DIV">/</span><span class="jsxTag T_JSX_IDENTIFIER">div</span><span class="jsxTag T_GREATER_THAN">></span>
     <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
-<span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre>
+<span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
-<h2>Defining components as <code>React.Component</code> subclasses</h2>
+<p>## Defining components as <code>React.Component</code> subclasses</p>
 
 <p>While PropTypes are great, they are quite limited. For example, it&#39;s possible
-to specify that a prop is some kind of function, but not what parameters that
-function accepts or what kind of value it might return.</p>
+ to specify that a prop is some kind of function, but not what parameters that
+ function accepts or what kind of value it might return.</p>
 
 <p>Flow has a much richer type system which is able to express those constraints
-and more. With class-based components, you can specify the your components&#39;
-props, default props, and state using Flow&#39;s annotation syntax.</p>
+ and more. With class-based components, you can specify the your components&#39;
+ props, default props, and state using Flow&#39;s annotation syntax.</p>
 
 
-<pre class="code"><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Button</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">Component</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Button</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">Component</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">props</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span>
     <span class="normal T_IDENTIFIER">title</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span>
     <span class="normal T_IDENTIFIER">visited</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_COMMA">,</span>
@@ -495,12 +608,56 @@ props, default props, and state using Flow&#39;s annotation syntax.</p>
     <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span>
   <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">element</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">container</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
-<span class="normal T_RCURLY">}</span></pre>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<h2>Higher-order components</h2>
+<p>## Higher-order components</p>
 
 
-<pre class="code"><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Props</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></td><td class="code"><pre><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Props</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
   <span class="normal T_CLASS">class</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReactClass</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="type T_COMMA">,</span>
   <span class="normal T_IDENTIFIER">config</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Promise</span><span class="type T_LESS_THAN"><</span><span class="type T_IDENTIFIER">Config</span><span class="type T_GREATER_THAN">></span><span class="type T_COMMA">,</span>
 <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
@@ -544,8 +701,8 @@ props, default props, and state using Flow&#39;s annotation syntax.</p>
       <span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
     <span class="normal T_RCURLY">}</span>
   <span class="normal T_RCURLY">}</span>
-<span class="normal T_RCURLY">}</span>
-<span class="normal T_EOF"></span></pre><script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"property `name`","start":{"line":42,"column":3,"offset":1360},"end":{"line":42,"column":12,"offset":1369}},{"id":"M1002","description":"Property not found in"},{"id":"M1003","description":"props of React element `Greeter`","start":{"line":50,"column":1,"offset":1491},"end":{"line":50,"column":12,"offset":1502}}]},{"id":"E2","messages":[{"id":"M2001","description":"null","start":{"line":51,"column":16,"offset":1537},"end":{"line":51,"column":20,"offset":1541}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":43,"column":11,"offset":1383},"end":{"line":43,"column":33,"offset":1405}}]},{"id":"E3","messages":[{"id":"M3001","description":"null","start":{"line":78,"column":23,"offset":2282},"end":{"line":78,"column":27,"offset":2286}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"string","start":{"line":70,"column":19,"offset":2138},"end":{"line":70,"column":26,"offset":2145}}]},{"id":"E4","messages":[{"id":"M4001","description":"string","start":{"line":96,"column":14,"offset":2655},"end":{"line":96,"column":40,"offset":2681}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"number","start":{"line":91,"column":14,"offset":2591},"end":{"line":91,"column":15,"offset":2592}}]},{"id":"E5","messages":[{"id":"M5001","description":"property `valu` of object literal","start":{"line":100,"column":19,"offset":2730},"end":{"line":102,"column":6,"offset":2771}},{"id":"M5002","description":"Property not found in"},{"id":"M5003","description":"object literal","start":{"line":89,"column":21,"offset":2563},"end":{"line":93,"column":4,"offset":2604}}]},{"id":"E6","messages":[{"id":"M6001","description":"Experimental class static field usage","start":{"line":138,"column":3,"offset":3708},"end":{"line":140,"column":5,"offset":3756}},{"id":"M6002","description":"Class static fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_static_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E7","messages":[{"id":"M7001","description":"Experimental class instance field usage","start":{"line":142,"column":3,"offset":3760},"end":{"line":144,"column":6,"offset":3824}},{"id":"M7002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E8","messages":[{"id":"M8001","description":"Experimental class instance field usage","start":{"line":146,"column":3,"offset":3828},"end":{"line":148,"column":6,"offset":3893}},{"id":"M8002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E9","messages":[{"id":"M9001","description":"Experimental class instance field usage","start":{"line":150,"column":3,"offset":3897},"end":{"line":152,"column":6,"offset":3961}},{"id":"M9002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]}])</script>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"property `name`","start":{"line":42,"column":3,"offset":1360},"end":{"line":42,"column":12,"offset":1369}},{"id":"M1002","description":"Property not found in"},{"id":"M1003","description":"props of React element `Greeter`","start":{"line":50,"column":1,"offset":1491},"end":{"line":50,"column":12,"offset":1502}}]},{"id":"E2","messages":[{"id":"M2001","description":"null","start":{"line":51,"column":16,"offset":1537},"end":{"line":51,"column":20,"offset":1541}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":43,"column":11,"offset":1383},"end":{"line":43,"column":33,"offset":1405}}]},{"id":"E3","messages":[{"id":"M3001","description":"null","start":{"line":78,"column":23,"offset":2282},"end":{"line":78,"column":27,"offset":2286}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"string","start":{"line":70,"column":19,"offset":2138},"end":{"line":70,"column":26,"offset":2145}}]},{"id":"E4","messages":[{"id":"M4001","description":"string","start":{"line":96,"column":14,"offset":2655},"end":{"line":96,"column":40,"offset":2681}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"number","start":{"line":91,"column":14,"offset":2591},"end":{"line":91,"column":15,"offset":2592}}]},{"id":"E5","messages":[{"id":"M5001","description":"property `valu` of object literal","start":{"line":100,"column":19,"offset":2730},"end":{"line":102,"column":6,"offset":2771}},{"id":"M5002","description":"Property not found in"},{"id":"M5003","description":"object literal","start":{"line":89,"column":21,"offset":2563},"end":{"line":93,"column":4,"offset":2604}}]},{"id":"E6","messages":[{"id":"M6001","description":"Experimental class static field usage","start":{"line":138,"column":3,"offset":3708},"end":{"line":140,"column":5,"offset":3756}},{"id":"M6002","description":"Class static fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_static_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E7","messages":[{"id":"M7001","description":"Experimental class instance field usage","start":{"line":142,"column":3,"offset":3760},"end":{"line":144,"column":6,"offset":3824}},{"id":"M7002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E8","messages":[{"id":"M8001","description":"Experimental class instance field usage","start":{"line":146,"column":3,"offset":3828},"end":{"line":148,"column":6,"offset":3893}},{"id":"M8002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]},{"id":"E9","messages":[{"id":"M9001","description":"Experimental class instance field usage","start":{"line":150,"column":3,"offset":3897},"end":{"line":152,"column":6,"offset":3961}},{"id":"M9002","description":"Class instance fields are an active early stage feature proposal that may change. You may opt-in to using them anyway in Flow by putting `esproposal.class_instance_fields=enable` into the [options] section of your .flowconfig."}]}])</script>
 
     <div class="docs-prevnext">
       
