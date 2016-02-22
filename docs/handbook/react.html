@@ -322,31 +322,31 @@
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">React</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">"react"</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <p>React applications are composed of nested components. As React-based
- applications grow, these component trees and the dependencies between them
- become increasingly complex.</p>
+applications grow, these component trees and the dependencies between them
+become increasingly complex.</p>
 
 <p>Flow&#39;s static analysis makes building large Web apps with React safe by
- tracking the types of props and state. Flow understands which props are
- required and also supports default props.</p>
+tracking the types of props and state. Flow understands which props are
+required and also supports default props.</p>
 
 <p>Currently, Flow supports components defined using the <code>React.createClass</code>
- factory method and those defined using JavaScript classes inheriting from
- <code>React.Component</code>.</p>
+factory method and those defined using JavaScript classes inheriting from
+<code>React.Component</code>.</p>
 
 <p>Support for stateless functional components is coming soon.</p>
 
-<p>## Defining components with the <code>createClass</code> factory</p>
+<h2>Defining components with the <code>createClass</code> factory</h2>
 
-<p>### PropTypes</p>
+<h3>PropTypes</h3>
 
 <p>React ships with PropTypes, which verify the props provided to a component.
- Unlike the static analysis performed by Flow, PropTypes are only checked at
- runtime. If your testing doesn&#39;t trigger every code path that provides props
- to a component, you might not notice a type error in your program.</p>
+Unlike the static analysis performed by Flow, PropTypes are only checked at
+runtime. If your testing doesn&#39;t trigger every code path that provides props
+to a component, you might not notice a type error in your program.</p>
 
 <p>Flow has built-in support for PropTypes. When Flow sees a <code>createClass</code>
- factory that specifies PropTypes, it is able to statically verify that all
- elements are constructed using valid props.</p>
+factory that specifies PropTypes, it is able to statically verify that all
+elements are constructed using valid props.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -373,14 +373,14 @@
 <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment block">// `name` should be a string</span>
 <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">Greeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"World"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// "Hello, World!"</span></pre></td></tr></tbody></table></figure>
 
-<p>### Default Props</p>
+<h3>Default Props</h3>
 
 <p>Flow understands when a default value is specified via <code>getDefaultProps</code> and
- will not error when the prop is not provided.</p>
+will not error when the prop is not provided.</p>
 
 <p>Note that it&#39;s still a good idea to specify <code>isRequired</code>, even when a default
- value is provided, to protect against <code>null</code> prop values. React will only use
- a default value if the prop value is <code>undefined</code>.</p>
+value is provided, to protect against <code>null</code> prop values. React will only use
+a default value if the prop value is <code>undefined</code>.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -413,10 +413,10 @@
 <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="normal T_LCURLY">{</span><span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_NULL">null</span></span><span class="normal T_RCURLY">}</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment block">// `name` should still be a string</span>
 <span class="jsxTag T_LESS_THAN"><</span><span class="jsxTag T_JSX_IDENTIFIER">DefaultGreeter</span> <span class="jsxTag T_JSX_IDENTIFIER">name</span><span class="jsxTag T_ASSIGN">=</span><span class="jsxTag T_JSX_TEXT">"Flow"</span> <span class="jsxTag T_DIV">/</span><span class="jsxTag T_GREATER_THAN">></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// "Hello, Flow!"</span></pre></td></tr></tbody></table></figure>
 
-<p>### State</p>
+<h3>State</h3>
 
 <p>Flow ensures that state reads and writes are consistent with the object
- returned from <code>getInitialState</code>.</p>
+returned from <code>getInitialState</code>.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -471,15 +471,15 @@
   <span class="normal T_RCURLY">}</span><span class="normal T_COMMA">,</span>
 <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
-<p>## Defining components as <code>React.Component</code> subclasses</p>
+<h2>Defining components as <code>React.Component</code> subclasses</h2>
 
 <p>While PropTypes are great, they are quite limited. For example, it&#39;s possible
- to specify that a prop is some kind of function, but not what parameters that
- function accepts or what kind of value it might return.</p>
+to specify that a prop is some kind of function, but not what parameters that
+function accepts or what kind of value it might return.</p>
 
 <p>Flow has a much richer type system which is able to express those constraints
- and more. With class-based components, you can specify the your components&#39;
- props, default props, and state using Flow&#39;s annotation syntax.</p>
+and more. With class-based components, you can specify the your components&#39;
+props, default props, and state using Flow&#39;s annotation syntax.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -610,7 +610,7 @@
   <span class="normal T_IDENTIFIER">React</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">render</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">element</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">container</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<p>## Higher-order components</p>
+<h2>Higher-order components</h2>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1

@@ -93,10 +93,10 @@
 <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">'Hello, world!'</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
-</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode"> 3:   return x * 10;
-             ^ string. This type is incompatible with
- 3:   return x * 10;
-             ^^^^^^ number
+</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  3:   return x * 10;
+              ^ string. This type is incompatible with
+  3:   return x * 10;
+              ^^^^^^ number
 </code></pre></div>
 <p>Flow also lets you gradually evolve JavaScript code into typed code:</p>
 
@@ -112,10 +112,10 @@
 <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">'Hello'</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
-</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode"> 3:   return x.length * y;
-             ^^^^^^^^^^^^ number. This type is incompatible with
- 2: function bar(x: string, y: number): string {
-                                        ^^^^^^ string
+</code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  3:   return x.length * y;
+              ^^^^^^^^^^^^ number. This type is incompatible with
+  2: function bar(x: string, y: number): string {
+                                         ^^^^^^ string
 </code></pre></div>
 <p>Typed Flow code easily transforms down to regular JavaScript, so it runs anywhere.</p>
 

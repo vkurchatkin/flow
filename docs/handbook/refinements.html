@@ -320,19 +320,19 @@
 
 
 <p>Flow understands many idiomatic constructs used to determine the type of a
- value at runtime, and incorporates that knowledge into its static analysis.</p>
+value at runtime, and incorporates that knowledge into its static analysis.</p>
 
 <p>There are several dynamic type tests (predicates) on local variables that Flow
- recognizes and uses to refine types. Refining a type with a predicate means
- narrowing the original type with the type satisfied by values satisfying the
- predicate.</p>
+recognizes and uses to refine types. Refining a type with a predicate means
+narrowing the original type with the type satisfied by values satisfying the
+predicate.</p>
 
 <p>Type tests can occur in <code>if</code> and <code>switch</code> statements, the test block in loop
- constructs like <code>for</code>, <code>for-in</code>, <code>for-of</code>, and <code>do-while</code>, conditional
- expressions (ternary statements), and inline logical expressions like <code>a &amp;&amp;
- a.b</code>.</p>
+constructs like <code>for</code>, <code>for-in</code>, <code>for-of</code>, and <code>do-while</code>, conditional
+expressions (ternary statements), and inline logical expressions like <code>a &amp;&amp;
+a.b</code>.</p>
 
-<p>### Maybe, Null, and Undefined</p>
+<h3>Maybe, Null, and Undefined</h3>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -381,7 +381,7 @@
 
 <p>Read more about <a href="/docs/nullable-types.html">Maybe Types</a>.</p>
 
-<p>### Truthiness and Existance</p>
+<h3>Truthiness and Existance</h3>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -466,10 +466,10 @@
   <span class="normal T_RCURLY">}</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<p>### <code>typeof</code></p>
+<h3><code>typeof</code></h3>
 
 <p>This type test is particularly useful in conjunction with <a
- href="/docs/union-intersection-types.html">union types</a>.</p>
+href="/docs/union-intersection-types.html">union types</a>.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -491,7 +491,7 @@
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <p>In JavaScript, <code>typeof null</code> is <code>&quot;object&quot;</code>, but don&#39;t worry, Flow won&#39;t let
- you make that common mistake. (Hint: use <code>x == null</code> instead.)</p>
+you make that common mistake. (Hint: use <code>x == null</code> instead.)</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -508,7 +508,7 @@
   <span class="normal T_RCURLY">}</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<p>### Array.isArray</p>
+<h3>Array.isArray</h3>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -541,7 +541,7 @@
   <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">result</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<p>### A instanceof B</p>
+<h3>A instanceof B</h3>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -568,7 +568,7 @@
   <span class="normal T_RCURLY">}</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<p>### Tagged Unions</p>
+<h3>Tagged Unions</h3>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -593,11 +593,11 @@
   <span class="normal T_RCURLY">}</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<p>## Caveats</p>
+<h2>Caveats</h2>
 
 <p>Flow is pessimistic about refinements. If it is possible that a refinement may
- become invalid, Flow will throw away the refinement. This can often happen
- when invoking a function that might refer to the refined value.</p>
+become invalid, Flow will throw away the refinement. This can often happen
+when invoking a function that might refer to the refined value.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -621,9 +621,9 @@
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <p>In the above code, <code>something</code> might mutate <code>x</code>, invalidating the refinement.
- It is unsafe to expect that <code>x.y</code> will always be a string after calling this
- function. It is simple to work around this, however. You can copy the object&#39;s
- property value to a local variable, which can&#39;t be mutated from the outside.</p>
+It is unsafe to expect that <code>x.y</code> will always be a string after calling this
+function. It is simple to work around this, however. You can copy the object&#39;s
+property value to a local variable, which can&#39;t be mutated from the outside.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -688,8 +688,8 @@
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <p>In some cases, Flow will throw away a refinement that is always safe to keep.
- In the following example, Flow doesn&#39;t have enough information to realize that
- <code>console.log</code> will not mutate <code>x</code>.</p>
+In the following example, Flow doesn&#39;t have enough information to realize that
+<code>console.log</code> will not mutate <code>x</code>.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -709,8 +709,8 @@
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <p>Flow does perform a mutation analysis and where it is safe to do so, will
- preserve refinements after function calls which it knows do not invalidate the
- refinemnet.</p>
+preserve refinements after function calls which it knows do not invalidate the
+refinemnet.</p>
 
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
