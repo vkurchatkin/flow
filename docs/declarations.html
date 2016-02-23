@@ -283,6 +283,13 @@
           </li>
         
           <li>
+            <a href="/docs/modules.html#_">
+              Modules
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/declarations.html#_" class="active">
               Declarations
             </a>
@@ -325,7 +332,7 @@
 <span class="nx">M</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="k">new</span> <span class="nx">C</span><span class="p">());</span><span class="w">
 </span></pre></td></tr></tbody></table></code></pre></figure>
 
-<p>As is evident, the above code could be fraught with problems. Where is the <code>M</code> 
+<p>As is evident, the above code could be fraught with problems. Where is the <code>M</code>
 module? Where is <code>C</code> defined?</p>
 
 <p>Running Flow on the above code yields:</p>
@@ -337,9 +344,9 @@ Unknown global name
 </code></pre></div>
 <h2>Declarations</h2>
 
-<p>Flow supports 
-<a href="third-party.html#example">declarations</a> 
-via the <code>declare</code> keyword to allow the interface of code to be defined and 
+<p>Flow supports
+<a href="third-party.html#example">declarations</a>
+via the <code>declare</code> keyword to allow the interface of code to be defined and
 then used in modules and other JavaScript code.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
@@ -365,7 +372,7 @@ example, should not be known by Flow: just the types it exposes is enough.</p>
 <blockquote>
 <p>NOTE</p>
 
-<p>The interfaces can be declared in any file you choose, as long as they are in a directory 
+<p>The interfaces can be declared in any file you choose, as long as they are in a directory
 outside the paths monitored by <code>.flowconfig</code>.</p>
 </blockquote>
 
@@ -375,7 +382,7 @@ outside the paths monitored by <code>.flowconfig</code>.</p>
 <p>It is also possible to specify multiple library paths, separated by commas.
 Furthermore, you can specify the libs in <code>.flowconfig</code> with the <code>[libs]</code> option. Within the specified folders, Flow will treat any file ending in <code>.js</code> as an interface.</p>
 
-<p>Now Flow knows to check <code>/lib/flow/</code> for any code that is not immediately 
+<p>Now Flow knows to check <code>/lib/flow/</code> for any code that is not immediately
 available in the file on which it is checking.</p>
 
 <p>Assuming we have the declarations above, now when running Flow against this code:</p>
@@ -419,7 +426,7 @@ Thus, when you have:</p>
 
     <div class="docs-prevnext">
       
-        <a href="/docs/primitives.html#_">&larr; Prev</a>
+        <a href="/docs/modules.html#_">&larr; Prev</a>
       
       
         <a class="right" href="/docs/cli.html#_">Next &rarr;</a>
