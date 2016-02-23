@@ -90,7 +90,7 @@
 <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_IDENTIFIER">x</span></span> <span class="normal T_MULT">*</span> <span class="normal T_NUMBER">10</span></span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_RCURLY">}</span>
-<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">'Hello, world!'</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello, world!&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
 </code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  3:   return x * 10;
@@ -109,7 +109,7 @@
 <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_STRING_TYPE">string</span></span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span> <span class="normal T_MULT">*</span> <span class="normal T_IDENTIFIER">y</span></span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_RCURLY">}</span>
-<span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">'Hello'</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>flow
 </code></pre></div><div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  3:   return x.length * y;

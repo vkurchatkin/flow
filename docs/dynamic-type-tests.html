@@ -312,26 +312,30 @@
 <article class='withtoc'>
     <h1>
       Dynamic Type Tests
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/01-dynamic-type-tests.md" target="_blank">Edit on GitHub</a>
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/ref/dynamic-type-tests.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <p>In addition to <code>null</code> checks, there are several other dynamic type tests
-(<em>predicates</em>) on local variables that Flow recognizes and uses to refine
-types. Refining a type with a predicate means narrowing the original type with
-the type satisfied by values satisfying the predicate.</p>
+    
+
+
+<p>Flow understands many idiomatic constructs used to determine the type of a
+value at runtime, and incorporates that knowledge into its static analysis.</p>
+
+<p>There are several dynamic type tests (predicates) on local variables that Flow
+recognizes and uses to refine types. Refining a type with a predicate means
+narrowing the original type with the type satisfied by values satisfying the
+predicate.</p>
 
 <p>Type tests can occur in <code>if</code> and <code>switch</code> statements, the test block in loop
 constructs like <code>for</code>, <code>for-in</code>, <code>for-of</code>, and <code>do-while</code>, conditional
 expressions (ternary statements), and inline logical expressions like <code>a &amp;&amp;
 a.b</code>.</p>
 
-<p>Flow understands many idiomatic constructs used to determine the type of a value
-at runtime, and incorporates that knowledge into its static analysis.</p>
-
 <h3>Maybe, Null, and Undefined</h3>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -349,32 +353,38 @@ at runtime, and incorporates that knowledge into its static analysis.</p>
 16
 17
 18
-19</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+19
+20
+21
+22</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">maybe_test</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_STRING_TYPE">string</span></span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_EQUAL">==</span> <span class="normal T_NULL">null</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// The condition will pass if `x` is `null` or `undefined`.</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_IDENTIFIER">x</span></span></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// In this branch, `x` must be a string.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="p">?</span><span class="nx">string</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"null or undefined"</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="p">?</span><span class="nx">string</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"null"</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"undefined"</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">null_undefined_tests</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E3" data-message-id="M3003"><span class="error"data-error-id="E4" data-message-id="M4003"><span class="type T_STRING_TYPE">string</span></span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_STRICT_EQUAL">===</span> <span class="normal T_NULL">null</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// The condition will pass if `x` is `null`.</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_STRICT_EQUAL">===</span> <span class="normal T_IDENTIFIER">undefined</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// The condition will pass if `x` is `undefined`.</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// In this branch, `x` must be a string.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <p>Read more about <a href="/docs/nullable-types.html">Maybe Types</a>.</p>
 
-<h3>Truthiness and Existance</h3>
+<h3>Truthiness and Existence</h3>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -402,43 +412,67 @@ at runtime, and incorporates that knowledge into its static analysis.</p>
 26
 27
 28
-29</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">boolean_truthiness</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_TRUE">true</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// In this branch, `x` must be `true`.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// Flow understands that `x` must be `false` in this branch, and therefore</span>
+    <span class="comment line">// that the expression !x must be `true`.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_NOT">!</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"the empty string"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">string_truthiness</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E5" data-message-id="M5003"><span class="type T_STRING">&quot;&quot;</span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// Flow understands that `x` can be any non-empty string in this branch.</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E5" data-message-id="M5001"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// Flow understands that `x` can only be &quot;&quot; in this branch.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="nx">number</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"zero"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">number_truthiness</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E6" data-message-id="M6003"><span class="type T_NUMBER_SINGLETON_TYPE">0</span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// Flow understands that `x` can be any non-zero number in this branch.</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E6" data-message-id="M6001"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// Flow understands that `x` can only be 0 in this branch.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">function</span> <span class="nx">baz</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="kr">boolean</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"true"</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"false"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">qux</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="p">{</span> <span class="nx">y</span><span class="p">?:</span> <span class="nx">number</span> <span class="p">}):</span> <span class="nx">number</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">y</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">sketchy_null_check</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_LCURLY">{</span>
+  <span class="comment line">// Since &quot;&quot; is not truthy, we will replace &quot;&quot; with &quot;default&quot; in this function.</span>
+  <span class="comment line">// Currently Flow does not complain about this pattern, but it&#39;s a common</span>
+  <span class="comment line">// request which may be added in the future.</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;default&quot;</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <h3><code>typeof</code></h3>
 
 <p>This type test is particularly useful in conjunction with <a
 href="/docs/union-intersection-types.html">union types</a>.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -446,47 +480,38 @@ href="/docs/union-intersection-types.html">union types</a>.</p>
 6
 7
 8
-9</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+9</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">typeof_test</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_TYPEOF">typeof</span> <span class="normal T_IDENTIFIER">x</span> <span class="normal T_STRICT_EQUAL">===</span> <span class="normal T_STRING">&quot;string&quot;</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// In this branch, `x` must be a string, and thus has a `length` method.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// By deduction, `x` must be a number in this branch.</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s2">"string"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>In JavaScript, <code>typeof null</code> is <code>&quot;object&quot;</code>, but don&#39;t worry, Flow won&#39;t let
+you make that common mistake. (Hint: use <code>x == null</code> instead.)</p>
 
-<h3>Booleans</h3>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
-7
-8
-9
-10
-11
-12</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-
-<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">onlyTrue</span><span class="p">(</span><span class="nx">t</span><span class="err">:</span> <span class="kc">true</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
-<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">onlyFalse</span><span class="p">(</span><span class="nx">f</span><span class="err">:</span> <span class="kc">false</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">test</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">onlyTrue</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nx">onlyFalse</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+7</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">typeof_null</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_IDENTIFIER">Object</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E7" data-message-id="M7003"><span class="type T_IDENTIFIER">Object</span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_TYPEOF">typeof</span> <span class="normal T_IDENTIFIER">x</span> <span class="normal T_STRICT_EQUAL">===</span> <span class="normal T_STRING">&quot;object&quot;</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E7" data-message-id="M7001"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// x can still be null</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <h3>Array.isArray</h3>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -500,26 +525,26 @@ href="/docs/union-intersection-types.html">union types</a>.</p>
 12
 13
 14
-15</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+15</pre></td><td class="code"><pre><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">NestedArray</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="type T_ASSIGN">=</span> <span class="type T_IDENTIFIER">Array</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_BIT_OR">|</span><span class="type T_IDENTIFIER">NestedArray</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span><span class="type T_GREATER_THAN">&gt;</span>
 
-<span class="nx">type</span> <span class="nx">NestedArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">|</span><span class="nx">NestedArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;&gt;</span>
-
-<span class="kd">function</span> <span class="nx">flatten</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">xs</span><span class="err">:</span> <span class="nx">NestedArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span> <span class="p">{</span>
-      <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">flatten</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]));</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">flatten</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">xs</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">NestedArray</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Array</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">result</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LBRACKET">[</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_FOR">for</span> <span class="normal T_LPAREN">(</span><span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">x</span> <span class="normal T_OF">of</span> <span class="normal T_IDENTIFIER">xs</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">Array</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">isArray</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+      <span class="comment line">// In this branch, `x` must be a `NestedArray&lt;T&gt;`</span>
+      <span class="normal T_IDENTIFIER">result</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">push</span><span class="normal T_LPAREN">(</span><span class="normal T_ELLIPSIS">...</span><span class="normal T_IDENTIFIER">flatten</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+      <span class="comment line">// By deduction, `x` must be a `T` in this branch.</span>
+      <span class="normal T_IDENTIFIER">result</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">push</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">result</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <h3>A instanceof B</h3>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -527,20 +552,26 @@ href="/docs/union-intersection-types.html">union types</a>.</p>
 6
 7
 8
-9</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+9
+10
+11
+12</pre></td><td class="code"><pre><span class="normal T_DECLARE">declare</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">businessLogic</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">businessLogic</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">myEventHandler</span><span class="p">(</span><span class="nx">e</span><span class="err">:</span> <span class="nx">Event</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="k">instanceof</span> <span class="nx">HTMLInputElement</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">businessLogic</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">myEventHandler</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">e</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Event</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="comment line">// We only know that e.target is an EventTarget</span>
+  <span class="error"data-error-id="E8" data-message-id="M8003"><span class="normal T_IDENTIFIER">e</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">target</span></span><span class="normal T_PERIOD">.</span><span class="error"data-error-id="E8" data-message-id="M8001"><span class="normal T_IDENTIFIER">value</span></span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">e</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">target</span> <span class="normal T_INSTANCEOF">instanceof</span> <span class="normal T_IDENTIFIER">HTMLInputElement</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// Now we know it&#39;s an &lt;input /&gt;, with a `value` property.</span>
+    <span class="normal T_IDENTIFIER">businessLogic</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">e</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">target</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">value</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="comment line">// error handling</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <h3>Tagged Unions</h3>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -550,75 +581,26 @@ href="/docs/union-intersection-types.html">union types</a>.</p>
 8
 9
 10
-11
-12
-13</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+11</pre></td><td class="code"><pre><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">BinaryTree</span> <span class="type T_ASSIGN">=</span>
+  <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">kind</span><span class="type T_COLON">:</span> <span class="type T_STRING">&quot;leaf&quot;</span><span class="type T_COMMA">,</span> <span class="normal T_IDENTIFIER">value</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="type T_RCURLY">}</span> <span class="type T_BIT_OR">|</span>
+  <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">kind</span><span class="type T_COLON">:</span> <span class="type T_STRING">&quot;branch&quot;</span><span class="type T_COMMA">,</span> <span class="normal T_IDENTIFIER">left</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">BinaryTree</span><span class="type T_COMMA">,</span> <span class="normal T_IDENTIFIER">right</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">BinaryTree</span> <span class="type T_RCURLY">}</span>
 
-<span class="nx">type</span> <span class="nx">BinaryTree</span> <span class="o">=</span>
-  <span class="p">{</span> <span class="na">kind</span><span class="p">:</span> <span class="s2">"leaf"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">number</span> <span class="p">}</span> <span class="o">|</span>
-  <span class="p">{</span> <span class="na">kind</span><span class="p">:</span> <span class="s2">"branch"</span><span class="p">,</span> <span class="na">left</span><span class="p">:</span> <span class="nx">BinaryTree</span><span class="p">,</span> <span class="na">right</span><span class="p">:</span> <span class="nx">BinaryTree</span> <span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">sumLeaves</span><span class="p">(</span><span class="nx">tree</span><span class="err">:</span> <span class="nx">BinaryTree</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">tree</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="s2">"leaf"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">tree</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">sumLeaves</span><span class="p">(</span><span class="nx">tree</span><span class="p">.</span><span class="nx">left</span><span class="p">)</span> <span class="o">+</span> <span class="nx">sumLeaves</span><span class="p">(</span><span class="nx">tree</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<h3>Logical Combinations and Negation</h3>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="kr">boolean</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s2">"number"</span> <span class="o">||</span> <span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s2">"boolean"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"number or boolean"</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="kr">boolean</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s2">"number"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s2">"boolean"</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"number of boolean"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">baz</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="p">{</span> <span class="nx">y</span><span class="p">?:</span> <span class="p">{</span> <span class="nx">z</span><span class="p">?:</span> <span class="nx">string</span> <span class="p">}}):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="nx">x</span><span class="p">.</span><span class="nx">y</span> <span class="o">&amp;&amp;</span> <span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">z</span> <span class="o">||</span> <span class="s2">"not found"</span><span class="p">;</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">sumLeaves</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tree</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">BinaryTree</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tree</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">kind</span> <span class="normal T_STRICT_EQUAL">===</span> <span class="normal T_STRING">&quot;leaf&quot;</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">tree</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">value</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">sumLeaves</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tree</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">left</span><span class="normal T_RPAREN">)</span> <span class="normal T_PLUS">+</span> <span class="normal T_IDENTIFIER">sumLeaves</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tree</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">right</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
 <h2>Caveats</h2>
 
 <p>Flow is pessimistic about refinements. If it is possible that a refinement may
-become invalid, Flow will throw away the refinement. This can often happen when
-invoking a function that might refer to the refined value.</p>
+become invalid, Flow will throw away the refinement. This can often happen
+when invoking a function that might refer to the refined value.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -627,28 +609,24 @@ invoking a function that might refer to the refined value.</p>
 7
 8
 9
-10
-11
-12</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+10</pre></td><td class="code"><pre><span class="normal T_DECLARE">declare</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">something</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">something</span><span class="p">()</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span> <span class="type T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E9" data-message-id="M9003"><span class="error"data-error-id="E10" data-message-id="M10003"><span class="type T_STRING_TYPE">string</span></span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">something</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E9" data-message-id="M9001"><span class="error"data-error-id="E10" data-message-id="M10001"><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span></span></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// error: x.y may be null/undefined</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;default&quot;</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="p">{</span> <span class="nl">y</span><span class="p">:</span> <span class="p">?</span><span class="nx">string</span> <span class="p">}):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">something</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span> <span class="c1">// error: x.y may be null/undefined</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"default"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>In the above code, <code>something</code> might mutate <code>x</code>, invalidating the refinement. It
-is unsafe to expect that <code>x.y</code> will always be a string after calling this
+<p>In the above code, <code>something</code> might mutate <code>x</code>, invalidating the refinement.
+It is unsafe to expect that <code>x.y</code> will always be a string after calling this
 function. It is simple to work around this, however. You can copy the object&#39;s
 property value to a local variable, which can&#39;t be mutated from the outside.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -658,29 +636,22 @@ property value to a local variable, which can&#39;t be mutated from the outside.
 8
 9
 10
-11
-12
-13</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+11</pre></td><td class="code"><pre><span class="normal T_DECLARE">declare</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">something</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">something</span><span class="p">()</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span> <span class="type T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">y</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_IDENTIFIER">something</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">y</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// OK: something couldn&#39;t have changed y</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;default&quot;</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="p">{</span> <span class="nl">y</span><span class="p">:</span> <span class="p">?</span><span class="nx">string</span> <span class="p">}):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
-    <span class="nx">something</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nx">y</span><span class="p">;</span> <span class="c1">// OK: something couldn't have changed y</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"default"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>Another way to help Flow keep a refinement is to use a <code>const</code> binding.</p>
 
-<p>Flow does not currently perform mutation analysis, so in some cases, Flow will
-throw away a refinement that is always safe to keep. As more analyses are
-implemented, Flow will hopefully come to understand the following examples are
-sound.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -697,30 +668,69 @@ sound.</p>
 15
 16
 17
-18
-19
-20</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+18</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=&gt;</span> <span class="normal T_LCURLY">{</span>
+      <span class="comment line">// We don&#39;t know when this function will be invoked, and `null` might be</span>
+      <span class="comment line">// written to `x` before it is.</span>
+      <span class="normal T_LPAREN">(</span><span class="error"data-error-id="E11" data-message-id="M11001"><span class="error"data-error-id="E12" data-message-id="M12001"><span class="normal T_IDENTIFIER">x</span></span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E11" data-message-id="M11003"><span class="error"data-error-id="E12" data-message-id="M12003"><span class="type T_STRING_TYPE">string</span></span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RCURLY">}</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="p">{</span> <span class="nl">y</span><span class="p">:</span> <span class="p">?</span><span class="nx">string</span> <span class="p">}):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"*obviously* this doesn't mutate x"</span><span class="p">);</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span> <span class="c1">// error: Flow doesn't know that</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"default"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+  <span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">const_x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">const_x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=&gt;</span> <span class="normal T_LCURLY">{</span>
+      <span class="comment line">// Regardless of when this function is invoked, `null` can never be</span>
+      <span class="comment line">// written to `const_x`, so we can keep the refinement.</span>
+      <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">const_x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="na">x</span><span class="p">:</span> <span class="p">?</span><span class="nx">string</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="kd">function</span> <span class="nx">baz</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* this doesn't mutate x */</span> <span class="p">}</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">baz</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span> <span class="c1">// error: Flow doesn't know that</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s2">"default"</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>In some cases, Flow will throw away a refinement that is always safe to keep.
+In the following example, Flow doesn&#39;t have enough information to realize that
+<code>console.log</code> will not mutate <code>x</code>.</p>
 
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span> <span class="type T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E13" data-message-id="M13003"><span class="error"data-error-id="E14" data-message-id="M14003"><span class="type T_STRING_TYPE">string</span></span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;*obviously* this doesn&#39;t mutate x&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E13" data-message-id="M13001"><span class="error"data-error-id="E14" data-message-id="M14001"><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span></span></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// error: Flow doesn&#39;t know that</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;default&quot;</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
+
+<p>Flow does perform a mutation analysis and where it is safe to do so, will
+preserve refinements after function calls which it knows do not invalidate the
+refinemnet.</p>
+
+
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></td><td class="code"><pre><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">baz</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="comment block">/* this doesn&#39;t mutate x */</span> <span class="normal T_RCURLY">}</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">baz</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// Flow understands that `baz` can&#39;t invalidate the refinement.</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;default&quot;</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"null","start":{"line":32,"column":12,"offset":983},"end":{"line":32,"column":13,"offset":984}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"string","start":{"line":29,"column":34,"offset":880},"end":{"line":29,"column":40,"offset":886}}]},{"id":"E2","messages":[{"id":"M2001","description":"undefined","start":{"line":32,"column":12,"offset":983},"end":{"line":32,"column":13,"offset":984}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":29,"column":34,"offset":880},"end":{"line":29,"column":40,"offset":886}}]},{"id":"E3","messages":[{"id":"M3001","description":"null","start":{"line":42,"column":12,"offset":1195},"end":{"line":42,"column":13,"offset":1196}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"string","start":{"line":39,"column":44,"offset":1106},"end":{"line":39,"column":50,"offset":1112}}]},{"id":"E4","messages":[{"id":"M4001","description":"undefined","start":{"line":45,"column":12,"offset":1295},"end":{"line":45,"column":13,"offset":1296}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"string","start":{"line":39,"column":44,"offset":1106},"end":{"line":39,"column":50,"offset":1112}}]},{"id":"E5","messages":[{"id":"M5001","description":"string","start":{"line":72,"column":12,"offset":1902},"end":{"line":72,"column":13,"offset":1903}},{"id":"M5002","description":"Expected string literal ``"},{"id":"M5003","description":"string literal ``","start":{"line":69,"column":40,"offset":1798},"end":{"line":69,"column":42,"offset":1800}}]},{"id":"E6","messages":[{"id":"M6001","description":"number","start":{"line":82,"column":12,"offset":2142},"end":{"line":82,"column":13,"offset":2143}},{"id":"M6002","description":"Expected number literal `0`"},{"id":"M6003","description":"number literal `0`","start":{"line":79,"column":40,"offset":2040},"end":{"line":79,"column":41,"offset":2041}}]},{"id":"E7","messages":[{"id":"M7001","description":"null","start":{"line":124,"column":12,"offset":3212},"end":{"line":124,"column":13,"offset":3213}},{"id":"M7002","description":"This type is incompatible with"},{"id":"M7003","description":"object type","start":{"line":122,"column":35,"offset":3161},"end":{"line":122,"column":41,"offset":3167}}]},{"id":"E8","messages":[{"id":"M8001","description":"property `value`","start":{"line":158,"column":12,"offset":3853},"end":{"line":158,"column":17,"offset":3858}},{"id":"M8002","description":"Property not found in"},{"id":"M8003","description":"EventTarget","start":{"line":158,"column":3,"offset":3844},"end":{"line":158,"column":11,"offset":3852}}]},{"id":"E9","messages":[{"id":"M9001","description":"null","start":{"line":196,"column":12,"offset":4724},"end":{"line":196,"column":15,"offset":4727}},{"id":"M9002","description":"This type is incompatible with"},{"id":"M9003","description":"string","start":{"line":193,"column":34,"offset":4674},"end":{"line":193,"column":40,"offset":4680}}]},{"id":"E10","messages":[{"id":"M10001","description":"undefined","start":{"line":196,"column":12,"offset":4724},"end":{"line":196,"column":15,"offset":4727}},{"id":"M10002","description":"This type is incompatible with"},{"id":"M10003","description":"string","start":{"line":193,"column":34,"offset":4674},"end":{"line":193,"column":40,"offset":4680}}]},{"id":"E11","messages":[{"id":"M11001","description":"null","start":{"line":230,"column":8,"offset":5607},"end":{"line":230,"column":9,"offset":5608}},{"id":"M11002","description":"This type is incompatible with"},{"id":"M11003","description":"string","start":{"line":230,"column":11,"offset":5610},"end":{"line":230,"column":17,"offset":5616}}]},{"id":"E12","messages":[{"id":"M12001","description":"undefined","start":{"line":230,"column":8,"offset":5607},"end":{"line":230,"column":9,"offset":5608}},{"id":"M12002","description":"This type is incompatible with"},{"id":"M12003","description":"string","start":{"line":230,"column":11,"offset":5610},"end":{"line":230,"column":17,"offset":5616}}]},{"id":"E13","messages":[{"id":"M13001","description":"null","start":{"line":253,"column":12,"offset":6179},"end":{"line":253,"column":15,"offset":6182}},{"id":"M13002","description":"This type is incompatible with"},{"id":"M13003","description":"string","start":{"line":250,"column":34,"offset":6092},"end":{"line":250,"column":40,"offset":6098}}]},{"id":"E14","messages":[{"id":"M14001","description":"undefined","start":{"line":253,"column":12,"offset":6179},"end":{"line":253,"column":15,"offset":6182}},{"id":"M14002","description":"This type is incompatible with"},{"id":"M14003","description":"string","start":{"line":250,"column":34,"offset":6092},"end":{"line":250,"column":40,"offset":6098}}]}])</script>
 
     <div class="docs-prevnext">
       
