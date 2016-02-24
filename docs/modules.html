@@ -397,7 +397,7 @@ defined within this module are available for use within this file, but only
 6</pre></td><td class="code"><pre><span class="comment line">// == `Calculator.js` == //</span>
 
 <span class="normal T_IMPORT">import</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">add</span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./Math.js&quot;</span><span class="normal T_SEMICOLON">;</span>
-<span class="normal T_IMPORT">import</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">sub</span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_STRING">&quot;./Math.js&quot;</span></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// Error! `sub` is not an export of Math.js</span>
+<span class="normal T_IMPORT">import</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">sub</span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./Math.js&quot;</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// Error! `sub` is not an export of Math.js</span>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">four</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">add</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">2</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">2</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
@@ -458,7 +458,7 @@ if you need to choose between the two options.</p>
 7
 8</pre></td><td class="code"><pre><span class="comment line">// == Calculator_CommonJS.js == //</span>
 
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">Math</span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;./Math_CommonJS.js&#39;</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">Math</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;./Math_CommonJS.js&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">four</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">Math</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">add</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">2</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">2</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
@@ -483,13 +483,13 @@ compatible with the strategy employed by Babel 6.</p>
 3
 4</pre></td><td class="code"><pre><span class="comment line">// == CJSModule.js == //</span>
 
-<span class="normal T_CLASS">class</span> <span class="error"data-error-id="E4" data-message-id="M4003"><span class="normal T_IDENTIFIER">MyClass</span></span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span>
-<span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_IDENTIFIER">module</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">exports</span></span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">MyClass</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">MyClass</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span>
+<span class="normal T_IDENTIFIER">module</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">exports</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">MyClass</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <p>If you wish to import <code>MyClass</code> in to an ES module, Flow models this as a
 <strong>default</strong> export from <code>CJSModule.js</code>:</p>
 
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="normal T_IDENTIFIER">MyClass</span></span> <span class="normal T_IDENTIFIER">from</span> <span class="error"data-error-id="E5" data-message-id="M5001"><span class="normal T_STRING">&quot;./CJSModule.js&quot;</span></span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_IDENTIFIER">MyClass</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./CJSModule.js&quot;</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 <p>(Note the lack of curly braces -- showing that this a <strong>&quot;default&quot;</strong> import
  rather than a <strong>&quot;named&quot;</strong> import)</p>
 
@@ -516,7 +516,7 @@ compatible with the strategy employed by Babel 6.</p>
 similar to what you might receive from a call to <code>require()</code>, you can do so
 via <code>import * as</code>:</p>
 
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_MULT">*</span> <span class="normal T_IDENTIFIER">as</span> <span class="normal T_IDENTIFIER">MultExports</span> <span class="normal T_IDENTIFIER">from</span> <span class="error"data-error-id="E6" data-message-id="M6001"><span class="normal T_STRING">&quot;./CJSModule_MultExports.js&quot;</span></span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_MULT">*</span> <span class="normal T_IDENTIFIER">as</span> <span class="normal T_IDENTIFIER">MultExports</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./CJSModule_MultExports.js&quot;</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 <h4><strong>Importing from ES Module -&gt; CommonJS</strong></h4>
 
 <p>Sometimes you&#39;re in the middle of converting your project to use ES modules
@@ -528,14 +528,14 @@ yet. For this, Flow supports using <code>require()</code> to import from an ES m
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3</pre></td><td class="code"><pre><span class="comment line">// == ES_NamedExports.js == //</span>
-<span class="normal T_EXPORT">export</span> <span class="error"data-error-id="E7" data-message-id="M7001"><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">util1</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span></span>
+<span class="normal T_EXPORT">export</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">util1</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span>
 <span class="normal T_EXPORT">export</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">util2</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 <p>You can <code>require()</code> this ES module from a CommonJS module as follows:</p>
 
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
-4</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">ES_NamedExports</span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E8" data-message-id="M8001"><span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;./ES_NamedExports.js&#39;</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span>
+4</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">ES_NamedExports</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;./ES_NamedExports.js&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
 <span class="normal T_IDENTIFIER">ES_NamedExports</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">util1</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_IDENTIFIER">ES_NamedExports</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">util2</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
@@ -549,7 +549,7 @@ yet. For this, Flow supports using <code>require()</code> to import from an ES m
 <figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
-4</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">ES_DefaultExport</span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E9" data-message-id="M9001"><span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;./ES_DefaultExport.js&#39;</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span>
+4</pre></td><td class="code"><pre><span class="normal T_CONST">const</span> <span class="normal T_IDENTIFIER">ES_DefaultExport</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">require</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;./ES_DefaultExport.js&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
 <span class="comment line">// Note that the default-export is stored as a property named `default`</span>
 <span class="normal T_IDENTIFIER">ES_DefaultExport</span><span class="normal T_PERIOD">.</span><span class="normal T_DEFAULT">default</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
@@ -669,13 +669,13 @@ will need access to as well, you can export it from the module using
 24
 25</pre></td><td class="code"><pre><span class="comment line">// == User.js == //</span>
 
-<span class="normal T_EXPORT">export</span> <span class="normal T_TYPE">type</span> <span class="error"data-error-id="E11" data-message-id="M11003"><span class="type T_IDENTIFIER">UserID</span></span> <span class="type T_ASSIGN">=</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
-<span class="normal T_EXPORT">export</span> <span class="normal T_TYPE">type</span> <span class="error"data-error-id="E12" data-message-id="M12003"><span class="type T_IDENTIFIER">User</span></span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
+<span class="normal T_EXPORT">export</span> <span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">UserID</span> <span class="type T_ASSIGN">=</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
+<span class="normal T_EXPORT">export</span> <span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">User</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">id</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">UserID</span><span class="type T_COMMA">,</span>
   <span class="normal T_IDENTIFIER">name</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span>
 <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
 
-<span class="normal T_TYPE">type</span> <span class="error"data-error-id="E10" data-message-id="M10003"><span class="error"data-error-id="E13" data-message-id="M13003"><span class="error"data-error-id="E14" data-message-id="M14003"><span class="type T_IDENTIFIER">GuitarT</span></span></span></span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">GuitarT</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
   <span class="normal T_TYPE">type</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span>
   <span class="normal T_IDENTIFIER">color</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span>
 <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
@@ -689,7 +689,7 @@ will need access to as well, you can export it from the module using
   <span class="normal T_RETURN">return</span> <span class="normal T_LCURLY">{</span>
     <span class="normal T_IDENTIFIER">id</span><span class="normal T_COLON">:</span> <span class="normal T_IDENTIFIER">id</span><span class="normal T_COMMA">,</span>
     <span class="normal T_IDENTIFIER">name</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;Jimi Hendrix&quot;</span><span class="normal T_COMMA">,</span>
-    <span class="normal T_IDENTIFIER">guitar</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E10" data-message-id="M10001"><span class="normal T_IDENTIFIER">GuitarT</span></span><span class="normal T_COMMA">,</span>
+    <span class="normal T_IDENTIFIER">guitar</span><span class="normal T_COLON">:</span> <span class="normal T_IDENTIFIER">jimiGuitar</span><span class="normal T_COMMA">,</span>
   <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
 
@@ -701,7 +701,7 @@ for other modules to access.</p>
 <p>In order for another module to import these types, it must use <code>import type</code>:</p>
 
 
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_TYPE">type</span> <span class="normal T_LCURLY">{</span><span class="error"data-error-id="E11" data-message-id="M11001"><span class="normal T_IDENTIFIER">UserID</span></span><span class="normal T_COMMA">,</span> <span class="error"data-error-id="E12" data-message-id="M12001"><span class="normal T_IDENTIFIER">User</span></span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./User.js&quot;</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_TYPE">type</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">UserID</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">User</span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./User.js&quot;</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <p>When you use <code>import type</code> in a module, you are creating a local type alias to
 the type that you are importing from the other module. <code>import type</code> will work
@@ -725,7 +725,7 @@ get it&#39;s type:</p>
 7
 8</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">jimiguitar</span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./User.js&quot;</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="normal T_TYPE">type</span> <span class="error"data-error-id="E13" data-message-id="M13001"><span class="type T_IDENTIFIER">GuitarT</span></span> <span class="type T_ASSIGN">=</span> <span class="type T_TYPEOF">typeof</span> <span class="type T_IDENTIFIER">jimiguitar</span><span class="type T_SEMICOLON">;</span>
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">GuitarT</span> <span class="type T_ASSIGN">=</span> <span class="type T_TYPEOF">typeof</span> <span class="type T_IDENTIFIER">jimiguitar</span><span class="type T_SEMICOLON">;</span>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">myGuitar</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">GuitarT</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_TYPE">type</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;Gibson&quot;</span><span class="normal T_COMMA">,</span>
@@ -741,7 +741,7 @@ simpler:</p>
 3
 4
 5
-6</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_TYPEOF">typeof</span> <span class="normal T_LCURLY">{</span><span class="error"data-error-id="E14" data-message-id="M14001"><span class="normal T_IDENTIFIER">jimiguitar</span> <span class="normal T_IDENTIFIER">as</span> <span class="normal T_IDENTIFIER">GuitarT</span></span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="error"data-error-id="E15" data-message-id="M15001"><span class="normal T_STRING">&quot;./User.js&quot;</span></span><span class="normal T_SEMICOLON">;</span>
+6</pre></td><td class="code"><pre><span class="normal T_IMPORT">import</span> <span class="normal T_TYPEOF">typeof</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">jimiguitar</span> <span class="normal T_IDENTIFIER">as</span> <span class="normal T_IDENTIFIER">GuitarT</span><span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&quot;./User.js&quot;</span><span class="normal T_SEMICOLON">;</span>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">myGuitar</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">GuitarT</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_TYPE">type</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;Gibson&quot;</span><span class="normal T_COMMA">,</span>
@@ -775,7 +775,7 @@ explicitly.</p>
 states that you are <code>Missing an annotation</code>. To resolve this error, simply add
 type annotations for the export the error points at.</p>
 
-<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"./Math.js","start":{"line":58,"column":19,"offset":1591},"end":{"line":58,"column":30,"offset":1602}},{"id":"M1002","description":"Required module not found"}]},{"id":"E2","messages":[{"id":"M2001","description":"./Math_CommonJS.js","start":{"line":102,"column":12,"offset":2940},"end":{"line":102,"column":41,"offset":2969}},{"id":"M2002","description":"Required module not found"}]},{"id":"E3","messages":[{"id":"M3001","description":"assignment of module.exports","start":{"line":126,"column":1,"offset":3634},"end":{"line":126,"column":15,"offset":3648}},{"id":"M3002","description":"Unable to determine module type (CommonJS vs ES) if both an export statement and module.exports are used in the same module!"}]},{"id":"E4","messages":[{"id":"M4001","description":"MyClass","start":{"line":132,"column":8,"offset":3792},"end":{"line":132,"column":15,"offset":3799}},{"id":"M4002","description":"name is already bound"},{"id":"M4003","description":"class MyClass","start":{"line":125,"column":7,"offset":3623},"end":{"line":125,"column":14,"offset":3630}}]},{"id":"E5","messages":[{"id":"M5001","description":"./CJSModule.js","start":{"line":132,"column":21,"offset":3805},"end":{"line":132,"column":37,"offset":3821}},{"id":"M5002","description":"Required module not found"}]},{"id":"E6","messages":[{"id":"M6001","description":"./CJSModule_MultExports.js","start":{"line":157,"column":30,"offset":4552},"end":{"line":157,"column":58,"offset":4580}},{"id":"M6002","description":"Required module not found"}]},{"id":"E7","messages":[{"id":"M7001","description":"export function util1() {}","start":{"line":168,"column":8,"offset":4963},"end":{"line":168,"column":27,"offset":4982}},{"id":"M7002","description":"Unable to determine module type (CommonJS vs ES) if both an export statement and module.exports are used in the same module!"}]},{"id":"E8","messages":[{"id":"M8001","description":"./ES_NamedExports.js","start":{"line":173,"column":25,"offset":5112},"end":{"line":173,"column":56,"offset":5143}},{"id":"M8002","description":"Required module not found"}]},{"id":"E9","messages":[{"id":"M9001","description":"./ES_DefaultExport.js","start":{"line":185,"column":26,"offset":5401},"end":{"line":185,"column":58,"offset":5433}},{"id":"M9002","description":"Required module not found"}]},{"id":"E10","messages":[{"id":"M10001","description":"GuitarT","start":{"line":310,"column":13,"offset":8829},"end":{"line":310,"column":20,"offset":8836}},{"id":"M10002","description":"type referenced from value position"},{"id":"M10003","description":"type GuitarT","start":{"line":296,"column":6,"offset":8594},"end":{"line":296,"column":13,"offset":8601}}]},{"id":"E11","messages":[{"id":"M11001","description":"UserID","start":{"line":324,"column":14,"offset":9081},"end":{"line":324,"column":20,"offset":9087}},{"id":"M11002","description":"name is already bound"},{"id":"M11003","description":"type UserID","start":{"line":290,"column":13,"offset":8517},"end":{"line":290,"column":19,"offset":8523}}]},{"id":"E12","messages":[{"id":"M12001","description":"User","start":{"line":324,"column":22,"offset":9089},"end":{"line":324,"column":26,"offset":9093}},{"id":"M12002","description":"name is already bound"},{"id":"M12003","description":"type User","start":{"line":291,"column":13,"offset":8546},"end":{"line":291,"column":17,"offset":8550}}]},{"id":"E13","messages":[{"id":"M13001","description":"GuitarT","start":{"line":342,"column":6,"offset":9698},"end":{"line":342,"column":13,"offset":9705}},{"id":"M13002","description":"name is already bound"},{"id":"M13003","description":"type GuitarT","start":{"line":296,"column":6,"offset":8594},"end":{"line":296,"column":13,"offset":8601}}]},{"id":"E14","messages":[{"id":"M14001","description":"GuitarT","start":{"line":354,"column":16,"offset":9907},"end":{"line":354,"column":37,"offset":9928}},{"id":"M14002","description":"name is already bound"},{"id":"M14003","description":"type GuitarT","start":{"line":296,"column":6,"offset":8594},"end":{"line":296,"column":13,"offset":8601}}]},{"id":"E15","messages":[{"id":"M15001","description":"./User.js","start":{"line":354,"column":44,"offset":9935},"end":{"line":354,"column":55,"offset":9946}},{"id":"M15002","description":"Required module not found"}]}])</script>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([])</script>
 
     <div class="docs-prevnext">
       
