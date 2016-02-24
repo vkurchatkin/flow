@@ -129,6 +129,13 @@
           </li>
         
           <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/advanced-configuration.html#_" class="active">
               Advanced Configuration
             </a>
@@ -152,20 +159,6 @@
           <li>
             <a href="/docs/underscore.html#_">
               Flow, meet Underscore
-            </a>
-            
-          </li>
-        
-      </ul>
-    </section>
-  
-    <section>
-      <h3>Coming Soon</h3>
-      <ul>
-        
-          <li>
-            <a href="/docs/coming-soon.html#_">
-              Future plans
             </a>
             
           </li>
@@ -306,20 +299,6 @@
       </ul>
     </section>
   
-    <section>
-      <h3>CLI</h3>
-      <ul>
-        
-          <li>
-            <a href="/docs/cli.html#_">
-              Using the CLI
-            </a>
-            
-          </li>
-        
-      </ul>
-    </section>
-  
 </nav>
 
 
@@ -330,21 +309,21 @@
     </h1>
     <p></p>
 
-    <p>This section discusses some of the advanced configuration options available 
+    <p>This section discusses some of the advanced configuration options available
 for customizing how <code>flow</code> runs.</p>
 
 <h2><code>.flowconfig</code></h2>
 
-<p>Many times it is enough to create an empty <code>.flowconfig</code> file via <code>flow init</code> 
-and just have <code>.flowconfig</code> simply be the token that tells flow to &quot;start type 
+<p>Many times it is enough to create an empty <code>.flowconfig</code> file via <code>flow init</code>
+and just have <code>.flowconfig</code> simply be the token that tells flow to &quot;start type
 checking here&quot;.</p>
 
-<p>However, <code>.flowconfig</code> does provide some configuration options that can be 
+<p>However, <code>.flowconfig</code> does provide some configuration options that can be
 used to customize what files <code>flow</code> accesses and what files it ignores.</p>
 
 <h3><code>[include]</code></h3>
 
-<p>The <code>[include]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the 
+<p>The <code>[include]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the
 specified files or directories when type checking your code. Including a
 directory includes all the files under that directory. Each line in the
 include section is a path to include. These paths can be relative to the root
@@ -534,11 +513,11 @@ into <code>&gt;=0.13.1 &lt;0.14.0</code>, whereas &quot;^1.2.3&quot; expands int
 
 <h3>Example</h3>
 
-<p>Say you have the following directory structure, with your <code>.flowconfig</code> in 
+<p>Say you have the following directory structure, with your <code>.flowconfig</code> in
 <code>mydir</code>:</p>
 <div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">otherdir
 └── src
-    ├── othercode.js 
+    ├── othercode.js
 mydir
 ├── .flowconfig
 ├── build
@@ -552,7 +531,7 @@ mydir
     ├── first.js
     └── shim.js
 </code></pre></div>
-<p>Here is an example of how you could use the <code>.flowconfig</code> directives. </p>
+<p>Here is an example of how you could use the <code>.flowconfig</code> directives.</p>
 <div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">[include]
 ../otherdir/src
 
@@ -562,13 +541,13 @@ mydir
 [libs]
 ./lib
 </code></pre></div>
-<p>Now <code>flow</code> will include a directory outside the <code>.flowconfig</code> path in its 
+<p>Now <code>flow</code> will include a directory outside the <code>.flowconfig</code> path in its
 check, ignore the <code>build</code> directory and use the declarations in  <code>lib</code>.</p>
 
 
     <div class="docs-prevnext">
       
-        <a href="/docs/troubleshooting.html#_">&larr; Prev</a>
+        <a href="/docs/cli.html#_">&larr; Prev</a>
       
       
         <a class="right" href="/docs/react-example.html#_">Next &rarr;</a>
