@@ -108,6 +108,13 @@
           </li>
         
           <li>
+            <a href="/docs/type-annotations.html#_">
+              Adding Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/third-party.html#_">
               Checking third-party code
             </a>
@@ -173,13 +180,6 @@
           <li>
             <a href="/docs/quick-reference.html#_">
               Quick Reference
-            </a>
-            
-          </li>
-        
-          <li>
-            <a href="/docs/type-annotations.html#_">
-              Type Annotations
             </a>
             
           </li>
@@ -319,22 +319,7 @@ and prototypes.</p>
 <p>In Flow, a class may be defined using
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">ES6 syntax</a>
 extended with field declarations.</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">C</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">C</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
@@ -347,7 +332,7 @@ extended with field declarations.</p>
   <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_SUPER">super</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">y</span> <span class="normal T_OR">||</span> <span class="normal T_NUMBER">0</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 
   <span class="normal T_STATIC">static</span> <span class="normal T_IDENTIFIER">qux</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">D</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;hello&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
-<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
 
 <p>In the code above, C has two fields: <code>x</code> typed as <code>string</code>, and <code>y</code> typed as <code>number</code>,
 as well as a constructor, and a few methods. <code>D</code> overrides those methods, and
@@ -357,9 +342,7 @@ also has a static method.</p>
 an overridden method in a superclass (e.g., <code>bar</code> in <code>C</code>) is compatible with
 the type of an overriding method (e.g., <code>bar</code> in <code>D</code>). This ensures that
 subclassing implies subtyping, i.e., the following code type checks:</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">C</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">D</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;D extends C&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">C</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">D</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;D extends C&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <h2>Type Annotations vs. Inference</h2>
 
@@ -373,9 +356,7 @@ from their field declarations. Flow uses type inference extensively in
 has propagated types through method calls and field accesses to infer
 a static type for each method. So, for example, the following code fails
 to typecheck:</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">n</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="type T_NUMBER_TYPE">number</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_IDENTIFIER">c</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span>  <span class="comment line">// string is incompatible with number</span></pre></td></tr></tbody></table></figure>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">n</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="type T_NUMBER_TYPE">number</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_IDENTIFIER">c</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span>  <span class="comment line">// string is incompatible with number</span></code></pre></figure>
 
 <h3>Annotations, Globally</h3>
 
@@ -389,25 +370,7 @@ be more thoroughly annotated than ones used only locally.</p>
 
 <p>Exported classes must annotate their method signatures - parameter
 and return types - in addition to field declarations:</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ExportC</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ExportC</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
@@ -423,25 +386,14 @@ and return types - in addition to field declarations:</p>
 <span class="normal T_RCURLY">}</span>
 
 <span class="normal T_IDENTIFIER">module</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">exports</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">C</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">ExportC</span><span class="normal T_SEMICOLON">;</span>
-<span class="normal T_IDENTIFIER">module</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">exports</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">D</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">ExportD</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_IDENTIFIER">module</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">exports</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">D</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">ExportD</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <h2>Structural vs. Nominal typing for Classes</h2>
 
 <p>Flow treats classes as <strong>nominal</strong> types: structurally identical classes
 are not interchangeable, and one class is only a subtype of another
 if it has been explicitly declared as a subclass, using <code>extends</code>.</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10</pre></td><td class="code"><pre><span class="comment line">// structurally identical to C, but nominally unrelated</span>
+<figure class="highlight"><pre><code><span class="comment line">// structurally identical to C, but nominally unrelated</span>
 <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">E</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span>
@@ -450,26 +402,12 @@ if it has been explicitly declared as a subclass, using <code>extends</code>.</p
   <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">y</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 <span class="normal T_RCURLY">}</span>
 
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">eAsC</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_IDENTIFIER">C</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">E</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;hi&quot;</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// nope, E is incompatible with C</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">eAsC</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_IDENTIFIER">C</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">E</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;hi&quot;</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// nope, E is incompatible with C</span></code></pre></figure>
 
 <p>However, <a href="/docs/objects.html">Object</a> and Interface types
 are structural. Classes implement interfaces, and satisfy object shapes,
 on a structural basis:</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13</pre></td><td class="code"><pre><span class="comment line">// class C has everything it needs to satisfy this interface</span>
+<figure class="highlight"><pre><code><span class="comment line">// class C has everything it needs to satisfy this interface</span>
 <span class="normal T_INTERFACE">interface</span> <span class="normal T_IDENTIFIER">ILikeC</span> <span class="type T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
@@ -481,25 +419,16 @@ on a structural basis:</p>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">C</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;implements ILikeC&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">s</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">takesAnILikeC</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">s</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">takesAnILikeC</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8</pre></td><td class="code"><pre><span class="comment line">// similarly, C satisfies this object shape</span>
+<figure class="highlight"><pre><code><span class="comment line">// similarly, C satisfies this object shape</span>
 <span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">XY</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span> <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
 
 <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">takesAnXY</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">xy</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">XY</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">xy</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">C</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;satisfies XY&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">n</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">takesAnXY</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">n</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">takesAnXY</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <h2>Polymorphic classes</h2>
 
@@ -508,21 +437,13 @@ a family of classes of the same &quot;shape&quot; but differing only in the
 instantiation of their type parameters.</p>
 
 <p>Consider a polymorphic version of class <code>C</code> above:</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">PolyC</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">X</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">PolyC</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">X</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">X</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
   <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
   <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">y</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">y</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
-<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
 
 <p>The class <code>C</code> is polymorphic in the type parameter <code>X</code>. Flow checks that the
 parts of <code>C</code> which refer to <code>X</code> are correct for any instantiation of <code>X</code>.</p>
@@ -531,15 +452,10 @@ parts of <code>C</code> which refer to <code>X</code> are correct for any instan
 Flow can conclude that the latter has a method with signature
 <code>foo(): string</code>, and (as usual) check that it is compatible
 with the type of <code>foo</code> in <code>InstanceD</code>.</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">InstanceD</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">PolyC</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">InstanceD</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">PolyC</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_SUPER">super</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_PLUS">+</span> <span class="normal T_STRING">&quot;!&quot;</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
   <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">y</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_SUPER">super</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">y</span> <span class="normal T_OR">||</span> <span class="normal T_NUMBER">0</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
-<span class="normal T_RCURLY">}</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
 
 <h3>Bounded polymorphism</h3>
 
@@ -558,22 +474,7 @@ which means that an expression of type <code>C&lt;T&gt;</code> may flow to a loc
 <p>For example, this read/write map of values of type <code>V</code> is only compatible
 with another map of values whose type is <em>both</em> a subtype and supertype
 of <code>V</code>.</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">A</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">A</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">B</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">A</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 
 <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ReadWriteMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">K</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">V</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
@@ -586,7 +487,7 @@ of <code>V</code>.</p>
 <span class="normal T_DECLARE">declare</span> <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">mapOfB</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReadWriteMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="error"data-error-id="E3" data-message-id="M3003"><span class="type T_IDENTIFIER">B</span></span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_SEMICOLON">;</span>
 
 <span class="comment line">// error: mapOfB.get(k): A is fine, but consider mapOfB.put(k, (a: A))</span>
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">mapOfA</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReadWriteMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="error"data-error-id="E3" data-message-id="M3001"><span class="type T_IDENTIFIER">A</span></span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">mapOfB</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">mapOfA</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReadWriteMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="error"data-error-id="E3" data-message-id="M3001"><span class="type T_IDENTIFIER">A</span></span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">mapOfB</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <p>However, a polymorphic class may specify that a given type parameter is
 co- or contravariant, meaning that one instance is compatible with another
@@ -594,17 +495,7 @@ if one type argument is a sub- or supertype, respectively, of the other.</p>
 
 <p><strong>Covariance</strong> is useful whan a type parameter only appears in output (or &quot;positive&quot;)
 positions within a class definition:</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">K</span><span class="type T_COMMA">,</span> <span class="type T_PLUS">+</span><span class="type T_IDENTIFIER">V</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">K</span><span class="type T_COMMA">,</span> <span class="type T_PLUS">+</span><span class="type T_IDENTIFIER">V</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">store</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="type T_LBRACKET">[</span><span class="type T_IDENTIFIER">k</span><span class="type T_COLON">:</span><span class="type T_IDENTIFIER">K</span><span class="type T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">V</span> <span class="type T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">store</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">store</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">store</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
   <span class="normal T_IDENTIFIER">get</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">k</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">K</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_IDENTIFIER">V</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">store</span><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">k</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
@@ -612,7 +503,7 @@ positions within a class definition:</p>
 
 <span class="normal T_DECLARE">declare</span> <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">readOnlyMapOfB</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">B</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_SEMICOLON">;</span>
 <span class="comment line">// ok: B is a subtype of A, and V is a covariant type param.</span>
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">readOnlyMapOfA</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">A</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">readOnlyMapOfB</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">readOnlyMapOfA</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">A</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">readOnlyMapOfB</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <p>Analogously, <strong>contravariance</strong> is useful when a type parameter
 only appears in input (or &quot;negative&quot;) positions within a class definition.</p>
@@ -642,17 +533,7 @@ methods <em>from the perspective of subclasses</em>: for example, a method of <c
 returns a value of type <code>this</code> can safely be viewed as returning <code>D</code> when
 invoked on an instance of <code>D</code> - instead of being locked to the less accurate
 (and no safer) type <code>C</code>, simply by virtue of having been defined in <code>C</code>.</p>
-
-
-<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9</pre></td><td class="code"><pre><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ThisA</span> <span class="normal T_LCURLY">{</span>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ThisA</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="type T_IDENTIFIER">this</span></span><span class="normal T_SEMICOLON">;</span>                            <span class="comment line">// error: input/output position</span>
   <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">this</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>        <span class="comment line">// ok: output position</span>
   <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E5" data-message-id="M5001"><span class="type T_IDENTIFIER">this</span></span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_VOID_TYPE">void</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>  <span class="comment line">// error: input position</span>
@@ -660,7 +541,7 @@ invoked on an instance of <code>D</code> - instead of being locked to the less a
 
 <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ThisB</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">ThisA</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RCURLY">}</span>
 
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ThisB</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">ThisB</span><span class="normal T_RPAREN">)</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// ok: foo() on a ThisB returns a ThisB</span></pre></td></tr></tbody></table></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ThisB</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">ThisB</span><span class="normal T_RPAREN">)</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// ok: foo() on a ThisB returns a ThisB</span></code></pre></figure>
 <script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1803},"end":{"line":65,"column":24,"offset":1810}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1794},"end":{"line":65,"column":14,"offset":1800}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3236},"end":{"line":117,"column":26,"offset":3247}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3232},"end":{"line":117,"column":12,"offset":3233}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":5981},"end":{"line":216,"column":35,"offset":5982}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5872},"end":{"line":213,"column":43,"offset":5873}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8128},"end":{"line":269,"column":10,"offset":8132}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8263},"end":{"line":271,"column":14,"offset":8267}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
 
     <div class="docs-prevnext">

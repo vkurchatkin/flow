@@ -108,6 +108,13 @@
           </li>
         
           <li>
+            <a href="/docs/type-annotations.html#_">
+              Adding Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/third-party.html#_">
               Checking third-party code
             </a>
@@ -173,13 +180,6 @@
           <li>
             <a href="/docs/quick-reference.html#_">
               Quick Reference
-            </a>
-            
-          </li>
-        
-          <li>
-            <a href="/docs/type-annotations.html#_">
-              Type Annotations
             </a>
             
           </li>
@@ -305,107 +305,66 @@
 <article class='withtoc'>
     <h1>
       Objects
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/01-objects.md" target="_blank">Edit on GitHub</a>
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/ref/objects.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <p>Objects can be created with object literals. The types of properties are fixed
-based on their initializers.</p>
+    
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">x</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-  <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">};</span>
-<span class="nx">o</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Objects can be created with object literals. The types of properties are fixed
+based on their initializers.</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">o</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">x</span><span class="normal T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="normal T_NUMBER">42</span></span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">o</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;hello&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <p>Flow infers the type of property <code>x</code> of the object to be number since it is
 initialized with a <code>number</code>. The method call <code>foo()</code> on the object writes
-<code>string</code> to that property. As expected, running Flow produces the following
-error:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">file.js:6:7,13: string
-This type is incompatible with
-  file.js:3:6,7: number
-</code></pre></div>
+<code>string</code> to that property. As expected, running Flow produces an error.</p>
+
 <h2>Object Types</h2>
 
 <p>Object types are of the form:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="p">{</span> <span class="nl">x1</span><span class="p">:</span> <span class="nx">T1</span><span class="p">;</span> <span class="nl">x2</span><span class="p">:</span> <span class="nx">T2</span><span class="p">;</span> <span class="p">...</span> <span class="nx">x3</span><span class="err">:</span> <span class="nx">T3</span><span class="p">;}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span> <span class="nl">x1</span><span class="p">:</span> <span class="nx">T1</span><span class="p">;</span> <span class="nl">x2</span><span class="p">:</span> <span class="nx">T2</span><span class="p">;</span> <span class="nl">x3</span><span class="p">:</span> <span class="nx">T3</span><span class="p">;}</span></code></pre></figure>
 
 <p>Here is an example of declaring an object type:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{}</span>
-<span class="kd">var</span> <span class="nx">obj</span><span class="err">:</span> <span class="p">{</span><span class="nl">a</span><span class="p">:</span> <span class="kr">boolean</span><span class="p">;</span> <span class="nl">b</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span> <span class="nl">c</span><span class="p">:</span> <span class="nx">Foo</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="na">a</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="s2">"Hi"</span><span class="p">,</span> <span class="na">c</span><span class="p">:</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">()}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Foo</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">obj</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span><span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Foo</span><span class="type T_RCURLY">}</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">a</span><span class="normal T_COLON">:</span> <span class="normal T_TRUE">true</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">b</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;Hi&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">c</span><span class="normal T_COLON">:</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">Foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_RCURLY">}</span></code></pre></figure>
 
 <p>Here is an example of Flow catching a problem with your object type:</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Bar</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">badObj</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span><span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_IDENTIFIER">Foo</span></span><span class="type T_RCURLY">}</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">a</span><span class="normal T_COLON">:</span> <span class="normal T_TRUE">true</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">b</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;Hi&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">c</span><span class="normal T_COLON">:</span> <span class="normal T_NEW">new</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_IDENTIFIER">Bar</span></span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_RCURLY">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{}</span>
-<span class="kr">class</span> <span class="nx">Bar</span> <span class="p">{}</span>
-<span class="kd">var</span> <span class="nx">obj</span><span class="err">:</span> <span class="p">{</span><span class="nl">a</span><span class="p">:</span> <span class="kr">boolean</span><span class="p">;</span> <span class="nl">b</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span> <span class="nl">c</span><span class="p">:</span> <span class="nx">Foo</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="na">a</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="s2">"Hi"</span><span class="p">,</span> <span class="na">c</span><span class="p">:</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">()}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">/tmp/flow/f.js:4:70,72: Bar
-This type is incompatible with
-  /tmp/flow/f.js:2:7,9: Foo
-</code></pre></div>
 <h2>Reusable Object Types</h2>
 
 <p>Object types can be made reusable through the use of
 <a href="type-aliases.html">type aliases</a>:</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">MyType</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span><span class="normal T_IDENTIFIER">message</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">isAwesome</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">sayHello</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">data</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">MyType</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">data</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">message</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="nx">type</span> <span class="nx">MyType</span> <span class="o">=</span> <span class="p">{</span><span class="na">message</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span> <span class="nl">isAwesome</span><span class="p">:</span> <span class="kr">boolean</span><span class="p">};</span>
-<span class="kd">function</span> <span class="nx">sayHello</span><span class="p">(</span><span class="nx">data</span><span class="err">:</span> <span class="nx">MyType</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kd">var</span> <span class="nx">mySampleData</span><span class="err">:</span> <span class="nx">MyType</span> <span class="o">=</span> <span class="p">{</span><span class="na">message</span><span class="p">:</span> <span class="s1">'Hello World'</span><span class="p">,</span> <span class="na">isAwesome</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
-<span class="nx">sayHello</span><span class="p">(</span><span class="nx">mySampleData</span><span class="p">);</span>
-<span class="nx">sayHello</span><span class="p">({</span><span class="na">message</span><span class="p">:</span> <span class="s1">'Hi'</span><span class="p">,</span> <span class="na">isAwesome</span><span class="p">:</span> <span class="kc">false</span><span class="p">});</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">mySampleData</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">MyType</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">message</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&#39;Hello World&#39;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">isAwesome</span><span class="normal T_COLON">:</span> <span class="normal T_TRUE">true</span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">sayHello</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">mySampleData</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">sayHello</span><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">message</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&#39;Hi&#39;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">isAwesome</span><span class="normal T_COLON">:</span> <span class="normal T_FALSE">false</span><span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <h2>Optional properties</h2>
 
 <p>Object types can have optional properties. The following code shows how
 optional properties allow objects with missing properties to be typed.</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">var</span> <span class="nx">obj</span><span class="err">:</span> <span class="p">{</span> <span class="nl">a</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span> <span class="nx">b</span><span class="p">?:</span> <span class="nx">number</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="s2">"hello"</span> <span class="p">};</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">optObj</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_PLING">?</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="type T_RCURLY">}</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">a</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;hello&quot;</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <p>When optional properties are accessed, Flow tracks the fact that they could
 be <code>undefined</code>, and reports errors when they are used as is.</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">var</span> <span class="nx">obj</span><span class="err">:</span> <span class="p">{</span> <span class="nl">a</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span> <span class="nx">b</span><span class="p">?:</span> <span class="nx">number</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="s2">"hello"</span> <span class="p">};</span>
-<span class="nx">obj</span><span class="p">.</span><span class="nx">b</span> <span class="o">*</span> <span class="mi">10</span> <span class="c1">// error: undefined is incompatible with number</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<figure class="highlight"><pre><code><span class="error"data-error-id="E3" data-message-id="M3003"><span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_IDENTIFIER">optObj</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">b</span></span> <span class="normal T_MULT">*</span> <span class="normal T_NUMBER">10</span></span> <span class="comment line">// error: undefined is incompatible with number</span></code></pre></figure>
 
 <p>One way to avoid errors is to dynamically check that an optional property exists
 before using it. See <a href="http://flowtype.org/docs/nullable-types.html#_">nullable types</a> for details.</p>
@@ -421,34 +380,28 @@ function calls it on a freshly created object before returning it.</p>
 <code>prototype</code> object. These properties are typically methods, and are inherited
 by all objects created from that constructor function by a process known as
 prototype chaining.</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
-6</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">function</span> <span class="nx">Foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
-<span class="nx">Foo</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
+6</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">FuncBasedClass</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
+<span class="normal T_IDENTIFIER">FuncBasedClass</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">prototype</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">f</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_FUNCTION">function</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 
-<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">x</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">o</span><span class="p">.</span><span class="nx">f</span><span class="p">();</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">y</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">FuncBasedClass</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">z</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">y</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">f</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <p>In this code, a <code>new</code> object is created by <code>new Foo(42)</code>; this object has a
 property <code>x</code> initialized by <code>Foo</code> with the <code>number</code> passed to it. The object
 also responds to the <code>f</code> method defined in <code>Foo.prototype</code>, so <code>o.f()</code> reads
 <code>o.x</code> and returns it. This fits with the expectation of a <code>number</code> as
-expressed by the annotation at line 7, so this code typechecks.</p>
+expressed by the annotation at line 6, so this code typechecks.</p>
 
 <p>Furthermore, Flow ensures that an object&#39;s type can always be viewed as a
 subtype of its constructor&#39;s <code>prototype type</code>. (This is analogous to subtyping
 based on class inheritance.) This means that the following code typechecks:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td><td class="code"><pre><span class="p">...</span>
-<span class="kd">var</span> <span class="nx">o</span><span class="err">:</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anObj</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">FuncBasedClass</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">FuncBasedClass</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <h2>Adding properties</h2>
 
@@ -470,53 +423,23 @@ complicate the analysis; this is a well-known fact (in technical terms, Flow&#39
 analysis is heap-insensitive for strong updates).</p>
 
 <p>For example, the following code typechecks:</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">p</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">p</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">42</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">q</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">q</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">f</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span> <span class="nx">p</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="nx">q</span><span class="p">)</span> <span class="p">{</span> <span class="nx">q</span><span class="p">.</span><span class="nx">f</span><span class="p">();</span> <span class="p">}</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">o</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">o</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">f</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_FUNCTION">function</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
 
-<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
-<span class="nx">o</span><span class="p">.</span><span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span> <span class="p">};</span>
-
-<span class="nx">bar</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
-<span class="nx">foo</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">o</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">o</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <p>In this code, when <code>bar(o)</code> is called, <code>o.x</code> is undefined; only later is it
 initialized by <code>foo(o)</code>, but it is hard to track this fact statically.</p>
 
 <p>Fortunately, though, the following code does not typecheck:</p>
+<figure class="highlight"><pre><code><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">o</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E4" data-message-id="M4003"><span class="type T_STRING_TYPE">string</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">o</span><span class="normal T_RPAREN">)</span></span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span> <span class="nx">p</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="nx">q</span><span class="p">)</span> <span class="p">{</span> <span class="nx">q</span><span class="p">.</span><span class="nx">f</span><span class="p">();</span> <span class="p">}</span>
-
-<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
-<span class="nx">o</span><span class="p">.</span><span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span> <span class="p">};</span>
-
-<span class="nx">foo</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">x</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">file.js:3:16,16: undefined
-This type is incompatible with
-  file.js:8:7,12: string
-</code></pre></div>
 <p>In other words, Flow knows enough to infer that whenever the <code>x</code> property of
 <code>o</code> does exist, it is a number, so a <code>string</code> should not be expected.</p>
 
@@ -564,6 +487,7 @@ types of the properties of the record. This is potentially unsound, but we
 admit it because a sound design would necessarily lead to severe imprecision
 in the types of properties.</p>
 
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":20,"column":21,"offset":287},"end":{"line":20,"column":22,"offset":288}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":19,"column":6,"offset":263},"end":{"line":19,"column":8,"offset":265}}]},{"id":"E2","messages":[{"id":"M2001","description":"Bar","start":{"line":48,"column":73,"offset":1350},"end":{"line":48,"column":76,"offset":1353}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"Foo","start":{"line":48,"column":40,"offset":1317},"end":{"line":48,"column":43,"offset":1320}}]},{"id":"E3","messages":[{"id":"M3001","description":"undefined","start":{"line":82,"column":1,"offset":2131},"end":{"line":82,"column":9,"offset":2139}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"number","start":{"line":82,"column":1,"offset":2131},"end":{"line":82,"column":14,"offset":2144}}]},{"id":"E4","messages":[{"id":"M4001","description":"undefined","start":{"line":164,"column":17,"offset":5254},"end":{"line":164,"column":23,"offset":5260}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"string","start":{"line":164,"column":8,"offset":5245},"end":{"line":164,"column":14,"offset":5251}}]}])</script>
 
     <div class="docs-prevnext">
       
