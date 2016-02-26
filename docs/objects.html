@@ -177,6 +177,13 @@
           </li>
         
           <li>
+            <a href="/docs/builtins.html#_">
+              Built-in Types
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/variables.html#_">
               Variables
             </a>
@@ -463,13 +470,14 @@ boundaries).</p>
 
 <h2>Objects as Maps</h2>
 
-<p>An object can be viewed as a map from <code>string</code> to some value type by setting
-and getting its properties via bracket notation (i.e. dynamic accessors),
-instead of dot notation. Flow infers a precise value type for the map: in
-other words, if you only write <code>number</code> values to a map, you will read <code>number</code>values back (rather than, say, <code>any</code>).</p>
+<p>An object can be viewed as a map from <code>string</code> to some value type by setting and
+getting its properties via bracket notation (i.e. dynamic accessors), instead of
+dot notation. Flow infers a precise value type for the map: in other words, if
+you only write <code>number</code> values to a map, you will read <code>number</code> values back
+(rather than, say, <code>any</code>).</p>
 
-<p>Such a map can be given a type of the form <code>{ [key: string]: number }</code> where <code>string</code> is the key type and <code>number</code> is the
-value type of the map.</p>
+<p>Such a map can be given a type of the form <code>{ [key: string]: number }</code> where
+<code>string</code> is the key type and <code>number</code> is the value type of the map.</p>
 
 <h3>Maps as Records</h3>
 
@@ -479,7 +487,26 @@ types of the properties of the record. This is potentially unsound, but we
 admit it because a sound design would necessarily lead to severe imprecision
 in the types of properties.</p>
 
-<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":20,"column":21,"offset":287},"end":{"line":20,"column":22,"offset":288}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":19,"column":6,"offset":263},"end":{"line":19,"column":8,"offset":265}}]},{"id":"E2","messages":[{"id":"M2001","description":"Bar","start":{"line":48,"column":73,"offset":1350},"end":{"line":48,"column":76,"offset":1353}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"Foo","start":{"line":48,"column":40,"offset":1317},"end":{"line":48,"column":43,"offset":1320}}]},{"id":"E3","messages":[{"id":"M3001","description":"undefined","start":{"line":82,"column":1,"offset":2131},"end":{"line":82,"column":9,"offset":2139}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"number","start":{"line":82,"column":1,"offset":2131},"end":{"line":82,"column":14,"offset":2144}}]},{"id":"E4","messages":[{"id":"M4001","description":"undefined","start":{"line":164,"column":17,"offset":5254},"end":{"line":164,"column":23,"offset":5260}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"string","start":{"line":164,"column":8,"offset":5245},"end":{"line":164,"column":14,"offset":5251}}]}])</script>
+<h3>The <code>Object</code> type</h3>
+
+<p>This type describes &quot;any object&quot; and you can think of it like an
+<code>any</code>-flavored version of an object type.</p>
+
+<p>In JavaScript, everything is an object. Flow is a bit stricter and does not
+consider primitive types to be subtypes of <code>Object</code>.)</p>
+<figure class="highlight"><pre><code><span class="normal T_LPAREN">(</span><span class="error"data-error-id="E5" data-message-id="M5001"><span class="normal T_NUMBER">0</span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E5" data-message-id="M5003"><span class="type T_IDENTIFIER">Object</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="error"data-error-id="E6" data-message-id="M6001"><span class="normal T_STRING">&quot;&quot;</span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E6" data-message-id="M6003"><span class="type T_IDENTIFIER">Object</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="error"data-error-id="E7" data-message-id="M7001"><span class="normal T_TRUE">true</span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E7" data-message-id="M7003"><span class="type T_IDENTIFIER">Object</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="error"data-error-id="E8" data-message-id="M8001"><span class="normal T_NULL">null</span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E8" data-message-id="M8003"><span class="type T_IDENTIFIER">Object</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="error"data-error-id="E9" data-message-id="M9001"><span class="normal T_IDENTIFIER">undefined</span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E9" data-message-id="M9003"><span class="type T_IDENTIFIER">Object</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>Many other types can be treated as objects, however. Naturally objects are
+compatible with <code>Object</code>, but so are functions and classes.</p>
+<figure class="highlight"><pre><code><span class="normal T_LPAREN">(</span><span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RCURLY">}</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Object</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_FUNCTION">function</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Object</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_CLASS">class</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Object</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="error"data-error-id="E10" data-message-id="M10001"><span class="normal T_LBRACKET">[</span><span class="normal T_RBRACKET">]</span></span><span class="type T_COLON">:</span> <span class="error"data-error-id="E10" data-message-id="M10003"><span class="type T_IDENTIFIER">Object</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// Flow does not treat arrays as objects (likely to change)</span></code></pre></figure>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":20,"column":21,"offset":287},"end":{"line":20,"column":22,"offset":288}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":19,"column":6,"offset":263},"end":{"line":19,"column":8,"offset":265}}]},{"id":"E2","messages":[{"id":"M2001","description":"Bar","start":{"line":48,"column":73,"offset":1350},"end":{"line":48,"column":76,"offset":1353}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"Foo","start":{"line":48,"column":40,"offset":1317},"end":{"line":48,"column":43,"offset":1320}}]},{"id":"E3","messages":[{"id":"M3001","description":"undefined","start":{"line":82,"column":1,"offset":2131},"end":{"line":82,"column":9,"offset":2139}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"number","start":{"line":82,"column":1,"offset":2131},"end":{"line":82,"column":14,"offset":2144}}]},{"id":"E4","messages":[{"id":"M4001","description":"undefined","start":{"line":164,"column":17,"offset":5254},"end":{"line":164,"column":23,"offset":5260}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"string","start":{"line":164,"column":8,"offset":5245},"end":{"line":164,"column":14,"offset":5251}}]},{"id":"E5","messages":[{"id":"M5001","description":"number","start":{"line":224,"column":2,"offset":8058},"end":{"line":224,"column":3,"offset":8059}},{"id":"M5002","description":"This type is incompatible with"},{"id":"M5003","description":"object type","start":{"line":224,"column":5,"offset":8061},"end":{"line":224,"column":11,"offset":8067}}]},{"id":"E6","messages":[{"id":"M6001","description":"string","start":{"line":225,"column":2,"offset":8071},"end":{"line":225,"column":4,"offset":8073}},{"id":"M6002","description":"This type is incompatible with"},{"id":"M6003","description":"object type","start":{"line":225,"column":6,"offset":8075},"end":{"line":225,"column":12,"offset":8081}}]},{"id":"E7","messages":[{"id":"M7001","description":"boolean","start":{"line":226,"column":2,"offset":8085},"end":{"line":226,"column":6,"offset":8089}},{"id":"M7002","description":"This type is incompatible with"},{"id":"M7003","description":"object type","start":{"line":226,"column":8,"offset":8091},"end":{"line":226,"column":14,"offset":8097}}]},{"id":"E8","messages":[{"id":"M8001","description":"null","start":{"line":227,"column":2,"offset":8101},"end":{"line":227,"column":6,"offset":8105}},{"id":"M8002","description":"This type is incompatible with"},{"id":"M8003","description":"object type","start":{"line":227,"column":8,"offset":8107},"end":{"line":227,"column":14,"offset":8113}}]},{"id":"E9","messages":[{"id":"M9001","description":"undefined","start":{"line":228,"column":2,"offset":8117},"end":{"line":228,"column":11,"offset":8126}},{"id":"M9002","description":"This type is incompatible with"},{"id":"M9003","description":"object type","start":{"line":228,"column":13,"offset":8128},"end":{"line":228,"column":19,"offset":8134}}]},{"id":"E10","messages":[{"id":"M10001","description":"empty array literal","start":{"line":238,"column":2,"offset":8350},"end":{"line":238,"column":4,"offset":8352}},{"id":"M10002","description":"This type is incompatible with"},{"id":"M10003","description":"object type","start":{"line":238,"column":6,"offset":8354},"end":{"line":238,"column":12,"offset":8360}}]}])</script>
 
     <div class="docs-prevnext">
       

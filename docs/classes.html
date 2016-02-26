@@ -177,6 +177,13 @@
           </li>
         
           <li>
+            <a href="/docs/builtins.html#_">
+              Built-in Types
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/variables.html#_">
               Variables
             </a>
@@ -534,6 +541,17 @@ invoked on an instance of <code>D</code> - instead of being locked to the less a
 <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ThisB</span> <span class="normal T_EXTENDS">extends</span> <span class="normal T_IDENTIFIER">ThisA</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RCURLY">}</span>
 
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">ThisB</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">ThisB</span><span class="normal T_RPAREN">)</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// ok: foo() on a ThisB returns a ThisB</span></code></pre></figure>
+
+<h2><code>Class&lt;T&gt;</code> type</h2>
+
+<p>The name of a class, used as a type annotation, represents instances of that
+class, not the class itself. It is often useful, however, to refer to the
+types of classes.</p>
+
+<p>Given a type <code>T</code> representing instances of a class <code>C</code>, the type <code>Class&lt;T&gt;</code> is
+the type of the class <code>C</code>.</p>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">theClass</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Class</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">C</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anInstance</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 <script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1803},"end":{"line":65,"column":24,"offset":1810}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1794},"end":{"line":65,"column":14,"offset":1800}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3236},"end":{"line":117,"column":26,"offset":3247}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3232},"end":{"line":117,"column":12,"offset":3233}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":5981},"end":{"line":216,"column":35,"offset":5982}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5872},"end":{"line":213,"column":43,"offset":5873}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8128},"end":{"line":269,"column":10,"offset":8132}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8263},"end":{"line":271,"column":14,"offset":8267}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
 
     <div class="docs-prevnext">

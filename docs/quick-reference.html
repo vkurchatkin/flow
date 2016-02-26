@@ -177,6 +177,13 @@
           </li>
         
           <li>
+            <a href="/docs/builtins.html#_">
+              Built-in Types
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/variables.html#_">
               Variables
             </a>
@@ -297,319 +304,291 @@
 <article class='withtoc'>
     <h1>
       Quick Reference
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/01-quick-reference.md" target="_blank">Edit on GitHub</a>
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/ref/quickref.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <h3>Built-in Primitive Types</h3>
+    
 
-<p>• <a href="#the-any-primitive-type"><strong><code>any</code></strong></a> - Describes <em>any</em> possible type<br />
-• <a href="#the-boolean-primitive-type"><strong><code>boolean</code></strong></a> - Describes <code>true</code> or <code>false</code> values<br />
-• <a href="#the-mixed-primitive-type"><strong><code>mixed</code></strong></a> - Describes the supertype of <em>all</em> types<br />
-• <a href="#the-number-primitive-type"><strong><code>number</code></strong></a> - Describes literal number values<br />
-• <a href="#the-string-primitive-type"><strong><code>string</code></strong></a> - Describes literal string values<br />
-• <a href="#the-void-primitive-type"><strong><code>void</code></strong></a> - Describes <code>undefined</code> values<br /></p>
+<h2>Primitives</h2>
 
-<h3>Built-in Class Types</h3>
-
-<p>• <a href="#the-array-t-constructor"><strong><code>Array&lt;T&gt;</code></strong></a> - Describes <code>Array</code> objects with elements of type <code>T</code><br />
-• <a href="#the-boolean-constructor"><strong><code>Boolean</code></strong></a> - Describes <code>Boolean</code> objects (but not <code>boolean</code> literal values!)<br />
-• <a href="#the-class-t-constructor"><strong><code>Class&lt;T&gt;</code></strong></a> - Describes the type of the class object that would instantiate an instance of class <code>T</code><br />
-• <a href="#the-function-constructor"><strong><code>Function</code></strong></a> - Describes <em>any</em> function<br />
-• <a href="#the-number-constructor"><strong><code>Number</code></strong></a> - Describes <code>Number</code> objects (but not <code>number</code> literal values!)<br />
-• <a href="#the-object-constructor"><strong><code>Object</code></strong></a> - Describes <em>any</em> object<br />
-• <a href="#the-string-constructor"><strong><code>String</code></strong></a> - Describes <code>String</code> objects (but not <code>string</code> literal values!)<br /></p>
-
-<h3>Built-in Syntactic Types</h3>
-
-<p>• <a href="#the-object-signature-type">Object Signature: <strong><code>{prop1: number, prop2: string}</code></strong></a> - Describes the type of objects that match a specified signature <br />
-• <a href="#the-function-signature-type">Function Signature: <strong><code>(p1: number, p2: string) =&gt; boolean</code></strong></a> - Describes the type of functions that match a specified signature <br />
-• <a href="#the-callable-object-function-object-type">Callable-Object/Function-Object Signature: <strong><code>{ (p1: number, p2: string): boolean, prop2: number }</code></strong></a> - Describes the type of functions that may have additional &quot;static&quot; properties on them <br /></p>
-
-<h3>Other Built-In Types</h3>
-
-<p>Flow comes with a <a href="https://github.com/facebook/flow/blob/master/lib/core.js">large interface definition</a> that describes all of the other language built-ins for JavaScript. It is included for you by default when you run Flow.</p>
-
-<h3>User Defined Constructor Types</h3>
-
-<p>User-defined class names and function names can be used as a named type annotation as well. This kind of annotation describes the type of the <strong>instance</strong> the class/function would instantiate if <code>new</code>-ed.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">MyClass</span> <span class="p">{</span>
-  <span class="nx">myMethod</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">MyConstructorFunc</span><span class="p">()</span> <span class="p">{}</span>
-<span class="nx">MyConstructorFunc</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">myMethod</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">};</span>
-
-<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">myMethod</span><span class="p">();</span> <span class="c1">// Valid!</span>
-
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">MyConstructorFunc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyConstructorFunc</span><span class="p">();</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">myMethod</span><span class="p">();</span> <span class="c1">// Valid!</span>
-</code></pre></div>
-<h2>Notes And Caveats</h2>
+<p>Flow has types for all of the JavaScript <strong>primitive types</strong>.</p>
 
 <ul>
-<li>The <code>+</code> operator works on numbers <strong>and</strong> strings in JavaScript. In the case of a using <code>+</code> on a <code>number</code> and <code>string</code>, the <code>number</code> is implicitly converted to a <code>string</code> via <code>toString()</code> and a concatenation takes place. Flow recognizes and allows this behavior.</li>
-<li><code>Date</code> objects implicitly convert to <code>number</code> when used in arithmetic operations.
-Flow supports this behavior.</li>
-<li>Use <code>mixed</code> to annotate a location that can take anything, but do not use <code>Object</code> instead! It is confusing to view everything as an object, and if by any chance you do mean &quot;any object&quot;, there is a better way to specify that, just as there is a way to specify &quot;any function&quot;. Also, be aware of the difference between <code>mixed</code> and <code>any</code>: <code>mixed</code> is a taint that propagates quickly, since no useful operation can be performed on it.</li>
+<li><a href="builtins.html#boolean">boolean</a></li>
+<li><a href="builtins.html#mixed">number</a></li>
+<li><a href="builtins.html#string">string</a></li>
+<li><a href="builtins.html#null-and-void">null</a></li>
+<li><a href="builtins.html#null-and-void">void</a></li>
 </ul>
 
-<p><hr /></p>
+<p>See <a href="builtins.html">Built-in Types</a> for more information and examples.</p>
 
-<h2>• The <code>any</code> primitive type</h2>
+<h2>any</h2>
 
-<p>This is a special type that represents <em>any</em> value. An <code>any</code> type may flow into any other type, and all other types may flow into an <code>any</code> type.</p>
+<p>The <code>any</code> type is a supertype <em>and</em> subtype of all types.</p>
 
-<p>This type can be useful when you don&#39;t want Flow to check the type of a value. Sometimes this is desirable if you&#39;re not sure what the type should be (i.e. it comes from a 3rd party library and isn&#39;t easily described) or if Flow is giving you an error for some code that you&#39;re certain is safe -- despite the fact that it doesn&#39;t typecheck.</p>
+<p>Code that uses <code>any</code> is effectively unchecked, and should be avoided when
+another type can be used instead.</p>
 
-<p>Using this &quot;backdoor&quot; is dangerous and not recommended, but it is sometimes necessary because of the gradual nature of Flow. <code>any</code> allows you to model code where Flow does not have knowledge (i.e. when you reference something in a non-Flow file or library).</p>
+<p>It can be useful to opt out of type checking, however. In particular, it is
+very useful when converting an existing code base to use types.</p>
 
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="s1">'some string'</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Valid!</span>
+<p>It is also occasionally necessary to bypass the type checker. There are a
+(decreasing) number of JS idioms which Flow is not able to type statically. In
+these instances, it is practical and reasonable to use <code>any</code>.</p>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nx">any</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Valid! ('any' may flow into any other type!)</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+<p>See <a href="builtins.html#any">Built-in Types</a> for more about <code>any</code>.</p>
 
-<h2>• The <code>Array&lt;T&gt;</code> constructor</h2>
+<h2>mixed</h2>
 
-<p>This type describes JavaScript array objects and the type of the elements contained within the array. Flow assumes that arrays are not sparse and that any element access on a value of type <code>Array&lt;T&gt;</code> will result in a type <code>T</code>.</p>
+<p>The <code>mixed</code> type is a supertype of all types.</p>
 
-<p>For arrays that have a fixed size and/or elements whose types aren&#39;t homogenous, consider using a <a href="arrays.html#tuples">tuple annotation</a> for more accurate typechecking.</p>
+<p>This type is particularly useful when paired with <a href="dynamic-type-tests.html">dynamic type
+tests</a>. For example, you can use <code>mixed</code> to annotate
+a value of an unknown type, and Flow will ensure that you perform the
+necessary type tests to use the value safely.</p>
 
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">];</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'some string'</span><span class="p">];</span> <span class="c1">// Type error!</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="s1">'some string'</span><span class="p">];</span> <span class="c1">// Type error!</span>
+<p>See <a href="builtins.html#mixed">Built-in Types</a> for more about <code>mixed</code>.</p>
 
-<span class="kd">var</span> <span class="nx">myNumbers</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">];</span>
-<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">myNumbers</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// Valid!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+<h2>Arrays</h2>
 
-<h2>• The <code>boolean</code> primitive type</h2>
+<p>This type describes JavaScript array objects and the type of the elements
+contained within the array.</p>
 
-<p>This type describes a boolean value in JavaScript. The possible values of this type are <code>true</code> and <code>false</code>.</p>
+<p>Indexing into an array with type <code>Array&lt;T&gt;</code> will always yield a value with
+type <code>T</code>. That is, Flow assumes arrays are dense and does not do bounds
+checking.</p>
+<figure class="highlight"><pre><code><span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">array</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_LBRACKET">[</span><span class="type T_RBRACKET">]</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">1</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">2</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">3.14</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">42</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">theAnswer</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">array</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">3</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// 42</span>
+<span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">offTheEnd</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">array</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">100</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// No error</span>
 
-<p>Note that there are many implicit conversions to <code>boolean</code> in JavaScript. Flow understands this and allows it when it is safe to do so. For example, any expression can be used as a conditional in an if-statement or as an operand to <code>&amp;&amp;</code>.</p>
+<span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">array2</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Array</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LBRACKET">[</span><span class="normal T_STRING">&quot;an alternate&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_STRING">&quot;syntax&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_STRING">&quot;for arrays&quot;</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+<h3>Tuples</h3>
 
-<h2>• The <code>Boolean</code> constructor</h2>
+<p>Tuple types are a kind of array type particularly suited to describe finite,
+heterogeneous collections.</p>
+<figure class="highlight"><pre><code><span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">tuple</span><span class="type T_COLON">:</span> <span class="type T_LBRACKET">[</span><span class="error"data-error-id="E1" data-message-id="M1001"><span class="error"data-error-id="E5" data-message-id="M5003"><span class="type T_STRING_TYPE">string</span></span></span><span class="type T_COMMA">,</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="error"data-error-id="E3" data-message-id="M3001"><span class="type T_NUMBER_TYPE">number</span></span></span><span class="type T_COMMA">,</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="type T_BOOLEAN_TYPE">boolean</span></span><span class="type T_RBRACKET">]</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LBRACKET">[</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">0</span><span class="normal T_COMMA">,</span> <span class="normal T_TRUE">true</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span>
 
-<p>This type describes objects created from JavaScript&#39;s built-in <code>Boolean</code> constructor. Note that this is distinct from literal <code>true</code> or <code>false</code> values! (although the methods of <code>Boolean</code> are also available on the primitive <code>boolean</code> type as well).</p>
+<span class="comment line">// Indexing into the array will return the type at a given index.</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tuple</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">0</span><span class="normal T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tuple</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">1</span><span class="normal T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_STRING_TYPE">string</span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Boolean</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Boolean</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+<span class="comment line">// Indexing into an statically unknown index will return a general type.</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">unknownNumber</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_SEMICOLON">;</span>
+<span class="comment line">// `void` is none of `string`, `number`, or `boolean`</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tuple</span><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">unknownNumber</span><span class="normal T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="error"data-error-id="E3" data-message-id="M3003"><span class="error"data-error-id="E4" data-message-id="M4003"><span class="type T_VOID_TYPE">void</span></span></span></span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">tuple</span><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">unknownNumber</span><span class="normal T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_BIT_OR">|</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_BIT_OR">|</span><span class="type T_BOOLEAN_TYPE">boolean</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// OK</span>
 
-<h2>• The <code>Class&lt;T&gt;</code> constructor</h2>
+<span class="comment line">// Values written must be compatible with the type at that index.</span>
+<span class="normal T_IDENTIFIER">tuple</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">1</span><span class="normal T_RBRACKET">]</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_MINUS">-</span><span class="normal T_NUMBER">1</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">tuple</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">0</span><span class="normal T_RBRACKET">]</span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E5" data-message-id="M5001"><span class="normal T_FALSE">false</span></span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-<p>This type describes the type of the class object that one would use to instantiate an instance of class <code>T</code>.</p>
+<p>See <a href="arrays.html">Arrays</a> for more information and examples.</p>
 
-<p>Normally when you specify the name of a class in a type annotation, this would refer to the type of <strong>instances</strong> of that class. However, sometimes it&#39;s useful to describe the type of the class object iself; So this type allows you to do this.</p>
+<h2>Objects</h2>
 
-<p>This is similar to a <a href="typeof.html"><code>typeof</code> annotation</a> except that it is limited to usage for classes rather than all values.</p>
+<p>This type describes any object values that match a specified shape.</p>
+<figure class="highlight"><pre><code><span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">object</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="normal T_IDENTIFIER">bar</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E6" data-message-id="M6003"><span class="type T_NUMBER_TYPE">number</span></span><span class="type T_RCURLY">}</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">bar</span><span class="normal T_COLON">:</span> <span class="normal T_NUMBER">0</span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">object</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">MyClass</span> <span class="p">{</span>
-  <span class="nx">myMethod</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
+<span class="comment line">// Property writes must be compatible with the declared type.</span>
+<span class="normal T_IDENTIFIER">object</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E6" data-message-id="M6001"><span class="normal T_STRING">&quot;bar&quot;</span></span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">MyClass</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">a</span><span class="p">();</span> <span class="c1">// Valid!</span>
+<h3>Objects as maps</h3>
 
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// Type error!</span>
+<p>Objects are often used as lookup tables, or maps. While the <code>Map</code> type is more
+suitable for this use case, Flow does support this common idiom.</p>
+<figure class="highlight"><pre><code><span class="normal T_LET">let</span> <span class="normal T_IDENTIFIER">coolRating</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span><span class="type T_LBRACKET">[</span><span class="type T_IDENTIFIER">id</span><span class="type T_COLON">:</span><span class="type T_STRING_TYPE">string</span><span class="type T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_RCURLY">}</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">coolRating</span><span class="normal T_LBRACKET">[</span><span class="normal T_STRING">&quot;sam&quot;</span><span class="normal T_RBRACKET">]</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">10</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// Yes, it&#39;s a 0-10 scale.</span></code></pre></figure>
 
-<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">e</span><span class="err">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">d</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">;</span> <span class="c1">// Error! 'd' is a runtime value, not a type!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+<h3>Callable objects</h3>
 
-<h2>• The <code>Function</code> constructor</h2>
+<p>Functions are also objects, and may have other props. Flow models this as an
+object type with a callable property.</p>
+<figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">makeCallable</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="type T_RCURLY">}</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">callable</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">number</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">number</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">toFixed</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">2</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+  <span class="normal T_IDENTIFIER">callable</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">123</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">callable</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<p>This type describes <em>any</em> function. Any kind of function may flow into it, and any interface that specifies any kind of function (no matter how specific) may receive it. This type works exactly like the <a href="#the-any-primitive-type"><code>any</code></a> type except that it is restricted to function types.</p>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">callable</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">makeCallable</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Function</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{};</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Function</span> <span class="o">=</span> <span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nb">Function</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">callableReturn</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">callable</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">Math</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">PI</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// &quot;3.14&quot;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">callableFoo</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">callable</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// 123</span></code></pre></figure>
 
-<span class="c1">// Valid! (`Function` may flow into any function type)</span>
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nb">Function</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
-<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="p">(</span><span class="nx">str</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Valid!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
+<h3>The <code>Object</code> type</h3>
 
-<h2>• The <code>mixed</code> primitive type</h2>
-
-<p>This is a special type that represents the supertype of all values. Any other type may flow into a <code>mixed</code> type, but <code>mixed</code> may only flow into other <code>mixed</code> types.</p>
-
-<p>Beware of the difference between <code>mixed</code> and <code>any</code>; <code>mixed</code> is a taint that ensures the type doesn&#39;t flow into a well-typed interface but allows any other type to flow into it. If you wish to flow a <code>mixed</code> variable into a well-typed interface, you must first <a href="dynamic-type-tests.html">refine</a> the type before using it.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">mixed</span> <span class="o">=</span> <span class="s1">'some string'</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">mixed</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">mixed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Valid!</span>
-
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nx">mixed</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Error! ('mixed' may not flow to any other type!)</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The <code>number</code> primitive type</h2>
-
-<p>This type describes a number in JavaScript.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="s1">'str'</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The <code>Number</code> constructor</h2>
-
-<p>This type describes objects created from JavaScript&#39;s built-in <code>Number</code> constructor. Note that this is distinct from number literal values! (although the methods of <code>Number</code> are also available on the primitive <code>number</code> type as well).</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Number</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Number</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The <code>Object</code> constructor</h2>
-
-<p>This type describes <em>any</em> object. Any kind of object may flow into it, and any interface that specifies any kind of object (no matter how specific) may receive it. This type works exactly like the <a href="#the-any-primitive-type"><code>any</code></a> type except that it is restricted to object types.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">Object</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">Object</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">();</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">d</span><span class="err">:</span> <span class="nb">Object</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
-
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="err">:</span> <span class="nb">Object</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">e</span><span class="err">:</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">();</span> <span class="c1">// Valid! (`Object` may flow into any object type)</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The <code>string</code> primitive type</h2>
-
-<p>This type describes a string in JavaScript.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">'some string'</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The <code>String</code> constructor</h2>
-
-<p>This type describes objects created from JavaScript&#39;s built-in <code>String</code> constructor. Note that this is distinct from string literal values! (although the methods of <code>String</code> are also available on the primitive <code>string</code> type as well).</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="nb">String</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="s1">'hai!'</span><span class="p">);</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="nb">String</span> <span class="o">=</span> <span class="s1">'hai!'</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The <code>void</code> primitive type</h2>
-
-<p>This type describes an <code>undefined</code> value in JavaScript.</p>
-
-<p>Normally you only want to use this type to describe the return type of functions that return nothing. The only values that have type <code>void</code> are <code>undefined</code> and the results of the <code>void()</code> operator in JavaScript. Flow is fairly strict about things that <code>void</code> may flow into.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="k">void</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="k">void</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Type error!</span>
-</code></pre></div>
-<p><sub><a href="#built-in-primitive-types">Back To Top</a></sub></p>
-
-<h2>• The object signature type</h2>
-
-<p>This type describes any object values that match the specified interface.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">a</span><span class="err">:</span> <span class="p">{</span><span class="nl">prop1</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">prop2</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">prop1</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-  <span class="na">prop2</span><span class="p">:</span> <span class="s1">'asdf'</span><span class="p">,</span>
-<span class="p">};</span>
-
-<span class="c1">// Type error! Missing a `prop2` property</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="p">{</span><span class="nl">prop1</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">prop2</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">prop1</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-<span class="p">};</span>
-
-<span class="c1">// Type error! `prop2 property types don't match!</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="p">{</span><span class="nl">prop1</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">prop2</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">prop1</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-  <span class="na">prop2</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="c1">// Type error!</span>
-<span class="p">};</span>
-</code></pre></div>
-<p><sub><a href="#built-in-syntactic-types">Back To Top</a></sub></p>
-
-<h2>• The function signature type</h2>
-
-<p>This type describes any function values that match the specified parameters/return signature.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Valid!</span>
-<span class="kd">var</span> <span class="nx">add</span><span class="err">:</span> <span class="p">((</span><span class="nx">num1</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">num2</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
-<span class="p">};</span>
-
-<span class="c1">// Type error! Parameter types don't match!</span>
-<span class="kd">var</span> <span class="nx">badTypeAnnotation</span><span class="err">:</span> <span class="p">((</span><span class="nx">num1</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">num2</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=</span>
-  <span class="kd">function</span><span class="p">(</span><span class="nx">str1</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">str2</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">str1</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="nx">str2</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-  <span class="p">};</span>
-</code></pre></div>
-<p><sub><a href="#built-in-syntactic-types">Back To Top</a></sub></p>
-
-<h2>• The callable-object/function-object type</h2>
-
-<p>This type describes function values that might have additional static properties set on them.</p>
-
-<p>Example:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Valid!</span>
-<span class="kd">function</span> <span class="nx">getStrProcessor</span><span class="p">(</span><span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="p">{</span> <span class="p">(</span><span class="nx">str</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">processor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="s1">'&lt;&lt;PROCESSED&gt;&gt;'</span><span class="p">);</span>
-  <span class="p">};</span>
-  <span class="nx">processor</span><span class="p">.</span><span class="nx">token</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
-  <span class="k">return</span> <span class="nx">processor</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// Type error! Note that the returned function is missing a `token` property</span>
-<span class="kd">function</span> <span class="nx">getStrProcessor</span><span class="p">(</span><span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="p">{</span> <span class="p">(</span><span class="nx">str</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">token</span><span class="err">:</span> <span class="nx">string</span><span class="p">}</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="s1">'&lt;&lt;PROCESSED&gt;&gt;'</span><span class="p">);</span>
-  <span class="p">};</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><sub><a href="#built-in-syntactic-types">Back To Top</a></sub></p>
-
+<p>The <code>Object</code> type is a supertype of all object types. A value of this type
+supports property access by any property name, and will return a value with
+type <code>any</code>.</p>
+
+<p>Like <code>any</code>, this type should be used sparingly.</p>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anyObject</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Object</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">anyObject</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">baz</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// OK</span></code></pre></figure>
+
+<p>See <a href="objects.html">Objects</a> for more information and examples.</p>
+
+<h2>Functions</h2>
+
+<p>Functions take zero or more arguments and optionally return a value. In
+addition to &quot;standard&quot; function declarations, Flow supports arrow functions,
+async functions, and generator functions.</p>
+<figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">greatestCommonDivisor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_NOT">!</span><span class="normal T_IDENTIFIER">b</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">a</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">greatestCommonDivisor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">b</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">a</span> <span class="normal T_MOD">%</span> <span class="normal T_IDENTIFIER">b</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="comment line">// Annotations included for example purposes only.</span>
+<span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">1</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">2</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">3</span><span class="normal T_RBRACKET">]</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">map</span><span class="normal T_LPAREN">(</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">num</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ARROW">=&gt;</span> <span class="normal T_IDENTIFIER">num</span> <span class="normal T_MULT">*</span> <span class="normal T_NUMBER">2</span><span class="normal T_RPAREN">)</span>
+
+<span class="normal T_ASYNC">async</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">getFriendNames</span><span class="normal T_LPAREN">(</span>
+  <span class="normal T_IDENTIFIER">friendIDs</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Promise</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_LBRACKET">[</span><span class="type T_RBRACKET">]</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">getFriendName</span><span class="type T_COLON">:</span> <span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">id</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_RPAREN">)</span> <span class="type T_ARROW">=&gt;</span> <span class="type T_IDENTIFIER">Promise</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_COMMA">,</span>
+<span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Promise</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_LBRACKET">[</span><span class="type T_RBRACKET">]</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">ids</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_AWAIT">await</span> <span class="normal T_IDENTIFIER">friendIDs</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">names</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_AWAIT">await</span> <span class="normal T_IDENTIFIER">Promise</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">all</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">ids</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">map</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">getFriendName</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">names</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_FUNCTION">function</span> <span class="normal T_MULT">*</span><span class="normal T_IDENTIFIER">infinity</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Generator</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_COMMA">,</span><span class="type T_VOID_TYPE">void</span><span class="type T_COMMA">,</span><span class="type T_VOID_TYPE">void</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">n</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">0</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_WHILE">while</span> <span class="normal T_LPAREN">(</span><span class="normal T_TRUE">true</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_YIELD">yield</span> <span class="normal T_IDENTIFIER">n</span><span class="normal T_INCR">++</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+
+<h3>The <code>Function</code> type</h3>
+
+<p>The <code>Function</code> type is a supertype of all function types. A value of this type
+may be called with any number of any type of parameters, and will return a
+value with type <code>any</code>.</p>
+
+<p>Like <code>any</code>, this type should be used sparingly.</p>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anyFunction</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Function</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_ARROW">=&gt;</span> <span class="normal T_LCURLY">{</span><span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">anyFunction</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_STRING">&quot;bar&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">baz</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">quux</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// OK</span></code></pre></figure>
+
+<p>See <a href="functions.html">Functions</a> for more information and examples.</p>
+
+<h2>Classes</h2>
+
+<p>Defining a class also defines a type, which can be used to annotate instances
+of that class.</p>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">MyClass</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+  <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">myInstance</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">MyClass</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">MyClass</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">myInstance</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">myInstance</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<h3>Interfaces</h3>
+
+<p>Classes are nominally typed in Flow. That means that two classes are only
+compatible if they have an explicit subtyping relationship, via <code>extends</code>. It
+is often useful to describe a set of types which are structurally similar.</p>
+<figure class="highlight"><pre><code><span class="normal T_INTERFACE">interface</span> <span class="normal T_IDENTIFIER">Fooable</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">foo</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span>
+
+<span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">AFoo</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;foo from A&quot;</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">BFoo</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_STRING">&quot;foo from B&quot;</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_LPAREN">(</span><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">AFoo</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Fooable</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">BFoo</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Fooable</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<h3>Sugar-free classes</h3>
+
+<p>ES2015 classes formalize the common practice of simulating class-like
+inheritace with functions and prototypes. Flow does have limited support for
+this pattern as well, but the ES2015 class syntax is highly recommended.</p>
+<figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">DietClass</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_IDENTIFIER">DietClass</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">prototype</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_FUNCTION">function</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">myDietInstance</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">DietClass</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">DietClass</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">myDietInstance</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">myDietInstance</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<h3>The <code>Class&lt;T&gt;</code> type</h3>
+
+<p>Remember that the name of the class as a type annotation represents instances
+of that class. Given a type <code>T</code> representing instances of a class <code>C</code>, the
+type <code>Class&lt;T&gt;</code> is the type of the class <code>C</code>.</p>
+<figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">myClass</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Class</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">MyClass</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">MyClass</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">myInstance2</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">myClass</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>See <a href="classes.html">Classes</a> for more information and examples.</p>
+
+<h2>Type aliases</h2>
+
+<p>Instead of writing out a potentially complex type multiple times, define a
+type alias instead.</p>
+<figure class="highlight"><pre><code><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">ObjectWithManyProperties</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">bar</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">baz</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_COMMA">,</span>
+  <span class="normal T_IDENTIFIER">qux</span><span class="type T_COLON">:</span> <span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">bar</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_RPAREN">)</span> <span class="type T_ARROW">=&gt;</span> <span class="type T_BOOLEAN_TYPE">boolean</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span></code></pre></figure>
+
+<p>See <a href="type-aliases.html">Type Aliases</a> for more information and examples.</p>
+
+<h2>Generics</h2>
+
+<p>Generics make it possible to abstract over types. A common example is
+container classes, which store, traverse, and retrieve data without knowledge
+of specifically what is inside.</p>
+
+<p>Generic object types can be specified using a type alias.</p>
+<figure class="highlight"><pre><code><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">GenericObject</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span> <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">numberObject</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">GenericObject</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_COLON">:</span> <span class="normal T_NUMBER">0</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">stringObject</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">GenericObject</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_COLON">:</span> <span class="normal T_STRING">&quot;foo&quot;</span> <span class="normal T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>Type parameters for classes are specified in the class declaration.</p>
+<figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">GenericClass</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">numberInstance</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">GenericClass</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">GenericClass</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">0</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">stringInstance</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">GenericClass</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">GenericClass</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>Type parameters for functions are specified in the function declaration.</p>
+<figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">findMax</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">arr</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_LBRACKET">[</span><span class="type T_RBRACKET">]</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">compare</span><span class="type T_COLON">:</span> <span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_COMMA">,</span> <span class="type T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_RPAREN">)</span> <span class="type T_ARROW">=&gt;</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">sorted</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">arr</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">sort</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">compare</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">sorted</span><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">sorted</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span> <span class="normal T_MINUS">-</span> <span class="normal T_NUMBER">1</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":74,"column":13,"offset":2136},"end":{"line":74,"column":19,"offset":2142}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"undefined","start":{"line":83,"column":24,"offset":2474},"end":{"line":83,"column":28,"offset":2478}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":74,"column":21,"offset":2144},"end":{"line":74,"column":27,"offset":2150}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":78,"column":12,"offset":2279},"end":{"line":78,"column":18,"offset":2285}}]},{"id":"E3","messages":[{"id":"M3001","description":"number","start":{"line":74,"column":21,"offset":2144},"end":{"line":74,"column":27,"offset":2150}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"undefined","start":{"line":83,"column":24,"offset":2474},"end":{"line":83,"column":28,"offset":2478}}]},{"id":"E4","messages":[{"id":"M4001","description":"boolean","start":{"line":74,"column":29,"offset":2152},"end":{"line":74,"column":36,"offset":2159}},{"id":"M4002","description":"This type is incompatible with"},{"id":"M4003","description":"undefined","start":{"line":83,"column":24,"offset":2474},"end":{"line":83,"column":28,"offset":2478}}]},{"id":"E5","messages":[{"id":"M5001","description":"boolean","start":{"line":88,"column":12,"offset":2627},"end":{"line":88,"column":17,"offset":2632}},{"id":"M5002","description":"This type is incompatible with"},{"id":"M5003","description":"string","start":{"line":74,"column":13,"offset":2136},"end":{"line":74,"column":19,"offset":2142}}]},{"id":"E6","messages":[{"id":"M6001","description":"string","start":{"line":102,"column":14,"offset":2951},"end":{"line":102,"column":19,"offset":2956}},{"id":"M6002","description":"This type is incompatible with"},{"id":"M6003","description":"number","start":{"line":98,"column":32,"offset":2821},"end":{"line":98,"column":38,"offset":2827}}]}])</script>
 
     <div class="docs-prevnext">
       
         <a href="/docs/underscore.html#_">&larr; Prev</a>
       
       
-        <a class="right" href="/docs/variables.html#_">Next &rarr;</a>
+        <a class="right" href="/docs/builtins.html#_">Next &rarr;</a>
       
     </div>
 
