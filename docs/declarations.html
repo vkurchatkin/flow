@@ -304,110 +304,210 @@
 <article class='withtoc'>
     <h1>
       Declarations
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/01-declarations.md" target="_blank">Edit on GitHub</a>
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/ref/declarations.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <p>Take the following code snippet:</p>
+    
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kd">var</span> <span class="nx">M</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'M'</span><span class="p">);</span>
-<span class="nx">M</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="k">new</span> <span class="nx">C</span><span class="p">());</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
 
-<p>As is evident, the above code could be fraught with problems. Where is the <code>M</code>
-module? Where is <code>C</code> defined?</p>
+<p>Sometimes we just want to <em>declare</em> the types of some definitions, so that
+code that <em>uses</em> those definitions may be typechecked, without worrying about
+the code that <em>implements</em> those definitions. The implementation code may
+simply not be available for typechecking (such as for JavaScript built-ins
+like <code>Math</code> or <code>Array</code>). Alternatively, the implementation code may be
+available but we may not want to typecheck it (yet). Declarations also enable
+a powerful modular approach to typechecking libraries, separating the checking
+of uses from the checking of implementations.</p>
 
-<p>Running Flow on the above code yields:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">/tmp/flow/f.js:2:9,20: M
-Required module not found
+<p>As we shall see below, declarations can not only express types of definitions
+in global scope (variables, functions, classes), but also express signatures
+of modules.</p>
 
-/tmp/flow/f.js:3:11,11: identifier C
-Unknown global name
-</code></pre></div>
-<h2>Declarations</h2>
+<h2>Declarations should be distinct from regular code</h2>
 
-<p>Flow supports
-<a href="third-party.html#example">declarations</a>
-via the <code>declare</code> keyword to allow the interface of code to be defined and
-then used in modules and other JavaScript code.</p>
+<p>Note that declarations are exclusively <em>compile-time</em> entities: they are
+transpiled away, so they have no effect at run time. In fact, declarations
+without backing implementations may cause typechecked uses to break at run
+time! Thus, it is important to distinguish declaration code from regular code.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6</pre></td><td class="code"><pre><span class="nx">declare</span> <span class="kr">class</span> <span class="nx">C</span> <span class="p">{</span>
-  <span class="nl">x</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nx">declare</span> <span class="nx">module</span> <span class="nx">M</span> <span class="p">{</span>
-  <span class="nx">declare</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">c</span><span class="err">:</span> <span class="nx">C</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>In Flow, there are two recommended styles of doing declarations: let&#39;s call
+them the <a href="#pointing-your-project-to-declarations">&quot;.flowconfig&quot;-style</a> and the
+<a href="#declaration-files">&quot;.js.flow&quot; style</a>. The styles differ in their generality
+and convenience, but share some important characteristics: both involve
+locating the declarations separately from regular code, and both use similar
+syntax.</p>
 
-<p>The declarations for <code>C</code> and <code>M</code> have global scope. This means that the name <code>C</code> can be referenced
-directly in any file, and the module <code>M</code> can be required in any file.</p>
+<h2>Pointing your project to declarations</h2>
 
-<p>Declarations can be thought of as interfaces.
-The implementation details of <code>foo()</code>, for
-example, should not be known by Flow: just the types it exposes is enough.</p>
+<p>Let&#39;s start with the &quot;.flowconfig&quot; style of doing declarations.</p>
 
-<blockquote>
-<p>NOTE</p>
+<p>In this style, declarations (see below for examples) can be made visible to an
+entire project by putting them in files with extension <code>.js</code> in a directory,
+say <code>decls</code>, and putting the following in the <code>.flowconfig</code> of the project:</p>
+<figure class="highlight"><pre><code><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">libs</span><span class="normal T_RBRACKET">]</span>
+<span class="normal T_IDENTIFIER">decls</span></code></pre></figure>
 
-<p>The interfaces can be declared in any file you choose, as long as they are in a directory
-outside the paths monitored by <code>.flowconfig</code>.</p>
-</blockquote>
+<h2>Declaring definitions that should exist at run time</h2>
 
-<p>To use code in declared files, tell the Flow server about it. Assuming the code above is defined in <code>/lib/flow/</code>, you can issue the following command:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">flow start --lib /lib/flow/
-</code></pre></div>
-<p>It is also possible to specify multiple library paths, separated by commas.
-Furthermore, you can specify the libs in <code>.flowconfig</code> with the <code>[libs]</code> option. Within the specified folders, Flow will treat any file ending in <code>.js</code> as an interface.</p>
+<p>Here&#39;s a simple example, where we declare a global variable.</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">DEBUG</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-<p>Now Flow knows to check <code>/lib/flow/</code> for any code that is not immediately
-available in the file on which it is checking.</p>
+<p>Other global definitions, like functions and classes, can similarly be
+declared. Note how function and method bodies are elided.</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">isLeapYear</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">year</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="normal T_SEMICOLON">;</span>
 
-<p>Assuming we have the declarations above, now when running Flow against this code:</p>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Counter</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">val</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">incr</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">M</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'M'</span><span class="p">);</span>
-<span class="nx">M</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="k">new</span> <span class="nx">C</span><span class="p">());</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">No errors!
-</code></pre></div>
-<h2>Paths</h2>
+<p>Such declarations can be made visible to all modules in a project (see
+<a href="#pointing-your-project-to-declarations">above</a>). This means that any code
+that uses these definitions in a typesafe manner will typecheck.</p>
+<figure class="highlight"><pre><code><span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">isLeapYear</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;2016&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span> <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Yay!&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
-<p>A module declaration can also use a string literal to describe the path used to refer to that module in <code>require</code> statements.
-Thus, when you have:</p>
+<p>Note that it is entirely up to the programmer to ensure that declared
+definitions actually exist, and have the correct types.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">M</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path/to/M'</span><span class="p">);</span>
-<span class="p">...</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<h2>Declaring types</h2>
 
-<p>Use a declaration of the form:</p>
+<p>It is similarly useful to declare types. Like other declarations, type
+declarations can also be made visible to all modules in a project.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td><td class="code"><pre><span class="nx">declare</span> <span class="nx">module</span> <span class="s2">"path/to/M"</span> <span class="p">{</span>
-  <span class="p">...</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
 
-<h2>CommonJS modules with a single export</h2>
+<p>Declared types include type aliases and interfaces; in fact, they share the
+same syntax as usual types, so the <code>declare</code> keyword is superfluous.</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Response</span> <span class="type T_ASSIGN">=</span> <span class="type T_STRING">&#39;yes&#39;</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING">&#39;no&#39;</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING">&#39;maybe&#39;</span><span class="type T_SEMICOLON">;</span>
 
-<p>Some CommonJS modules provide a single export by overwriting <code>module.exports</code> with some specific class/function/etc (e.g. <a href="https://www.npmjs.com/package/glob">glob</a>). Use the following trick to specify interface declaration for such modules:</p>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_INTERFACE">interface</span> <span class="normal T_IDENTIFIER">Stack</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">push</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">item</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="type T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">pop</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">isEmpty</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td><td class="code"><pre><span class="nx">declare</span> <span class="nx">module</span> <span class="s1">'glob'</span> <span class="p">{</span>
-<span class="err">　</span><span class="nx">declare</span> <span class="kd">function</span> <span class="nx">exports</span><span class="p">(</span><span class="nx">globStr</span><span class="err">:</span> <span class="nx">string</span><span class="p">)</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<h2>Declaring modules</h2>
 
+<p>Finally, modules can be declared as well. Like definitions that should exist
+at run time, it is up to the programmer to ensure that the declared modules
+actually exist at run time.</p>
+
+<p>Declaring a module consists of naming the module and declaring its exports. Of
+course, the exports can be variables, functions, classes, as well as type
+aliases and interfaces. Thus it is not surprising that they share exactly the
+same syntax as the declarations above, except that they are now scoped to the
+module, instead of globally.</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_IDENTIFIER">module</span> <span class="normal T_IDENTIFIER">Misc</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_DECLARE">declare</span> <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">DEBUG</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_DECLARE">declare</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">isLeapYear</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">year</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Counter</span> <span class="type T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">val</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
+    <span class="normal T_IDENTIFIER">incr</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="type T_SEMICOLON">;</span>
+  <span class="type T_RCURLY">}</span>
+  <span class="normal T_DECLARE">declare</span> <span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Response</span> <span class="type T_ASSIGN">=</span> <span class="type T_STRING">&#39;yes&#39;</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING">&#39;no&#39;</span> <span class="type T_BIT_OR">|</span> <span class="type T_STRING">&#39;maybe&#39;</span><span class="type T_SEMICOLON">;</span>
+  <span class="normal T_DECLARE">declare</span> <span class="normal T_INTERFACE">interface</span> <span class="normal T_IDENTIFIER">Stack</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="type T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">push</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">item</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_VOID_TYPE">void</span><span class="type T_SEMICOLON">;</span>
+    <span class="normal T_IDENTIFIER">pop</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_SEMICOLON">;</span>
+    <span class="normal T_IDENTIFIER">isEmpty</span><span class="type T_LPAREN">(</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="type T_SEMICOLON">;</span>
+  <span class="type T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+
+<p>Note that a declared module should have a global name. (This can sometimes be
+a limitation; see <a href="#declaration-files">below</a>.) The global name could be any
+string, though: it need not be an identifier. So the following also works:</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_IDENTIFIER">module</span> <span class="normal T_STRING">&quot;fancy-pants&quot;</span> <span class="normal T_LCURLY">{</span>
+  <span class="comment line">// ...</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+
+<p>A declared module would be looked up by the typechecker only when a file
+implementing that module was not found by <a href="modules.html#module-resolution">the resolution algorithm of the
+module system</a>, or such a file was found but
+not <a href="new-project.html#typechecking-your-files">checked</a>. For example, suppose
+we have the following code in a file <code>src/LookBeforeYouLeap.js</code>:</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_IMPORT">import</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">isLeapYear</span> <span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&#39;Misc&#39;</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">isLeapYear</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;2016&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span> <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Yay!&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>If the import successfully resolves to (say) a file
+<code>src/node_modules/Misc/index.js</code> with the following code, then we would get a
+Flow error, since the parameter of <code>isLeapYear</code> expects a <code>number</code>.</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_EXPORT">export</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">isLeapYear</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">year</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">year</span> <span class="normal T_MOD">%</span> <span class="normal T_NUMBER">4</span> <span class="normal T_EQUAL">==</span> <span class="normal T_NUMBER">0</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// yeah, this is approximate</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+
+<p>But on the other hand, if the above file doesn&#39;t exist or we remove the
+<code>@flow</code> header then we would <em>not</em> get a Flow error, since the parameter of
+<code>isLeapYear</code> in the declared module <code>Misc</code> expects a <code>string</code>.</p>
+
+<h2>Declaration files</h2>
+
+<p>Now, let&#39;s look at a more general, and sometimes more convenient, way to
+declare types for modules: the &quot;.js.flow&quot; style.</p>
+
+<p>The exported types of a module may be declared in a <em>declaration file</em> with
+the <code>.js.flow</code> extension, colocated with the corresponding <em>implementation
+file</em> with the <code>.js</code> extension. A declaration file for a module shadows a
+colocated implementation file for that module when typechecking other code
+that may depend on that module.</p>
+
+<p>For example, looking back at the file <code>src/LookBeforeYouLeap.js</code>, suppose it
+instead had the following code (note the relative-path import):</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_IMPORT">import</span> <span class="normal T_LCURLY">{</span> <span class="normal T_IDENTIFIER">isLeapYear</span> <span class="normal T_RCURLY">}</span> <span class="normal T_IDENTIFIER">from</span> <span class="normal T_STRING">&#39;./Misc&#39;</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">isLeapYear</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;2016&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_RPAREN">)</span> <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Yay!&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>Next, suppose that <code>src/Misc.js</code> had an incompatible implementation of
+<code>isLeapYear</code>, just as above.</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+<span class="normal T_EXPORT">export</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">isLeapYear</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">year</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">year</span> <span class="normal T_MOD">%</span> <span class="normal T_NUMBER">4</span> <span class="normal T_EQUAL">==</span> <span class="normal T_NUMBER">0</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// yeah, this is approximate</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+
+<p>If we now create a declaration file <code>src/Misc.js.flow</code>, the declarations in it
+will be used instead of the code in <code>src/Misc.js</code>. Let&#39;s say we have the
+following declarations in <code>src/Misc.js.flow</code>. Note that the syntax for
+declarations in a declaration file is the same as we&#39;ve seen above, except
+that we also write the keyword <code>export</code>, like we would in an implementation
+file.</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_EXPORT">export</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">isLeapYear</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">year</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_BOOLEAN_TYPE">bool</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>What do you think will happen? Right, the <code>isLeapYear</code> call in
+<code>src/LookBeforeYouLeap.js</code> will typecheck.</p>
+
+<p>As this example shows, declaration files must be written with care: it is up
+to the programmer to ensure they are correct, otherwise they may hide type
+errors.</p>
+
+<p>That said, declaration files provide a very convenient way to write
+specifications for modular typechecking. Sometimes, the implementation code
+may not yet be free of type errors, but we may want to move on and come back
+to fixing the type errors later. Another important use of this feature is for
+libraries, whose implementation code may be too complex to typecheck
+satisfactorily, but whose clients we still want to typecheck against
+well-defined specifications.</p>
+
+<h2>Inlining declarations in regular code</h2>
+
+<p>As noted above, declarations should be distinct from regular code. But
+sometimes, it is useful to do declarations &quot;inline,&quot; as part of the source of
+an implementation file. <strong>Proceed with caution!</strong></p>
+
+<p>The most common use is writing &quot;work-in-progress&quot; code while ensuring that
+your code typechecks. In the following example, say you want to finish writing
+the function <code>fooList</code> without bothering to mock up its dependencies first: a
+function <code>foo</code> that takes a <code>number</code>, and returns a <code>string</code> and a class
+<code>List</code> that has a <code>map</code> method. Easy! (Just don&#39;t forget to replace the
+declarations with proper implementations.)</p>
+<figure class="highlight"><pre><code><span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">List</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">T</span><span class="type T_GREATER_THAN">&gt;</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">map</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">U</span><span class="type T_GREATER_THAN">&gt;</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">f</span><span class="type T_COLON">:</span> <span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">T</span><span class="type T_RPAREN">)</span> <span class="type T_ARROW">=&gt;</span> <span class="type T_IDENTIFIER">U</span><span class="type T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">List</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">U</span><span class="type T_GREATER_THAN">&gt;</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">n</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_RPAREN">)</span><span class="normal T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
+
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">fooList</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">ns</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">List</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">List</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_STRING_TYPE">string</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">ns</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">map</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">foo</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([])</script>
 
     <div class="docs-prevnext">
       
