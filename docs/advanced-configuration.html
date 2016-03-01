@@ -376,14 +376,24 @@ can be overridden with command line flags.</p>
 
 <ul>
 <li><code>log.file</code> (string): the path to the log file (defaults to <code>/tmp/flow/&lt;escaped root path&gt;.log</code>)</li>
-<li><p><code>module.name_mapper</code> (regex -&gt; string): specify a regular expression to match against module names, and a replacement value, separated by a <code>-&gt;</code>.</p>
+<li><p><code>module.name_mapper</code> (regex -&gt; string): specify a regular expression to match against module names, and a replacement pattern, separated by a <code>-&gt;</code>.</p>
 
 <p>For example:</p>
 <div class="highlight"><pre><code class="language-" data-lang="">module.name_mapper= '^image![a-zA-Z0-9$_]+$' -&gt; 'ImageStub'
 </code></pre></div>
-<p>makes Flow treat <code>require(&#39;image!foo.jpg&#39;)</code> as if it was <code>require(&#39;ImageStub&#39;)</code>.</p>
+<p>makes Flow treat <code>require(&#39;image!foo.jpg&#39;)</code> as if it were <code>require(&#39;ImageStub&#39;)</code>.</p>
 
 <p>(<strong>note:</strong> you can specify <code>module.name_mapper</code> multiple times)</p></li>
+<li><p><code>module.name_mapper.extension</code> (string -&gt; string): specify a file extension to match, and a replacement module name, separated by a <code>-&gt;</code>. </p>
+
+<p><em>(Note that this is just shorthand for <code>module.name_mapper=&#39;^\(.\*\)\.EXTENSION$&#39; -&gt; &#39;TEMPLATE&#39;</code>)</em></p>
+
+<p>For example:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">module.name_mapper.extension= 'css' -&gt; '&lt;PROJECT_ROOT&gt;/CSSFlowStub.js.flow'
+</code></pre></div>
+<p>makes Flow treat <code>require(&#39;foo.css&#39;)</code> as if it were <code>require(PROJECT_ROOT + &#39;/CSSFlowStub&#39;)</code>.</p>
+
+<p>(<strong>note:</strong> you can specify <code>module.name_mapper.extension</code> multiple times for different extensions)</p></li>
 <li><p><code>module.system</code> (<code>node</code> | <code>haste</code>): the module system to use to resolve
 <code>import</code> and <code>require</code>. <a href="https://github.com/facebook/node-haste">Haste</a> is
 used in React Native. The default is <code>node</code>.</p></li>
