@@ -266,13 +266,79 @@
     </h1>
     <p></p>
 
-    <p>Flow is a static type checker for JavaScript. It can be used to catch common bugs in JavaScript programs - such as silent type conversions, null dereferences and so on - often without requiring any changes to your code. It also adds type syntax to JavaScript, so that developers can express invariants about their code and have them maintained automatically.</p>
+    <p>Flow is a <strong>static type checker</strong> for JavaScript. It can be used to catch common
+bugs in JavaScript programs before they run, including:</p>
 
-<p>Flow&#39;s type checking is <strong>opt-in</strong>: files are not type checked unless you ask it to. This means that you can gradually convert your JavaScript codebase to Flow while reaping incremental benefits. When you do opt-in a file, Flow tries to type check the code automatically by performing type inference, reporting errors without further manual guidance. This simple workflow is usually sufficient when your codebase is broken down into small files, each defining a module that exports a well-defined interface. However, for some files (e.g., monolithic libraries), the analysis Flow performs might turn out to be too imprecise, causing lots of spurious errors to be reported. In such cases, the developer can either try to manually guide Flow with type annotations, or switch to a <a href="existing.html#weak-mode">weaker mode</a> with limited type inference to reduce noise.</p>
+<ul>
+<li>silent type conversions,</li>
+<li><code>null</code> dereferences,</li>
+<li>and the dreaded <code>undefined is not a function</code>.</li>
+</ul>
 
-<p>Flow&#39;s type checking is <strong>online</strong>: it performs an initial analysis of all files in a code base, and then monitors those files for subsequent changes, type checking them and other dependencies piecemeal and proactively in the background. For the developer, this means that there are no perceptible compile-time delays; saving a bunch of files in an editor or rebasing a set of files in a repository automatically triggers type checking, storing the results in a persistent server, so that they are available instantaneously when queried.</p>
+<p>Flow also powers advanced features for editors, including <a href="https://github.com/flowtype/vim-flow">Vim</a>,
+<a href="https://github.com/facebook/flow/blob/master/flow-types.el">Emacs</a>, and <a href="http://nuclide.io/docs/languages/flow/">Nuclide</a>.</p>
 
-<p>Flow is used at Facebook but remains very much a <strong>work in progress</strong>, with many features still being developed in the open. Our long-term vision is to make JavaScript development an awesome experience without compromising the essence of the language: we want to give developers powerful tools to understand and maintain their code, and to perform transformations and optimizations easily and safely. We are open-sourcing Flow early in its lifetime so that it has the chance to grow up in public, taking the interests and needs of the entire JavaScript community into account. We hope you will join us in this mission!</p>
+<h2>Gradual</h2>
+
+<p>Flow&#39;s type checking is opt-in, which means you can gradually convert your
+existing JavaScript codebase to Flow while reaping incremental benefits. You
+don&#39;t need to rewrite your existing codebase to start using Flow.</p>
+
+<p>You can opt-in on a per file basis by simply adding a <code>/* @flow */</code> comment to
+the top of your source file. Flow uses type inference to find errors without
+further guidance. You can add type assertions by <a href="syntax.html">annotating your
+program</a> with types.</p>
+
+<h2>Idiomatic</h2>
+
+<p>Flow is designed for JavaScript programmers. Writing code with Flow should feel
+like writing JavaScript, from the common idioms in the language to the fast
+development cycle.</p>
+
+<p>Most JavaScript code is &quot;boring.&quot; Boring is good! Boring code is easy to read
+and understand for humans and computers alike. Flow is particularly well suited
+to code like this, but that&#39;s not all Flow can do.</p>
+
+<p>JavaScript also provides powerful tools for metaprogramming that traditional
+statically typed langauges lack. Flow is designed to understand even very
+dynamic code which is often found in JavaScript programs.</p>
+
+<p>We&#39;re constantly improving Flow to understand more and more JavaScript, but if
+you need it, the <a href="builtins.html#any"><code>any</code> type</a> lets you opt-out of type
+checking in a granular way, so you can keep writing JavaScript the way
+JavaScript was meant to be written.</p>
+
+<h2>Fast</h2>
+
+<p>When you start Flow, it performs an initial analysis of all the files in your
+codebase and stores the results in a persistent server. When you save a file,
+Flow incrementally rechecks the changes in the background.</p>
+
+<p>Both the initial analysis and recheck are heavily optimized for performance,
+which preserves the fast feedback of developing plain JavaScript.</p>
+
+<p>In short, you don&#39;t need to wait for Flow to check your code.</p>
+
+<h2>Safe</h2>
+
+<p>Flow uses control flow analysis to deeply understand your code to find errors
+that other type systems can&#39;t. Flow is designed to find errors and we take
+soundness seriously.</p>
+
+<p>For example, Flow tracks <code>null</code> values which may propagate unintentionally
+through code and eventually cause a runtime error. Flow&#39;s path sensitive
+analysis can uncover bugs like this, even through layers of indirection in the
+program&#39;s control flow.</p>
+
+<h2>Powerful</h2>
+
+<p>The type system has a rich and rapidly expanding feature set that allows it to
+understand common JavaScript idioms, even when annotations are absent through
+type inference.</p>
+
+<p>In addition to inference, Flow also provides an expressive type language,
+covering the JavaScript core language and standard libraries found in browsers
+and platforms like Node.js.</p>
 
 
     <div class="docs-prevnext">
