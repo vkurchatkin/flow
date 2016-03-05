@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset='utf-8'>
+    <title>Flow | Disjoint Unions</title>
+    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
+    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
+    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link rel='shortcut icon' href='/static/favicon.png'>
+    <meta name='viewport' content='width=480'>
+    <meta property="og:title" content="Disjoint Unions" />
+    <meta property="og:site_name" content="flowtype">
+    <meta property='og:description' content='Flow is a static type checker for
+    JavaScript.'>
+    <meta property='og:image' content='http://flowtype.org/static/flow-og-image.png'>
+    <meta property='og:url' content="http://flowtype.org/docs/disjoint-unions.html">
+    
+    <meta property='og:type' content='website'>
+    
+    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
+    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
+</head>
+<body>
+
+<header class='topbar'><nav class='width'>
+<a href='/'>
+  <img src="/static/flow-logo.png" class="logo">
+</a>
+    <ul>
+      <li><a href="/docs/getting-started.html#_"
+           class="active" >
+          Docs
+      </a></li>
+      <li><a href="/docs/about-flow.html#_"
+          >
+          About
+      </a></li>
+      <li><a href="/support.html"
+          >
+          Support
+      </a></li>
+      <li><a href="/blog"
+          >
+          Blog
+      </a></li>
+      <li><a href="http://github.com/facebook/flow">GitHub</a>
+    </ul>
+</nav></header>
+
+
+<section class='content'><div class='width'>
+
+<nav class='toc'>
+  
+    <section>
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/about-flow.html#_">
+              About Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/getting-started.html#_">
+              Getting started with Flow
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/five-simple-examples.html#_">
+              Five simple examples
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>User Guide</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/new-project.html#_">
+              Starting a new Flow project
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/existing.html#_">
+              Running Flow on existing code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-annotations.html#_">
+              Adding Type Annotations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/third-party.html#_">
+              Checking third-party code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/running.html#_">
+              Running Flow code
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/troubleshooting.html#_">
+              Troubleshooting
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/cli.html#_">
+              Using the CLI
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/advanced-configuration.html#_">
+              Advanced Configuration
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+    <section>
+      <h3>Language Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/docs/quick-reference.html#_">
+              Quick Reference
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/builtins.html#_">
+              Built-in Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/syntax.html#_">
+              Syntax
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/arrays.html#_">
+              Arrays and Tuples
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/classes.html#_">
+              Classes
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/objects.html#_">
+              Objects
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/functions.html#_">
+              Functions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/nullable-types.html#_">
+              Maybe Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/destructuring.html#_">
+              Destructuring
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/union-intersection-types.html#_">
+              Union and Intersection Types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/type-aliases.html#_">
+              Type Aliases
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/typeof.html#_">
+              Typeof types
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/dynamic-type-tests.html#_">
+              Dynamic Type Tests
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/disjoint-unions.html#_" class="active">
+              Disjoint Unions
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/modules.html#_">
+              Modules
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/declarations.html#_">
+              Declarations
+            </a>
+            
+          </li>
+        
+          <li>
+            <a href="/docs/react.html#_">
+              React
+            </a>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</nav>
+
+
+<article class='withtoc'>
+    <h1>
+      Disjoint Unions
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/ref/disjoint_unions.doc.js" target="_blank">Edit on GitHub</a>
+    </h1>
+    <p></p>
+
+    
+
+
+<p>Sometimes programs need to deal with different kinds of data all at once,
+where the shape of the data can be different based on what kind of data the
+code is looking at. This kind of programming is so common in functional
+programming languages that almost all such languages come with a way of:</p>
+
+<ul>
+<li><p>Specifying such data by a set of disjoint cases, distinguished by &quot;tags,&quot;
+where each tag is associated with a different &quot;record&quot; of properties. (These
+descriptions are called &quot;disjoint union&quot; or &quot;variant&quot; types.)</p></li>
+<li><p>Doing case analysis on such data, by checking tags and then directly
+accessing the associated record of properties. (The common way to do such case
+analysis is by pattern matching.)</p></li>
+</ul>
+
+<p>Examples of programs that analyze or transform such data range from compilers
+working with abstract syntax trees, to operations that may return exceptional
+values, with much more in between!</p>
+
+<p>With Flow, it is possible to program in this style in JavaScript in a
+type-safe manner. You can define a disjoint union of object types and do case
+analysis on objects of that type by switching on the value of some common
+property (called a &quot;sentinel&quot;) in those object types.</p>
+
+<h2>Example</h2>
+
+<p>Consider a computation that takes an argument and a callback that is invoked
+when the computation is complete, with a success or failure result. As a
+concrete example, suppose that we are interested in computing the inverse of a
+matrix (which may or may not exist).</p>
+
+<p>The result type can be modeled as a disjoint union type. In terms of syntax, a
+disjoint union type is just a specific form of <a href="union-intersection-types.html">union
+type</a>. In addition, a disjoint union type makes
+heavy use of <a href="builtins.html#literal-types">literal types</a>: this is important,
+because we will see below how Flow can relate these types back to dynamic
+equality checks with literals that appear commonly in JavaScript code.</p>
+<figure class="highlight"><pre><code><span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Matrix</span> <span class="type T_ASSIGN">=</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_LBRACKET">[</span><span class="type T_RBRACKET">]</span><span class="type T_LBRACKET">[</span><span class="type T_RBRACKET">]</span><span class="type T_SEMICOLON">;</span> <span class="comment line">// type of input and output for our function</span>
+
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Result</span> <span class="type T_ASSIGN">=</span> <span class="type T_IDENTIFIER">Done</span> <span class="type T_BIT_OR">|</span> <span class="type T_IDENTIFIER">Error</span><span class="type T_SEMICOLON">;</span> <span class="comment line">// a disjoint union type with two cases</span>
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Done</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">status</span><span class="type T_COLON">:</span> <span class="type T_STRING">&#39;done&#39;</span><span class="type T_COMMA">,</span> <span class="normal T_IDENTIFIER">answer</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Matrix</span> <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span>
+<span class="normal T_TYPE">type</span> <span class="type T_IDENTIFIER">Error</span> <span class="type T_ASSIGN">=</span> <span class="type T_LCURLY">{</span> <span class="normal T_IDENTIFIER">status</span><span class="type T_COLON">:</span> <span class="type T_STRING">&#39;error&#39;</span><span class="type T_COMMA">,</span> <span class="normal T_IDENTIFIER">message</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="type T_RCURLY">}</span><span class="type T_SEMICOLON">;</span></code></pre></figure>
+<p>Here, the property <code>status</code> serves as the sentinel property in <code>Result</code>: this
+is the property that actually makes the union type &quot;disjoint.&quot;</p>
+
+<p>Case analysis can be performed on results of type <code>Result</code> by matching the
+value of the <code>status</code> property with the literals <code>done</code> or <code>error</code>. Note that
+matching must be performed with the <code>===</code> operator. Conveniently, <code>switch</code>
+statements already use this operator, but using <code>if</code> with this operator also
+works.</p>
+
+<p>Flow will correctly narrow down the <code>Result</code> type to the corresponding cases,
+<code>Done</code> and <code>Error</code>, so that the properties <code>answer</code> and <code>message</code> can be
+accessed safely based on context.</p>
+<figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">invert</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">matrix</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Matrix</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">callback</span><span class="type T_COLON">:</span> <span class="type T_LPAREN">(</span><span class="type T_IDENTIFIER">result</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Result</span><span class="type T_RPAREN">)</span> <span class="type T_ARROW">=&gt;</span> <span class="type T_VOID_TYPE">void</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="comment line">// Try to compute the inverse of `matrix`.</span>
+  <span class="comment line">// On success, invoke callback with `{ status: &#39;done&#39;, answer: ... }`.</span>
+  <span class="comment line">// On failure, involve callback with `{ status: &#39;error&#39;, message: ... }`.</span>
+
+  <span class="comment line">// ...</span>
+<span class="normal T_RCURLY">}</span>
+
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">showInverseOf</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">matrix</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Matrix</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">invert</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">matrix</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">result</span> <span class="normal T_ARROW">=&gt;</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_SWITCH">switch</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">result</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">status</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_CASE">case</span> <span class="normal T_STRING">&#39;error&#39;</span><span class="normal T_COLON">:</span>
+      <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span> <span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;Uh oh!&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">result</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">message</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+      <span class="normal T_BREAK">break</span><span class="normal T_SEMICOLON">;</span>  <span class="comment line">// see what happens if you forget to break! :)</span>
+    <span class="normal T_DEFAULT">default</span><span class="normal T_COLON">:</span>
+      <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span> <span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;Inverse:&quot;</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">result</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">answer</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+    <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RCURLY">}</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span></code></pre></figure>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([])</script>
+
+    <div class="docs-prevnext">
+      
+        <a href="/docs/dynamic-type-tests.html#_">&larr; Prev</a>
+      
+      
+        <a class="right" href="/docs/modules.html#_">Next &rarr;</a>
+      
+    </div>
+
+    <a id="_"></a>
+</article>
+
+</div></section>
+<footer><div class='width'>
+    &copy; Copyright 2014 - 2016, Facebook Inc.
+</div></footer>
+
+<script src="/static/linkify.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-49208336-4', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>
+

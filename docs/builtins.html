@@ -240,6 +240,13 @@
           </li>
         
           <li>
+            <a href="/docs/disjoint-unions.html#_">
+              Disjoint Unions
+            </a>
+            
+          </li>
+        
+          <li>
             <a href="/docs/modules.html#_">
               Modules
             </a>
@@ -504,8 +511,11 @@ type, Flow requires us to implement the necessary runtime type checks.</p>
 
 <p>While type <code>boolean</code>, <code>number</code>, and <code>string</code> types admit <code>true</code> and <code>false</code>,
 any number, and any string, respectively, it can also be useful to specify a
-type that admits a single value. For example, literal types can be used to
-build enums.</p>
+type that admits a single value. This feature turns out to be surprisingly
+<a href="disjoint-unions.html">versatile</a>: literal types can be used to build enums
+and other disjoint unions, as well as express some common forms of method
+overloading for which the types <code>boolean</code>, <code>number</code>, and <code>string</code> are not
+adequate.</p>
 <figure class="highlight"><pre><code><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="type T_COLON">:</span> <span class="type T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;bar&quot;</span><span class="type T_COLON">:</span> <span class="type T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// `&quot;bar&quot;` is not exactly `&quot;foo&quot;`</span>
 <span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;fo&quot;</span><span class="normal T_PLUS">+</span><span class="normal T_STRING">&quot;o&quot;</span><span class="type T_COLON">:</span> <span class="type T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// even simple expressions lose literal information</span>
