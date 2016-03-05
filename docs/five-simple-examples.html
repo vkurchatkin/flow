@@ -276,148 +276,177 @@
 <article class='withtoc'>
     <h1>
       Five simple examples
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/00-five-simple-examples.md" target="_blank">Edit on GitHub</a>
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/five-simple-examples.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <h2>1. Hello Flow!</h2>
+    
 
-<p>Inside the installed folder you&#39;ll find an <code>examples</code> directory. This contains the examples for this tutorial. To get a feel for Flow, let&#39;s look at the first one:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span><span class="nb">cd </span>flow/examples/01_HelloWorld
-<span class="gp">$&gt; </span>flow check
+
+<p>Throughout each of the following examples, we will check our code using the
+<code>flow</code> CLI. You can install this CLI using
+<a href="http://blog.npmjs.org/post/85484771375/how-to-install-npm">npm</a> by running
+<code>npm install --global flow-bin</code>.</p>
+
+<p>Note also that the first time you run <code>flow</code> on a given example (or project), it
+will normally take a few seconds, but subsequent runs are <em>much</em> quicker. This
+is because running <code>flow</code> will start a process in the background which monitors
+the project you are working within and incrementally recalculate type errors
+with each change you save to disk. <strong>If you wish to stop the background Flow
+process, you can do so with the <code>flow stop</code> command.</strong></p>
+
+<p>If you wish to just typecheck a project without a persistent process (and
+you don&#39;t mind waiting a few extra seconds each time) you can use <code>flow check</code>.
+This will ensure that Flow shuts down immediately after checking your project.</p>
+
+<h2>1. Hello Flow!</h2>
+
+<p>Inside the Flow GitHub repo, you&#39;ll find an
+  <a href="https://github.com/facebook/flow/tree/master/examples"><code>examples</code> directory</a>.
+  This directory contains the examples for this tutorial. To get a feel for
+  Flow, let&#39;s look at the first one:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$&gt;</span> <span class="nb">cd </span>flow/examples/01_HelloWorld
+  <span class="nv">$&gt;</span> flow
 </code></pre></div>
-<p>You should see an error a little like this:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">hello.js:7
-  7: foo("Hello, world!");
-     ^^^^^^^^^^^^^^^^^^^^ function call
-  4:   return x*10;
-              ^ string. This type is incompatible with
-  4:   return x*10;
-              ^^^^ number
+<p>You should see an error that looks something like this:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  hello.js:7
+    7: foo("Hello, world!");
+       ^^^^^^^^^^^^^^^^^^^^ function call
+    4:   return x * 10;
+                ^ string. This type is incompatible with
+    4:   return x * 10;
+                ^^^^^^ number
 </code></pre></div>
 <p>Looking at the <code>hello.js</code> example file, it&#39;s easy to see why:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
-7</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+7</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">10</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="error"data-error-id="E3" data-message-id="M3003"><span class="error"data-error-id="E1" data-message-id="M1001"><span class="error"data-error-id="E3" data-message-id="M3001"><span class="normal T_IDENTIFIER">x</span></span></span> <span class="normal T_MULT">*</span> <span class="normal T_NUMBER">10</span></span></span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello, world!'</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello, world!&#39;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
-<p>We&#39;re calling a function that clearly expects a number with a string. Flow detects that and returns an error. One fix for this example would be to call <code>foo</code> with an integer instead:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>We&#39;re calling a function with a string, when that function clearly expects a
+number. Flow detects this problem and gives an error. One fix for this example
+would be to call <code>foo</code> with a number instead:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
 7
-8</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+8</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">10</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span> <span class="normal T_MULT">*</span> <span class="normal T_NUMBER">10</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="c1">// This is fine, because we're passing a number now</span>
-<span class="nx">foo</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="comment line">// This is fine, because we&#39;re passing a number now</span>
+<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">10</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
-<p>Throughout this tutorial, you will find solutions for each example in the example&#39;s <code>answer</code> directory.</p>
+<p>Throughout this tutorial, you will find solutions for each example in the
+example&#39;s <code>answer</code> directory.</p>
 
 <p>You may have noticed this header line in the example file:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td><td class="code"><pre><span class="cm">/* @flow */</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>This is important: it tells Flow that this file should be typechecked. Flow will ignore any files that don&#39;t have this header. This allows you to convert and/or type-check a JS project one file at a time.</p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span></code></pre></figure>
+<p>This is important: it tells Flow that this file should be typechecked. <strong>Flow
+  will ignore any files that don&#39;t have this header.</strong> This allows you to
+  convert and/or typecheck a JS project one file at a time.</p>
 
 <h2>2. Adding type annotations</h2>
 
-<p>Flow can infer the type of most things within a file, so you don&#39;t always have to annotate every function and variable to get typechecking. However, even if Flow can infer a type, you can still add annotations to be explicit. In fact, Flow requires that you add type annotations for functions that are exported from a module (defined in one file and used in another).</p>
+<p>Flow can infer the type of most things within a file, so you don&#39;t always have
+  to annotate every function and variable to get typechecking to work. However,
+  even if Flow can infer a type, you can still add annotations to be explicit.
+  The only time that Flow strictly <em>requires</em> an annotation is when a
+  variable/function/class is exported from a module (defined in one file and
+  used in another).</p>
 
-<p>The second example (<code>02_TypeAnnotations</code>) shows basic type annotations in Flow:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>The second example (<code>02_TypeAnnotations</code>) shows usage of some basic type
+  annotations in Flow:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
-7</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+7</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">y</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E2" data-message-id="M2003"><span class="type T_STRING_TYPE">string</span></span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E2" data-message-id="M2001"><span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span> <span class="normal T_MULT">*</span> <span class="normal T_IDENTIFIER">y</span></span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<p>Here we have annotated the <code>foo</code> function to say that it&#39;s two parameters are
+of type <code>string</code> and <code>number</code> and that it returns a <code>string</code>.</p>
 
-<p>Again, running <code>flow check</code> gives an error:</p>
+<p>With these annotations in place, if we run <code>flow check</code> we&#39;ll see an error:</p>
 <div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">type_annotations.js:4
   4:   return x.length * y;
               ^^^^^^^^^^^^ number. This type is incompatible with
   3: function foo(x: string, y: number): string {
                                          ^^^^^^ string
 </code></pre></div>
-<p>In this case it is the return type of <code>foo</code> that is wrong - we&#39;ve declared it to be a <code>string</code> even though the function is actually returning a <code>number</code>. Flow flags that, and you can fix it by changing the return type:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>In this case it is the return type for <code>foo</code> that is wrong. Even though we
+have annotated it as returning a <code>string</code>, the actual type that it returns (a
+<code>number</code>) does not match! Flow flags this issue and you can fix it by
+correcting the return type:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
 7
-8</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+8</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="c1">// Changing the return type to number fixes the error</span>
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">y</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span><span class="err">:</span> <span class="nx">number</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="comment line">// Changing the return type to number fixes the error</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_COMMA">,</span> <span class="normal T_IDENTIFIER">y</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span> <span class="normal T_MULT">*</span> <span class="normal T_IDENTIFIER">y</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
+<span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 <h2>3. Nullable types</h2>
 
-<p>Flow handles <code>null</code> differently than most type systems - which ignore <code>null</code>. When a type system ignores <code>null</code>, that means your program can type check as correct but still crash when <code>null</code> is accessed in an unsafe way. In Flow, doing this is an error as shown by our third example (<code>03_Null</code>):</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>Flow handles <code>null</code> differently than most type systems. When a type system
+  does not track usage of <code>null</code> carefully, it becomes possible for your program
+  to misleadingly typecheck as correct but still crash when <code>null</code> is accessed
+  in an unsafe way. In Flow, accessing <code>null</code> in an unsafe way will incur an
+  error as shown by our third example (<code>03_Null</code>):</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
-7</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+7</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">length</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">length</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E4" data-message-id="M4003"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_PERIOD">.</span><span class="error"data-error-id="E4" data-message-id="M4001"><span class="normal T_IDENTIFIER">length</span></span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">length</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span> <span class="o">+</span> <span class="nx">length</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>This program would fail at runtime, with a <code>TypeError</code> when it tries to read the property <code>length</code> on <code>null</code>. Running <code>flow check</code> will detect that:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">nulls.js:7
-  7: var total = length("Hello") + length(null);
-                                   ^^^^^^^^^^^^ function call
-  4:   return x.length;
-                ^^^^^^ property `length`. Property cannot be accessed on possibly null value
-  4:   return x.length;
-              ^ null
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">total</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">length</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_RPAREN">)</span> <span class="normal T_PLUS">+</span> <span class="normal T_IDENTIFIER">length</span><span class="normal T_LPAREN">(</span><span class="normal T_NULL">null</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+</pre></td></tr></tbody></table></figure>
+<p>This program would fail at runtime, with a <code>TypeError</code> when it tries to read
+  the property <code>length</code> on <code>null</code>. Running <code>flow</code> will detect this bug:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  nulls.js:7
+    7: var total = length("Hello") + length(null);
+                                     ^^^^^^^^^^^^ function call
+    4:   return x.length;
+                  ^^^^^^ property `length`. Property cannot be accessed on possibly null value
+    4:   return x.length;
+                ^ null
 </code></pre></div>
-<p>The file in the <code>answer</code> directory fixes both the code and the type error:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>The file in the <code>answer</code> directory fixes this bug just like you might if you
+  had discovered it at runtime. This fix, in turn, makes the type error go away:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -427,26 +456,27 @@
 8
 9
 10
-11</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+11</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">length</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">length</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span> <span class="normal T_STRICT_NOT_EQUAL">!==</span> <span class="normal T_NULL">null</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_NUMBER">0</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">length</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span> <span class="o">+</span> <span class="nx">length</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>Because we&#39;ve checked that <code>x</code> is not <code>null</code>, Flow knows this is safe and doesn&#39;t emit a type error.</p>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">total</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">length</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_RPAREN">)</span> <span class="normal T_PLUS">+</span> <span class="normal T_IDENTIFIER">length</span><span class="normal T_LPAREN">(</span><span class="normal T_NULL">null</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+</pre></td></tr></tbody></table></figure>
+<p>Because we&#39;ve checked that <code>x</code> is not <code>null</code>, Flow knows that this code is
+  now safe and doesn&#39;t emit a type error.</p>
 
 <h2>4. Arrays</h2>
 
-<p>Flow is of course not limited to simple types like numbers and strings. For example, <code>04_Arrays</code> illustrates the support for annotating functions on arrays:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>Flow is of course not limited to simple types like numbers and strings. Our
+  next example, <code>04_Arrays</code>, illustrates support for annotating functions on
+  arrays:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -456,31 +486,29 @@
 8
 9
 10
-11</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+11</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">total</span><span class="p">(</span><span class="nx">numbers</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">total</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">numbers</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Array</span><span class="type T_LESS_THAN">&lt;</span><span class="error"data-error-id="E5" data-message-id="M5003"><span class="type T_NUMBER_TYPE">number</span></span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">result</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">0</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_FOR">for</span> <span class="normal T_LPAREN">(</span><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">i</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">0</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">i</span> <span class="normal T_LESS_THAN">&lt;</span> <span class="normal T_IDENTIFIER">numbers</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">i</span><span class="normal T_INCR">++</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">result</span> <span class="normal T_PLUS_ASSIGN">+=</span> <span class="normal T_IDENTIFIER">numbers</span><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">i</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">result</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="nx">total</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'Hello'</span><span class="p">]);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>Flow will flag the call to <code>total</code> as an error, since that function needs an array of numbers, and one of the items of the array passed in is a string:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">arrays.js:11
- 11: total([1, 2, 3, "Hello"]);
-     ^^^^^^^^^^^^^^^^^^^^^^^^^ function call
- 11: total([1, 2, 3, "Hello"]);
-                     ^^^^^^^ string. This type is incompatible with
-  3: function total(numbers: Array&lt;number&gt;) {
-                                   ^^^^^^ number
+<span class="normal T_IDENTIFIER">total</span><span class="normal T_LPAREN">(</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">1</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">2</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">3</span><span class="normal T_COMMA">,</span> <span class="error"data-error-id="E5" data-message-id="M5001"><span class="normal T_STRING">&#39;Hello&#39;</span></span><span class="normal T_RBRACKET">]</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
+<p>Flow will flag the string <code>&#39;Hello&#39;</code> here since the <code>total()</code> function accepts
+  only an array of numbers:</p>
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  arrays.js:11
+   11: total([1, 2, 3, "Hello"]);
+       ^^^^^^^^^^^^^^^^^^^^^^^^^ function call
+   11: total([1, 2, 3, "Hello"]);
+                       ^^^^^^^ string. This type is incompatible with
+    3: function total(numbers: Array&lt;number&gt;) {
+                                     ^^^^^^ number
 </code></pre></div>
-<p>This, however, will pass:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>If we replace <code>&quot;Hello&quot;</code> with a number, the code will pass Flow&#39;s checks:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -490,50 +518,47 @@
 8
 9
 10
-11</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+11</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">total</span><span class="p">(</span><span class="nx">numbers</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">total</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">numbers</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Array</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_NUMBER_TYPE">number</span><span class="type T_GREATER_THAN">&gt;</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">result</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">0</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_FOR">for</span> <span class="normal T_LPAREN">(</span><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">i</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NUMBER">0</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">i</span> <span class="normal T_LESS_THAN">&lt;</span> <span class="normal T_IDENTIFIER">numbers</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_IDENTIFIER">i</span><span class="normal T_INCR">++</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_IDENTIFIER">result</span> <span class="normal T_PLUS_ASSIGN">+=</span> <span class="normal T_IDENTIFIER">numbers</span><span class="normal T_LBRACKET">[</span><span class="normal T_IDENTIFIER">i</span><span class="normal T_RBRACKET">]</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+  <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">result</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="nx">total</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_IDENTIFIER">total</span><span class="normal T_LPAREN">(</span><span class="normal T_LBRACKET">[</span><span class="normal T_NUMBER">1</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">2</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">3</span><span class="normal T_COMMA">,</span> <span class="normal T_NUMBER">4</span><span class="normal T_RBRACKET">]</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></pre></td></tr></tbody></table></figure>
 
 <h2>5. Dynamic code</h2>
 
-<p>In our final example, <code>05_DynamicCode</code>, we haven&#39;t annotated the function, but we are passing in two different types of argument:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<p>In our final example, <code>05_DynamicCode</code>, we haven&#39;t annotated the function, but we are passing in two different types of arguments:</p>
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
 5
 6
-7</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+7</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_RETURN">return</span> <span class="error"data-error-id="E6" data-message-id="M6003"><span class="normal T_IDENTIFIER">x</span></span><span class="normal T_PERIOD">.</span><span class="error"data-error-id="E6" data-message-id="M6001"><span class="normal T_IDENTIFIER">length</span></span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span> <span class="o">+</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">res</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_RPAREN">)</span> <span class="normal T_PLUS">+</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+</pre></td></tr></tbody></table></figure>
 
 <p>In this case, Flow detects that the second time the function is called (with a number), the <code>length</code> property will fail:</p>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">dynamic.js:4
-  4:   return x.length;
-              ^^^^^^^^ property `length`
-  4:   return x.length;
-                ^^^^^^ property `length`. Property not found in
-  4:   return x.length;
-              ^ Number
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">  dynamic.js:4
+    4:   return x.length;
+                ^^^^^^^^ property `length`
+    4:   return x.length;
+                  ^^^^^^ property `length`. Property not found in
+    4:   return x.length;
+                ^ Number
 </code></pre></div>
 <p>One fix is to simply detect what the type is within the function:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><table class="highlighttable" style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
 2
 3
 4
@@ -543,25 +568,32 @@
 8
 9
 10
-11</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+11</pre></td><td class="code"><pre><span class="comment line">// @flow</span>
 
-<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s1">'string'</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+  <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_TYPEOF">typeof</span> <span class="normal T_IDENTIFIER">x</span> <span class="normal T_STRICT_EQUAL">===</span> <span class="normal T_STRING">&#39;string&#39;</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">length</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span> <span class="normal T_ELSE">else</span> <span class="normal T_LCURLY">{</span>
+    <span class="normal T_RETURN">return</span> <span class="normal T_IDENTIFIER">x</span><span class="normal T_SEMICOLON">;</span>
+  <span class="normal T_RCURLY">}</span>
+<span class="normal T_RCURLY">}</span>
 
-<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span> <span class="o">+</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>Flow is smart enough to detect that this conditional check is sufficient to avoid any potential failures at run time, and will give you a clean bill of health.</p>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">res</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&#39;Hello&#39;</span><span class="normal T_RPAREN">)</span> <span class="normal T_PLUS">+</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_NUMBER">42</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+</pre></td></tr></tbody></table></figure>
+<p>Flow is smart enough to detect that this conditional check is sufficient to
+  avoid any potential failures at run time, and will give you a clean bill of
+  health.</p>
 
 <h2>Next Steps</h2>
 
-<p>These simple examples just scratch the surface. You&#39;re now ready to <a href="new-project.html">start a new project with Flow</a> or incrementally <a href="existing.html">try Flow on existing code</a>. You may also want to check out our much bigger <a href="react-example.html">React example</a> to see Flow in more representative use cases.</p>
+<p>These simple examples just scratch the surface. You&#39;re now ready to start a
+  new project with Flow and use the <a href="http://devbig687.ash4.facebook.com:8080/docs/running.html#using-the-offline-transform-tool">offline transform tool</a>
+  to compile type annotations before publishing. Or you could incrementally
+  <a href="/docs/existing.html">try Flow using flow on some existing code</a>. You may also
+  want to check out our much bigger <a href="/docs/react-example.html">React example</a> to
+  see Flow in more representative use cases.</p>
 
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":11,"offset":1833}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":16,"offset":1838}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":112,"column":10,"offset":3234},"end":{"line":112,"column":22,"offset":3246}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":111,"column":37,"offset":3216},"end":{"line":111,"column":43,"offset":3222}}]},{"id":"E3","messages":[{"id":"M3001","description":"string","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":11,"offset":1833}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"number","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":16,"offset":1838}}]},{"id":"E4","messages":[{"id":"M4001","description":"property `length`","start":{"line":161,"column":12,"offset":4658},"end":{"line":161,"column":18,"offset":4664}},{"id":"M4002","description":"Property cannot be accessed on possibly null value"},{"id":"M4003","description":"null","start":{"line":161,"column":10,"offset":4656},"end":{"line":161,"column":11,"offset":4657}}]},{"id":"E5","messages":[{"id":"M5001","description":"string","start":{"line":222,"column":17,"offset":6074},"end":{"line":222,"column":24,"offset":6081}},{"id":"M5002","description":"This type is incompatible with"},{"id":"M5003","description":"number","start":{"line":214,"column":31,"offset":5934},"end":{"line":214,"column":37,"offset":5940}}]},{"id":"E6","messages":[{"id":"M6001","description":"property `length`","start":{"line":267,"column":12,"offset":7042},"end":{"line":267,"column":18,"offset":7048}},{"id":"M6002","description":"Property not found in"},{"id":"M6003","description":"Number","start":{"line":267,"column":10,"offset":7040},"end":{"line":267,"column":11,"offset":7041}}]}])</script>
 
     <div class="docs-prevnext">
       

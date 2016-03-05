@@ -276,51 +276,114 @@
 <article class='withtoc'>
     <h1>
       Getting started with Flow
-      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/00-getting-started.md" target="_blank">Edit on GitHub</a>
+      <a class="edit-page-link" href="https://github.com/facebook/flow/tree/master/website/docs/getting-started.doc.js" target="_blank">Edit on GitHub</a>
     </h1>
     <p></p>
 
-    <h2>Installing Flow</h2>
+    
 
-<p>We provide pre-built binaries for Flow, depending on your operating system:</p>
 
-<ul>
-<li><a href="https://github.com/facebook/flow/releases/download/v0.22.1/flow-osx-v0.22.1.zip">Mac OS X</a></li>
-<li><a href="https://github.com/facebook/flow/releases/download/v0.22.1/flow-linux64-v0.22.1.zip">Linux (64 bit)</a></li>
-</ul>
+<p>To demonstrate how to add Flow to a project, let&#39;s set up an example npm project.</p>
 
-<p>Flow is packaged as a zip file. To install, simply unzip it:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>unzip flow.zip
+<p>First, we&#39;ll make an npm package for our example project called &quot;get_started&quot;:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>mkdir -p get_started
+<span class="gp">$&gt; </span><span class="nb">cd </span>get_started
+<span class="gp">$&gt; </span><span class="nb">echo</span> <span class="s1">'{"name": "get_started", "scripts": {"flow": "flow; [[ $?=0||$?=2 ]]"}}'</span> &gt; package.json
 </code></pre></div>
-<p>This creates a directory called <code>flow</code> containing the executable binary (also called <code>flow</code>) and a folder of five examples. It&#39;s recommended you add this directory to your path so that you can simply run <code>flow</code> from anywhere on your system:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span><span class="nb">cd </span>flow
-<span class="gp">$&gt; </span><span class="nb">echo</span> -e <span class="s2">"</span><span class="se">\n</span><span class="s2">PATH=</span><span class="se">\"\$</span><span class="s2">PATH:</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/</span><span class="se">\"</span><span class="s2">"</span> &gt;&gt; ~/.bashrc <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.bashrc
+<p>Next we&#39;ll add Flow to our project:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>touch .flowconfig
+<span class="gp">$&gt; </span>npm install --save-dev flow-bin
 </code></pre></div>
-<h3>Brew on OSX</h3>
+<p>And now we can start writing some code!</p>
 
-<p>Alternatively, and more simply, you can install via <a href="http://brew.sh/">brew</a> on OSX:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>brew update
-<span class="gp">$&gt; </span>brew install flow
+<p><strong>index.js</strong></p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
+
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">str</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_STRING">&#39;hello world!&#39;</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">str</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<p>Note that we&#39;ve added <code>// @flow</code> to the top of our file. This indicates to Flow
+that we want this file to be checked. <strong>If we don&#39;t add this flag to the top of
+the file, Flow will assume that the file isn&#39;t ready to be checked yet and
+Flow will not attempt to type check the file.</strong></p>
+
+<p>Ok, now let&#39;s run Flow and see what it has to say about the code we just wrote:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>npm run-script flow
+
+<span class="gp">&gt; </span><span class="nb">test</span>@ flow /get_started
+<span class="gp">&gt; </span>flow
+
+No errors!
 </code></pre></div>
-<p>Brew adds flow to your path as part of the install.</p>
+<p>Woohoo! No errors! Ok, now let&#39;s add a trivial type error just to see what
+happens:</p>
 
-<h3>npm wrapper</h3>
+<p><strong>index.js</strong></p>
+<figure class="highlight"><pre><code><span class="comment line">// @flow</span>
 
-<p>You can also install flow by using <a href="https://github.com/flowtype/flow-bin">flow-bin</a>. Similarly, only OS X and Linux (64-bit) binaries are provided.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>npm install flow-bin --global
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">str</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="type T_NUMBER_TYPE">number</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_STRING">&#39;hello world!&#39;</span></span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">str</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$&gt;</span> npm run-script flow
+
+  &gt; <span class="nb">test</span>@ flow /get_started
+  &gt; flow 2&gt; /dev/null
+
+  index.js:3
+    3: <span class="nb">let </span>str: number <span class="o">=</span> <span class="s1">'hello world!'</span>;
+                         ^^^^^^^^^^^^^^ string. This <span class="nb">type </span>is incompatible with
+    3: <span class="nb">let </span>str: number <span class="o">=</span> <span class="s1">'hello world!'</span>;
+                ^^^^^^ number
+
+
+  Found 1 error
 </code></pre></div>
+<p>Cool -- Flow noticed that we&#39;re assigning a string to a number and gave an
+  error.</p>
+
+<p>Before we fix this type error, let&#39;s add Babel to our project so we can
+  try running our code:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$&gt;</span> npm install -g babel-cli
+  <span class="nv">$&gt;</span> npm install --save-dev babel-plugin-transform-flow-strip-types
+  <span class="nv">$&gt;</span> <span class="nb">echo</span> <span class="s1">'{"plugins": ["transform-flow-strip-types"]}'</span> &gt; .babelrc
+</code></pre></div>
+<p>Now we can try running our code <em>in spite</em> of the type error and see what
+  happens:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$&gt;</span> babel-node index.js
+  hello world!
+</code></pre></div>
+<p>It works! As you can see Flow does not prevent you from running the code you
+  have written even if there are type errors. It is considered best practice to
+  never publish your project when it has type errors, but often at development
+  time it&#39;s useful to try running code even before it fully typechecks (usually
+  for debugging or ad-hoc testing). This is one of the benefits of gradual typing
+  and Flow is designed to support this and stay out of your way as much as you
+  need it to during development.</p>
+
+<p>Note that we ran our code using <code>babel-node</code> rather than just vanilla <code>node</code> to
+  run index.js. <a href="https://babeljs.io/docs/usage/cli/#babel-node"><code>babel-node</code></a>
+  comes with <code>babel-cli</code> and is just a thin wrapper around vanilla <code>node</code> that
+  first intercepts and transpiles JS code before running it with <code>node</code>.</p>
+
+<p>Check out the <a href="/docs/running.html">Running Flow Code</a> section for more details
+  on how we recommend compiling and publishing Flow code to npm and into
+  production.</p>
+
 <h3>Next steps</h3>
 
-<p>To see what Flow can do, let&#39;s take a quick look at the <a href="five-simple-examples.html">five examples</a> in the installation:</p>
+<p>Now that we know how to set Flow up, let&#39;s take a quick look at
+  <a href="/five-simple-examples.html">a few examples</a> that are
+  <a href="https://github.com/facebook/flow/tree/master/examples">included in the Flow repo</a>:</p>
 
 <ol>
-<li><a href="five-simple-examples.html#1-hello-flow">Hello Flow!</a></li>
-<li><a href="five-simple-examples.html#2-adding-type-annotations">Adding type annotations</a></li>
-<li><a href="five-simple-examples.html#3-nullable-types">Nullable types</a></li>
-<li><a href="five-simple-examples.html#4-arrays">Arrays</a></li>
-<li><a href="five-simple-examples.html#5-dynamic-code">Dynamic code</a></li>
+<li><a href="/docs/five-simple-examples.html#1-hello-flow">Hello Flow!</a></li>
+<li><a href="/docs/five-simple-examples.html#2-adding-type-annotations">Adding type annotations</a></li>
+<li><a href="/docs/five-simple-examples.html#3-nullable-types">Nullable types</a></li>
+<li><a href="/docs/five-simple-examples.html#4-arrays">Arrays</a></li>
+<li><a href="/docs/five-simple-examples.html#5-dynamic-code">Dynamic code</a></li>
 </ol>
 
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":66,"column":19,"offset":1357},"end":{"line":66,"column":33,"offset":1371}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":66,"column":10,"offset":1348},"end":{"line":66,"column":16,"offset":1354}}]}])</script>
 
     <div class="docs-prevnext">
       
