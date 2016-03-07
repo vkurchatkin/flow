@@ -473,26 +473,31 @@ module.name_mapper='^Foo$' -&gt; 'Bar'
 <span class="c1">// for a module named "Bar" rather than "Foo" here.</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">something</span><span class="p">}</span> <span class="nx">from</span> <span class="s2">"Foo"</span><span class="p">;</span>
 </code></pre></div>
+<h3>CSS Modules with Webpack</h3>
+
 <p>A more common (and less trivial) example here is to configure Flow to
 understand <a href="https://github.com/css-modules/css-modules">CSS Modules</a>:</p>
 
-<p><strong><code>.flowconfig</code></strong></p>
-<div class="highlight"><pre><code class="language-" data-lang="">[options]
-module.name_mapper='^\(.*\)\.css$' -&gt; '&lt;PROJECT_ROOT&gt;/CSSModule.js.flow'
-</code></pre></div>
 <p><strong><code>CSSModule.js.flow</code></strong></p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// @flow</span>
 
 <span class="c1">// CSS modules have a `className` export which is a string</span>
-<span class="nx">declare</span> <span class="kr">export</span> <span class="kd">let</span> <span class="nx">className</span><span class="err">:</span> <span class="nx">string</span><span class="p">;</span>
+<span class="nx">declare</span> <span class="kr">export</span> <span class="kd">var</span> <span class="nx">className</span><span class="err">:</span> <span class="nx">string</span><span class="p">;</span>
 </code></pre></div>
-<p><strong><code>main.js</code></strong>
-```javascript
-// @flow</p>
+<p><strong><code>.flowconfig</code></strong></p>
+<div class="highlight"><pre><code class="language-" data-lang="">[options]
+module.name_mapper='^\(.*\)\.css$' -&gt; '&lt;PROJECT_ROOT&gt;/CSSModule.js.flow'
+</code></pre></div>
+<p><strong>NOTE: You do not need to manually substitue anything for
+        &quot;&lt;PROJECT_ROOT&gt;&quot;.</strong> This is a string token that Flow recognizes and
+        will automatically replace with the path to the directory of your
+        .flowconfig file.</p>
 
-<p>import {className} from &quot;./SomeCSSFile.css&quot;; // Works!
-```</p>
+<p><strong><code>main.js</code></strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// @flow</span>
 
+<span class="kr">import</span> <span class="p">{</span><span class="nx">className</span><span class="p">}</span> <span class="nx">from</span> <span class="s2">"./SomeCSSFile.css"</span><span class="p">;</span> <span class="c1">// Works!</span>
+</code></pre></div>
 <p>Note that the <strong><code>module.name_mapper</code></strong> config option uses the regular
 expression syntax as documented
 <a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/Str.html#TYPEregexp">here</a>.</p>
