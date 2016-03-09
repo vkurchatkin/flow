@@ -3,6 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <title>Flow | Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
     <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
     <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
     <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
@@ -17,6 +18,7 @@
     
     <meta property='og:type' content='website'>
     
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
     <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
     <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
     <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
@@ -46,6 +48,11 @@
           >
           Blog
       </a></li>
+      <li>
+        <input id="algolia-doc-search" type="text" placeholder="Search docs..." />
+      </li>
+    </ul>
+    <ul class="external">
       <li><a href="http://github.com/facebook/flow">GitHub</a>
     </ul>
 </nav></header>
@@ -395,6 +402,12 @@ function eat&lt;T: Food&gt;(meal: T): Indigestion&lt;T&gt; { ... }
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-49208336-4', 'auto');
   ga('send', 'pageview');
+
+  docsearch({
+    apiKey: 'cf314b2976b27157c82b6f27553497f5',
+    indexName: 'flowtype',
+    inputSelector: '#algolia-doc-search'
+  });
 </script>
 </body>
 </html>
