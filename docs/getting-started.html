@@ -328,7 +328,7 @@ happens:</p>
 <p><strong>index.js</strong></p>
 <figure class="highlight"><pre><code><span class="comment line">// @flow</span>
 
-<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">str</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_STRING">&#39;hello world!&#39;</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">str</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E1" data-message-id="M1003"><span class="type T_NUMBER_TYPE">number</span></span> <span class="normal T_ASSIGN">=</span> <span class="error"data-error-id="E1" data-message-id="M1001"><span class="normal T_STRING">&#39;hello world!&#39;</span></span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_IDENTIFIER">console</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">log</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">str</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$&gt;</span> npm run-script flow
@@ -390,7 +390,7 @@ happens:</p>
 <li><a href="/docs/five-simple-examples.html#5-dynamic-code">Dynamic code</a></li>
 </ol>
 
-<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string"},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number"}]}])</script>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":66,"column":19,"offset":1357},"end":{"line":66,"column":32,"offset":1371}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":66,"column":10,"offset":1348},"end":{"line":66,"column":15,"offset":1354}}]}])</script>
 
     <div class="docs-prevnext">
       
