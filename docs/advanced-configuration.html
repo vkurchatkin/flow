@@ -359,6 +359,19 @@ will be ignored.</li>
 <li>Any file that ends with the extension <code>.ignore.js</code></li>
 </ol>
 
+<p>Starting with Flow v0.23.0, you may use the <code>&lt;PROJECT_ROOT&gt;</code> placeholder in
+your regular expressions. At runtime, Flow will treat the placeholder as if it
+were the absolute path to the project&#39;s root directory. This is useful for
+writing regular expressions that are relative rather than absolute. For
+example, you can write</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[ignore]
+&lt;PROJECT_ROOT&gt;/__tests__/.*
+</code></pre></div>
+<p>which would ignore any file or directory under the directory named <code>__tests__/</code>
+within the project root. However, unlike the previous example&#39;s
+<code>.*/__tests__/.*</code>, it would NOT ignore files or directories under other
+directories named <code>__tests__/</code>, like <code>src/__tests__/</code>.</p>
+
 <h3><code>[libs]</code></h3>
 
 <p>The <code>[libs]</code> heading in a <code>.flowconfig</code> file tells <code>flow</code> to include the
