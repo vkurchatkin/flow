@@ -501,6 +501,15 @@ digit (e.g.  <code>^0.13.0</code> expands into <code>&gt;=0.13.0 &lt;0.14.0</cod
 into <code>&gt;=0.13.1 &lt;0.14.0</code>, whereas &quot;^1.2.3&quot; expands into &quot;&gt;=1.2.3 &lt;2.0.0&quot;).</li>
 </ul>
 
+<h3>Comments</h3>
+
+<p>Comment support was added in v0.23.0. Lines beginning with 0 or more spaces
+followed by an <code>#</code> or <code>;</code> are ignored.  For example:</p>
+<div class="highlight"><pre><code class="language-" data-lang=""># This is a comment
+   # This is a comment
+; This is a comment
+   ; This is a comment
+</code></pre></div>
 <h3>Example</h3>
 
 <p>Say you have the following directory structure, with your <code>.flowconfig</code> in
