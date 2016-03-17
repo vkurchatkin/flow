@@ -297,7 +297,7 @@
 <p>First, we&#39;ll make an npm package for our example project called &quot;get_started&quot;:</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>mkdir -p get_started
 <span class="gp">$&gt; </span><span class="nb">cd </span>get_started
-<span class="gp">$&gt; </span><span class="nb">echo</span> <span class="s1">'{"name": "get_started", "scripts": {"flow": "flow; [[ $?=0||$?=2 ]]"}}'</span> &gt; package.json
+<span class="gp">$&gt; </span><span class="nb">echo</span> <span class="s1">'{"name": "get_started", "scripts": {"flow": "flow; test $? -eq 0 -o $? -eq 2"}}'</span> &gt; package.json
 </code></pre></div>
 <p>Next we&#39;ll add Flow to our project:</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$&gt; </span>touch .flowconfig
@@ -392,7 +392,7 @@ happens:</p>
 <li><a href="/docs/five-simple-examples.html#5-dynamic-code">Dynamic code</a></li>
 </ol>
 
-<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":66,"column":19,"offset":1357},"end":{"line":66,"column":32,"offset":1371}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":66,"column":10,"offset":1348},"end":{"line":66,"column":15,"offset":1354}}]}])</script>
+<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":66,"column":19,"offset":1366},"end":{"line":66,"column":32,"offset":1380}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":66,"column":10,"offset":1357},"end":{"line":66,"column":15,"offset":1363}}]}])</script>
 
     <div class="docs-prevnext">
       
