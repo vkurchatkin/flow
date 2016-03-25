@@ -4,9 +4,8 @@
     <meta charset='utf-8'>
     <title>Flow | A static type checker for JavaScript</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
-    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
-    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
-    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link type="text/css" rel="stylesheet" href="/assets/flow.css">
+    <link type="text/css" rel="stylesheet" href="/assets/syntax.css">
     <link rel='shortcut icon' href='/static/favicon.png'>
     <meta name='viewport' content='width=480'>
     <meta property="og:title" content="A static type checker for JavaScript" />
@@ -158,7 +157,9 @@ is used heavily within Facebook and we will continue to develop it in the open.
 We hope it will be useful for other JavaScript projects, so please try it out,
 join the community, and give us feedback!</p>
 
-<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":10,"offset":277}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":15,"offset":282}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":42,"column":10,"offset":633},"end":{"line":42,"column":21,"offset":645}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":41,"column":37,"offset":615},"end":{"line":41,"column":42,"offset":621}}]}])</script>
+<script type="text/javascript" src="/assets/inlineErrors.js"></script> 
+
+<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":10,"offset":277}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":15,"offset":282}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":42,"column":10,"offset":633},"end":{"line":42,"column":21,"offset":645}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":41,"column":37,"offset":615},"end":{"line":41,"column":42,"offset":621}}]}])</script>
 
 </article>
 
@@ -175,15 +176,8 @@ join the community, and give us feedback!</p>
     &copy; Copyright 2014 - 2016, Facebook Inc.
 </div></footer>
 
-<script src="/static/linkify.js"></script>
+<script type="text/javascript" src="/assets/default.js"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-49208336-4', 'auto');
-  ga('send', 'pageview');
-
   docsearch({
     apiKey: 'cf314b2976b27157c82b6f27553497f5',
     indexName: 'flowtype',

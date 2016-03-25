@@ -4,9 +4,8 @@
     <meta charset='utf-8'>
     <title>Flow | Classes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
-    <link rel='stylesheet' href='/static/flow.css' type='text/css'/>
-    <link rel='stylesheet' href='/static/syntax.css' type='text/css'/>
-    <link rel="stylesheet" href='/static/pygments.css' type='text/css'/>
+    <link type="text/css" rel="stylesheet" href="/assets/flow.css">
+    <link type="text/css" rel="stylesheet" href="/assets/syntax.css">
     <link rel='shortcut icon' href='/static/favicon.png'>
     <meta name='viewport' content='width=480'>
     <meta property="og:title" content="Classes" />
@@ -533,7 +532,9 @@ types of classes.</p>
 the type of the class <code>C</code>.</p>
 <figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">theClass</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Class</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">C</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anInstance</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
-<script src="//code.jquery.com/jquery-git2.min.js"></script><script src="/static/dhtml.js"></script><script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1803},"end":{"line":65,"column":23,"offset":1810}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1794},"end":{"line":65,"column":13,"offset":1800}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3236},"end":{"line":117,"column":25,"offset":3247}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3232},"end":{"line":117,"column":11,"offset":3233}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":5981},"end":{"line":216,"column":34,"offset":5982}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5872},"end":{"line":213,"column":42,"offset":5873}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8128},"end":{"line":269,"column":9,"offset":8132}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8263},"end":{"line":271,"column":13,"offset":8267}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
+<script type="text/javascript" src="/assets/inlineErrors.js"></script> 
+
+<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1803},"end":{"line":65,"column":23,"offset":1810}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1794},"end":{"line":65,"column":13,"offset":1800}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3236},"end":{"line":117,"column":25,"offset":3247}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3232},"end":{"line":117,"column":11,"offset":3233}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":5981},"end":{"line":216,"column":34,"offset":5982}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5872},"end":{"line":213,"column":42,"offset":5873}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8128},"end":{"line":269,"column":9,"offset":8132}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8263},"end":{"line":271,"column":13,"offset":8267}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
 
     <div class="docs-prevnext">
       
@@ -552,15 +553,8 @@ the type of the class <code>C</code>.</p>
     &copy; Copyright 2014 - 2016, Facebook Inc.
 </div></footer>
 
-<script src="/static/linkify.js"></script>
+<script type="text/javascript" src="/assets/default.js"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-49208336-4', 'auto');
-  ga('send', 'pageview');
-
   docsearch({
     apiKey: 'cf314b2976b27157c82b6f27553497f5',
     indexName: 'flowtype',
