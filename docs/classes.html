@@ -291,12 +291,12 @@
     
 
 
-<p>Classes were introduced in JavaScript (ES6) to formalize the common practice of
+<p>Classes were introduced in JavaScript to formalize the common practice of
 simulating class-like inheritance hierarchies in JavaScript with functions
 and prototypes.</p>
 
 <p>In Flow, a class may be defined using
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">ES6 syntax</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">standard syntax</a>
 extended with field declarations.</p>
 <figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">C</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
@@ -313,9 +313,9 @@ extended with field declarations.</p>
   <span class="normal T_STATIC">static</span> <span class="normal T_IDENTIFIER">qux</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">D</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;hello&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
 <span class="normal T_RCURLY">}</span></code></pre></figure>
 
-<p>In the code above, C has two fields: <code>x</code> typed as <code>string</code>, and <code>y</code> typed as <code>number</code>,
-as well as a constructor, and a few methods. <code>D</code> overrides those methods, and
-also has a static method.</p>
+<p>In the code above, class <code>C</code> defines fields <code>x</code> and <code>y</code>, which are typed as
+<code>string</code> and <code>number</code>, respectively. <code>C</code> also defines a constructor and a
+few methods. class <code>D</code> then overrides those methods, and adds a static method.</p>
 
 <p>Just like other languages with classes, Flow enforces that the type of
 an overridden method in a superclass (e.g., <code>bar</code> in <code>C</code>) is compatible with
@@ -339,7 +339,7 @@ to typecheck:</p>
 
 <h3>Annotations, Globally</h3>
 
-<p>In general, type inference adds convenience, and helps to keep code
+<p>In general, type inference adds convenience and helps to keep code
 from becoming cluttered with redundant type annotations. But a lack of
 annotations can also reduce clarity - in particular, when errors occur
 far from their causes.</p>
@@ -371,7 +371,7 @@ and return types - in addition to field declarations:</p>
 
 <p>Flow treats classes as <strong>nominal</strong> types: structurally identical classes
 are not interchangeable, and one class is only a subtype of another
-if it has been explicitly declared as a subclass, using <code>extends</code>.</p>
+if it has been explicitly declared as a subclass using <code>extends</code>.</p>
 <figure class="highlight"><pre><code><span class="comment line">// structurally identical to C, but nominally unrelated</span>
 <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">E</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_SEMICOLON">;</span>
@@ -472,8 +472,8 @@ of <code>V</code>.</p>
 co- or contravariant, meaning that one instance is compatible with another
 if one type argument is a sub- or supertype, respectively, of the other.</p>
 
-<p><strong>Covariance</strong> is useful whan a type parameter only appears in output (or &quot;positive&quot;)
-positions within a class definition:</p>
+<p><strong>Covariance</strong> is useful whan a type parameter only appears in output (or
+&quot;positive&quot;) positions within a class definition:</p>
 <figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">K</span><span class="type T_COMMA">,</span> <span class="type T_PLUS">+</span><span class="type T_IDENTIFIER">V</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">store</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="type T_LBRACKET">[</span><span class="type T_IDENTIFIER">k</span><span class="type T_COLON">:</span><span class="type T_IDENTIFIER">K</span><span class="type T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">V</span> <span class="type T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>
   <span class="normal T_IDENTIFIER">constructor</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">store</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">store</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">store</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>
@@ -496,9 +496,10 @@ types, not just polymorphic classes.</p>
 in annotations. <code>this</code> can improve the precision of certain types
 in the presence of inheritance.</p>
 
-<p>Intuitively, the meaning of the <code>this</code> type is as follows: consider a class <code>C</code>,
-and a class <code>D</code> extending <code>C</code>. At runtime, the value of <code>this</code> within methods
-of <code>C</code> will sometimes be an instance of <code>C</code>, and sometimes an instance of <code>D</code>.</p>
+<p>Intuitively, the meaning of the <code>this</code> type is as follows: consider a class
+<code>C</code> and a class <code>D</code> extending <code>C</code>. At runtime, the value of <code>this</code> within
+methods of <code>C</code> will sometimes be an instance of <code>C</code>, and sometimes an instance
+of <code>D</code>.</p>
 
 <p>Within the body of <code>C</code>, then, the <code>this</code> type denotes <em>both</em> <code>C</code> and <code>D</code>.
 More generally, the <code>this</code> type behaves exactly like a type parameter on
@@ -508,10 +509,9 @@ a class, ranging over that class and all of its subclasses.</p>
 (aka covariant, &quot;positive&quot;) positions, if subtyping is to be preserved.</p>
 
 <p>The payoff comes in the form of improved precision in the types of superclass
-methods <em>from the perspective of subclasses</em>: for example, a method of <code>C</code> that
-returns a value of type <code>this</code> can safely be viewed as returning <code>D</code> when
-invoked on an instance of <code>D</code> - instead of being locked to the less accurate
-(and no safer) type <code>C</code>, simply by virtue of having been defined in <code>C</code>.</p>
+methods <em>from the perspective of subclasses</em>: for example, a method of <code>C</code>
+that returns a value of type <code>this</code> can safely be viewed as returning <code>D</code> when
+invoked on an instance of <code>D</code>.</p>
 <figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ThisA</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="error"data-error-id="E4" data-message-id="M4001"><span class="type T_IDENTIFIER">this</span></span><span class="normal T_SEMICOLON">;</span>                            <span class="comment line">// error: input/output position</span>
   <span class="normal T_IDENTIFIER">foo</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">this</span> <span class="normal T_LCURLY">{</span> <span class="normal T_RETURN">return</span> <span class="normal T_THIS">this</span><span class="normal T_SEMICOLON">;</span> <span class="normal T_RCURLY">}</span>        <span class="comment line">// ok: output position</span>
@@ -534,7 +534,7 @@ the type of the class <code>C</code>.</p>
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anInstance</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
 <script type="text/javascript" src="/assets/inlineErrors.js"></script> 
 
-<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1803},"end":{"line":65,"column":23,"offset":1810}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1794},"end":{"line":65,"column":13,"offset":1800}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3236},"end":{"line":117,"column":25,"offset":3247}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3232},"end":{"line":117,"column":11,"offset":3233}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":5981},"end":{"line":216,"column":34,"offset":5982}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5872},"end":{"line":213,"column":42,"offset":5873}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8128},"end":{"line":269,"column":9,"offset":8132}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8263},"end":{"line":271,"column":13,"offset":8267}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
+<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1840},"end":{"line":65,"column":23,"offset":1847}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1831},"end":{"line":65,"column":13,"offset":1837}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3271},"end":{"line":117,"column":25,"offset":3282}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3267},"end":{"line":117,"column":11,"offset":3268}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":6016},"end":{"line":216,"column":34,"offset":6017}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5907},"end":{"line":213,"column":42,"offset":5908}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8043},"end":{"line":269,"column":9,"offset":8047}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8178},"end":{"line":271,"column":13,"offset":8182}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
 
     <div class="docs-prevnext">
       
