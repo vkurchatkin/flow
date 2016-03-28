@@ -17,9 +17,7 @@
     
     <meta property='og:type' content='website'>
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
-    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script type="text/javascript" src="/assets/prelude.js"></script>
     <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
 </head>
 <body>
@@ -391,9 +389,9 @@ happens:</p>
 <li><a href="/docs/five-simple-examples.html#5-dynamic-code">Dynamic code</a></li>
 </ol>
 
-<script type="text/javascript" src="/assets/inlineErrors.js"></script> 
-
-<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":66,"column":19,"offset":1366},"end":{"line":66,"column":32,"offset":1380}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":66,"column":10,"offset":1357},"end":{"line":66,"column":15,"offset":1363}}]}])</script>
+<script>require(['inlineErrors'], function(inlineErrors) {
+  inlineErrors.highlight([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":66,"column":19,"offset":1366},"end":{"line":66,"column":32,"offset":1380}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":66,"column":10,"offset":1357},"end":{"line":66,"column":15,"offset":1363}}]}]);
+});</script>
 
     <div class="docs-prevnext">
       
@@ -411,15 +409,7 @@ happens:</p>
 <footer><div class='width'>
     &copy; Copyright 2014 - 2016, Facebook Inc.
 </div></footer>
-
-<script type="text/javascript" src="/assets/default.js"></script>
-<script>
-  docsearch({
-    apiKey: 'cf314b2976b27157c82b6f27553497f5',
-    indexName: 'flowtype',
-    inputSelector: '#algolia-doc-search'
-  });
-</script>
+<script>require(['default']);</script>
 </body>
 </html>
 

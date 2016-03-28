@@ -17,9 +17,7 @@
     
     <meta property='og:type' content='website'>
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
-    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script type="text/javascript" src="/assets/prelude.js"></script>
     <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
 </head>
 <body>
@@ -157,36 +155,26 @@ is used heavily within Facebook and we will continue to develop it in the open.
 We hope it will be useful for other JavaScript projects, so please try it out,
 join the community, and give us feedback!</p>
 
-<script type="text/javascript" src="/assets/inlineErrors.js"></script> 
-
-<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":10,"offset":277}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":15,"offset":282}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":42,"column":10,"offset":633},"end":{"line":42,"column":21,"offset":645}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":41,"column":37,"offset":615},"end":{"line":41,"column":42,"offset":621}}]}])</script>
+<script>require(['inlineErrors'], function(inlineErrors) {
+  inlineErrors.highlight([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":10,"offset":277}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":21,"column":10,"offset":276},"end":{"line":21,"column":15,"offset":282}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":42,"column":10,"offset":633},"end":{"line":42,"column":21,"offset":645}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":41,"column":37,"offset":615},"end":{"line":41,"column":42,"offset":621}}]}]);
+});</script>
 
 </article>
 
 </div></section>
 
 
-
-
   <header class='hero'><div class='width'>
     <div class="buttons-unit">
       <a href="/docs/getting-started.html#_" class="button">Get Started</a>
     </div>
+  </div></header>
+
+
 <footer><div class='width'>
     &copy; Copyright 2014 - 2016, Facebook Inc.
 </div></footer>
-
-<script type="text/javascript" src="/assets/default.js"></script>
-<script>
-  docsearch({
-    apiKey: 'cf314b2976b27157c82b6f27553497f5',
-    indexName: 'flowtype',
-    inputSelector: '#algolia-doc-search'
-  });
-</script>
+<script>require(['default']);</script>
 </body>
 </html>
-
-  </div></header>
-
 

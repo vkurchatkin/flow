@@ -17,9 +17,7 @@
     
     <meta property='og:type' content='website'>
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
-    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script type="text/javascript" src="/assets/prelude.js"></script>
     <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
 </head>
 <body>
@@ -601,9 +599,9 @@ correcting the return type:</p>
   want to check out our much bigger <a href="/docs/react.html">React example</a> to
   see Flow in more representative use cases.</p>
 
-<script type="text/javascript" src="/assets/inlineErrors.js"></script> 
-
-<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":10,"offset":1833}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":15,"offset":1838}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":112,"column":10,"offset":3234},"end":{"line":112,"column":21,"offset":3246}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":111,"column":37,"offset":3216},"end":{"line":111,"column":42,"offset":3222}}]},{"id":"E3","messages":[{"id":"M3001","description":"string","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":10,"offset":1833}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"number","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":15,"offset":1838}}]},{"id":"E4","messages":[{"id":"M4001","description":"property `length`","start":{"line":161,"column":12,"offset":4658},"end":{"line":161,"column":17,"offset":4664}},{"id":"M4002","description":"Property cannot be accessed on possibly null value"},{"id":"M4003","description":"null","start":{"line":161,"column":10,"offset":4656},"end":{"line":161,"column":10,"offset":4657}}]},{"id":"E5","messages":[{"id":"M5001","description":"string","start":{"line":222,"column":17,"offset":6074},"end":{"line":222,"column":23,"offset":6081}},{"id":"M5002","description":"This type is incompatible with"},{"id":"M5003","description":"number","start":{"line":214,"column":31,"offset":5934},"end":{"line":214,"column":36,"offset":5940}}]},{"id":"E6","messages":[{"id":"M6001","description":"property `length`","start":{"line":267,"column":12,"offset":7042},"end":{"line":267,"column":17,"offset":7048}},{"id":"M6002","description":"Property not found in"},{"id":"M6003","description":"Number","start":{"line":267,"column":10,"offset":7040},"end":{"line":267,"column":10,"offset":7041}}]}])</script>
+<script>require(['inlineErrors'], function(inlineErrors) {
+  inlineErrors.highlight([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":10,"offset":1833}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":15,"offset":1838}}]},{"id":"E2","messages":[{"id":"M2001","description":"number","start":{"line":112,"column":10,"offset":3234},"end":{"line":112,"column":21,"offset":3246}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"string","start":{"line":111,"column":37,"offset":3216},"end":{"line":111,"column":42,"offset":3222}}]},{"id":"E3","messages":[{"id":"M3001","description":"string","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":10,"offset":1833}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"number","start":{"line":61,"column":10,"offset":1832},"end":{"line":61,"column":15,"offset":1838}}]},{"id":"E4","messages":[{"id":"M4001","description":"property `length`","start":{"line":161,"column":12,"offset":4658},"end":{"line":161,"column":17,"offset":4664}},{"id":"M4002","description":"Property cannot be accessed on possibly null value"},{"id":"M4003","description":"null","start":{"line":161,"column":10,"offset":4656},"end":{"line":161,"column":10,"offset":4657}}]},{"id":"E5","messages":[{"id":"M5001","description":"string","start":{"line":222,"column":17,"offset":6074},"end":{"line":222,"column":23,"offset":6081}},{"id":"M5002","description":"This type is incompatible with"},{"id":"M5003","description":"number","start":{"line":214,"column":31,"offset":5934},"end":{"line":214,"column":36,"offset":5940}}]},{"id":"E6","messages":[{"id":"M6001","description":"property `length`","start":{"line":267,"column":12,"offset":7042},"end":{"line":267,"column":17,"offset":7048}},{"id":"M6002","description":"Property not found in"},{"id":"M6003","description":"Number","start":{"line":267,"column":10,"offset":7040},"end":{"line":267,"column":10,"offset":7041}}]}]);
+});</script>
 
     <div class="docs-prevnext">
       
@@ -621,15 +619,7 @@ correcting the return type:</p>
 <footer><div class='width'>
     &copy; Copyright 2014 - 2016, Facebook Inc.
 </div></footer>
-
-<script type="text/javascript" src="/assets/default.js"></script>
-<script>
-  docsearch({
-    apiKey: 'cf314b2976b27157c82b6f27553497f5',
-    indexName: 'flowtype',
-    inputSelector: '#algolia-doc-search'
-  });
-</script>
+<script>require(['default']);</script>
 </body>
 </html>
 

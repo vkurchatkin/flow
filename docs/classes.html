@@ -17,9 +17,7 @@
     
     <meta property='og:type' content='website'>
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/vqa1hcx.js"></script>
-    <script type="text/javascript">{'try{Typekit.load();}catch(e){}'}</script>
+    <script type="text/javascript" src="/assets/prelude.js"></script>
     <link rel="alternate" type="application/rss+xml" title="Flow" href="http://flowtype.org/blog/feed.xml">
 </head>
 <body>
@@ -532,9 +530,9 @@ types of classes.</p>
 the type of the class <code>C</code>.</p>
 <figure class="highlight"><pre><code><span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">theClass</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">Class</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">C</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_SEMICOLON">;</span>
 <span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">anInstance</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">C</span><span class="normal T_LPAREN">(</span><span class="normal T_STRING">&quot;foo&quot;</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span></code></pre></figure>
-<script type="text/javascript" src="/assets/inlineErrors.js"></script> 
-
-<script>highlightErrors([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1840},"end":{"line":65,"column":23,"offset":1847}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1831},"end":{"line":65,"column":13,"offset":1837}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3271},"end":{"line":117,"column":25,"offset":3282}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3267},"end":{"line":117,"column":11,"offset":3268}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":6016},"end":{"line":216,"column":34,"offset":6017}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5907},"end":{"line":213,"column":42,"offset":5908}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8043},"end":{"line":269,"column":9,"offset":8047}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8178},"end":{"line":271,"column":13,"offset":8182}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}])</script>
+<script>require(['inlineErrors'], function(inlineErrors) {
+  inlineErrors.highlight([{"id":"E1","messages":[{"id":"M1001","description":"string","start":{"line":65,"column":17,"offset":1840},"end":{"line":65,"column":23,"offset":1847}},{"id":"M1002","description":"This type is incompatible with"},{"id":"M1003","description":"number","start":{"line":65,"column":8,"offset":1831},"end":{"line":65,"column":13,"offset":1837}}]},{"id":"E2","messages":[{"id":"M2001","description":"E","start":{"line":117,"column":15,"offset":3271},"end":{"line":117,"column":25,"offset":3282}},{"id":"M2002","description":"This type is incompatible with"},{"id":"M2003","description":"C","start":{"line":117,"column":11,"offset":3267},"end":{"line":117,"column":11,"offset":3268}}]},{"id":"E3","messages":[{"id":"M3001","description":"A","start":{"line":216,"column":34,"offset":6016},"end":{"line":216,"column":34,"offset":6017}},{"id":"M3002","description":"This type is incompatible with"},{"id":"M3003","description":"B","start":{"line":213,"column":42,"offset":5907},"end":{"line":213,"column":42,"offset":5908}}]},{"id":"E4","messages":[{"id":"M4001","description":"`this` type","start":{"line":269,"column":6,"offset":8043},"end":{"line":269,"column":9,"offset":8047}},{"id":"M4002","description":"invariant position (expected `this` to occur only covariantly)"}]},{"id":"E5","messages":[{"id":"M5001","description":"`this` type","start":{"line":271,"column":10,"offset":8178},"end":{"line":271,"column":13,"offset":8182}},{"id":"M5002","description":"contravariant position (expected `this` to occur only covariantly)"}]}]);
+});</script>
 
     <div class="docs-prevnext">
       
@@ -552,15 +550,7 @@ the type of the class <code>C</code>.</p>
 <footer><div class='width'>
     &copy; Copyright 2014 - 2016, Facebook Inc.
 </div></footer>
-
-<script type="text/javascript" src="/assets/default.js"></script>
-<script>
-  docsearch({
-    apiKey: 'cf314b2976b27157c82b6f27553497f5',
-    indexName: 'flowtype',
-    inputSelector: '#algolia-doc-search'
-  });
-</script>
+<script>require(['default']);</script>
 </body>
 </html>
 
