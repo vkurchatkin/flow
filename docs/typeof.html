@@ -360,33 +360,27 @@ whether that is a class, module or some other construct.</p>
 3
 4
 5
-6</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
-<span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span> <span class="p">}</span>
-<span class="c1">// b ends up being a Foo type, since f evaluates to Foo</span>
-<span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="p">{</span> <span class="nl">f</span> <span class="p">:</span> <span class="k">typeof</span> <span class="nx">Foo</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">f</span> <span class="p">:</span> <span class="nx">Foo</span> <span class="p">};</span>
-<span class="c1">// Since f is Foo, and b is of a Foo type, we can instantiate b as Foo </span>
-<span class="k">new</span> <span class="nx">b</span><span class="p">.</span><span class="nx">f</span><span class="p">();</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p>Let&#39;s see an example where we use <code>typeof</code> and Flow will catch a typing error:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
 6
-7</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+7
+8
+9
+10</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
 <span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span> <span class="p">}</span>
 <span class="kr">class</span> <span class="nx">Bar</span> <span class="p">{</span> <span class="p">}</span>
+<span class="c1">// b ends up being a Foo type, since f evaluates to Foo</span>
 <span class="kd">var</span> <span class="nx">b</span><span class="err">:</span> <span class="p">{</span> <span class="nl">f</span> <span class="p">:</span> <span class="k">typeof</span> <span class="nx">Foo</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">f</span> <span class="p">:</span> <span class="nx">Foo</span> <span class="p">};</span>
-<span class="kd">var</span> <span class="nx">c</span><span class="err">:</span> <span class="p">{</span> <span class="nl">g</span> <span class="p">:</span> <span class="k">typeof</span> <span class="nx">Bar</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">g</span> <span class="p">:</span> <span class="nx">Bar</span> <span class="p">};</span>
-<span class="c1">// b is of type Foo, not of type Bar (g is a Bar )</span>
-<span class="k">new</span> <span class="nx">b</span><span class="p">.</span><span class="nx">g</span><span class="p">();</span><span class="w">
+<span class="c1">// Since the type of b.f is typeof Foo (i.e. Class&lt;Foo&gt;), the following </span>
+<span class="c1">// assignment is valid because the type of the new instance is Foo:</span>
+<span class="kd">var</span> <span class="nx">inst1</span><span class="err">:</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">b</span><span class="p">.</span><span class="nx">f</span><span class="p">();</span>
+<span class="c1">// However, this fails because the type of the new instance is not Bar:</span>
+<span class="kd">var</span> <span class="nx">inst2</span><span class="err">:</span> <span class="nx">Bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">b</span><span class="p">.</span><span class="nx">f</span><span class="p">();</span><span class="w">
 </span></pre></td></tr></tbody></table></code></pre></figure>
-<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">/tmp/flow/f.js:6:5,7: property g
-Property not found in
-  /tmp/flow/f.js:6:5,5: object type
+<div class="highlight"><pre><code class="language-bbcode" data-lang="bbcode">tmp/flow/f.js:10
+ 10: var inst2: Bar = new b.f();
+                      ^^^^^^^^^ Foo. This type is incompatible with
+ 10: var inst2: Bar = new b.f();
+                ^^^ Bar
+
 
 Found 1 error
 </code></pre></div>
