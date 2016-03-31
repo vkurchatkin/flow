@@ -349,11 +349,54 @@ argument matching while taking into account optional/rest parameters.</p>
 
 <h3>Too Few Arguments</h3>
 
-<p>Flow produces an error whenever a call provides too few arguments to a
-function. On the other hand, too many arguments is fine, which is why Flow
-does not complain on most uses of builtin primitives like <code>Array</code>, whose
-methods are often called with closures that take fewer parameters than
-prescribed.</p>
+<p>When you call a function with fewer arguments than it accepts, the <code>void</code> type
+will be flowed to the missing parameters. If the missing parameter does not
+accept values of type <code>void</code> then you will get an error.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">function</span> <span class="nx">takesANumber</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{}</span>
+<span class="nx">takesANumber</span><span class="p">()</span> <span class="c1">// Error: undefined passed to x, which expects a number</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>However if the missing parameter accepts values of type <code>void</code> then there will
+be no error.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">function</span> <span class="nx">canTakeNoArgs</span><span class="p">(</span><span class="nx">a</span><span class="err">:</span> <span class="k">void</span><span class="p">,</span> <span class="nx">b</span><span class="err">:</span> <span class="p">?</span><span class="nx">number</span><span class="p">,</span> <span class="nx">c</span><span class="p">?:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{}</span>
+<span class="nx">canTakeNoArgs</span><span class="p">();</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<h3>Too Many Arguments</h3>
+
+<p>In JavaScript you can call a function with more arguments than it expects. Flow
+allows this too. However, there is an easy trick to declare a function can&#39;t
+take extra arguments.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="kd">function</span> <span class="nx">takesOnlyOneNumber</span><span class="p">(</span><span class="nx">x</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{}</span>
+<span class="nx">takesOnlyOneNumber</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">// Error: 2 does not have the type void</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>This is particularly useful when declaring overloads in lib files.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6</pre></td><td class="code"><pre><span class="cm">/* @flow */</span>
+<span class="c1">// The first overload matches 0 args, the second matches 1 arg, the third</span>
+<span class="c1">// matches 2 args</span>
+<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">(...</span><span class="nx">rest</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">;</span>
+<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">;</span>
+<span class="nx">declare</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">b</span><span class="err">:</span> <span class="nx">number</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">)</span><span class="err">:</span> <span class="nx">string</span><span class="p">;</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <h2>Function-based type annotations</h2>
 

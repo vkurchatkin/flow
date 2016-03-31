@@ -14,8 +14,8 @@
 declare var NaN: number;
 declare var Infinity: number;
 
-declare function parseInt(string: string, radix?: number): number;
-declare function parseFloat(string: string): number;
+declare function parseInt(string: mixed, radix?: number): number;
+declare function parseFloat(string: mixed): number;
 declare function isNaN(number: mixed): boolean;
 declare function isFinite(number: mixed): boolean;
 declare function decodeURI(encodedURI: string): string;
@@ -225,6 +225,7 @@ declare class String {
     lastIndexOf(searchString: string, position?: number): number;
     localeCompare(that: string): number;
     match(regexp: string | RegExp): ?Array<string>;
+    normalize(format?: string): string;
     startsWith(searchString: string, position?: number): boolean;
     endsWith(searchString: string, position?: number): boolean;
     repeat(count: number): string;
