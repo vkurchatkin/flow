@@ -505,7 +505,7 @@ In the following example, Flow doesn&#39;t have enough information to realize th
 
 <p>Flow does perform a mutation analysis and where it is safe to do so, will
 preserve refinements after function calls which it knows do not invalidate the
-refinemnet.</p>
+refinement.</p>
 <figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">bar</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="type T_COLON">:</span> <span class="type T_PLING">?</span><span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">baz</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span> <span class="comment block">/* this doesn&#39;t mutate x */</span> <span class="normal T_RCURLY">}</span>
   <span class="normal T_IF">if</span> <span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">x</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>

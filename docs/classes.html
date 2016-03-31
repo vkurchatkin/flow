@@ -470,7 +470,7 @@ of <code>V</code>.</p>
 co- or contravariant, meaning that one instance is compatible with another
 if one type argument is a sub- or supertype, respectively, of the other.</p>
 
-<p><strong>Covariance</strong> is useful whan a type parameter only appears in output (or
+<p><strong>Covariance</strong> is useful when a type parameter only appears in output (or
 &quot;positive&quot;) positions within a class definition:</p>
 <figure class="highlight"><pre><code><span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">ReadOnlyMap</span><span class="type T_LESS_THAN">&lt;</span><span class="type T_IDENTIFIER">K</span><span class="type T_COMMA">,</span> <span class="type T_PLUS">+</span><span class="type T_IDENTIFIER">V</span><span class="type T_GREATER_THAN">&gt;</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_IDENTIFIER">store</span><span class="type T_COLON">:</span> <span class="type T_LCURLY">{</span> <span class="type T_LBRACKET">[</span><span class="type T_IDENTIFIER">k</span><span class="type T_COLON">:</span><span class="type T_IDENTIFIER">K</span><span class="type T_RBRACKET">]</span><span class="type T_COLON">:</span> <span class="type T_IDENTIFIER">V</span> <span class="type T_RCURLY">}</span><span class="normal T_SEMICOLON">;</span>

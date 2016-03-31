@@ -495,7 +495,7 @@ is often useful to describe a set of types which are structurally similar.</p>
 <h3>Sugar-free classes</h3>
 
 <p>ES2015 classes formalize the common practice of simulating class-like
-inheritace with functions and prototypes. Flow does have limited support for
+inheritance with functions and prototypes. Flow does have limited support for
 this pattern as well, but the ES2015 class syntax is highly recommended.</p>
 <figure class="highlight"><pre><code><span class="normal T_FUNCTION">function</span> <span class="normal T_IDENTIFIER">DietClass</span><span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">foo</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span> <span class="normal T_LCURLY">{</span>
   <span class="normal T_THIS">this</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">foo</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_IDENTIFIER">foo</span><span class="normal T_SEMICOLON">;</span>
