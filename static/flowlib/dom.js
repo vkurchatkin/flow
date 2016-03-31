@@ -337,6 +337,7 @@ declare class Document extends Node {
     xmlVersion: string;
 
     registerElement(type: string, options?: ElementRegistrationOptions): any;
+    getSelection(): Selection | null;
 
     // 6.4.6 Focus management APIs
     activeElement: HTMLElement;
@@ -489,6 +490,30 @@ declare class DocumentFragment extends Node {
     querySelectorAll(selector: string): NodeList<HTMLElement>;
 }
 
+declare class Selection {
+    anchorNode: Node | null;
+    anchorOffset: number;
+    focusNode: Node | null;
+    focusOffset: number;
+    isCollapsed: boolean;
+    rangeCount: number;
+    addRange(range: Range): void;
+    getRangeAt(index: number): Range;
+    removeRange(range: Range): void;
+    removeAllRanges(): void;
+    collapse(parentNode: Node | null, offset?: number): void;
+    collapseToStart(): void;
+    collapseToEnd(): void;
+    containsNode(aNode: Node, aPartlyContained?: boolean): boolean;
+    deleteFromDocument(): void;
+    extend(parentNode: Node, offset?: number): void;
+    empty(): void;
+    selectAllChildren(parentNode: Node): void;
+    setPosition(aNode: Node | null, offset?: number): void;
+    setBaseAndExtent(anchorNode: Node, anchorOffset: number, focusNode: Node, focusOffset: number): void;
+    toString(): string;
+}
+
 declare class Range { // extension
     startOffset: number;
     collapsed: boolean;
@@ -571,7 +596,7 @@ declare class Element extends Node {
     removeAttribute(name?: string): void;
     removeAttributeNS(namespaceURI: string, localName: string): void;
     removeAttributeNode(oldAttr: Attr): Attr;
-    scrollIntoView(top?: boolean): void;
+    scrollIntoView(arg?: (boolean | { behavior?: ('auto' | 'instant' | 'smooth'), block?: ('start' | 'end') })): void;
     setAttribute(name?: string, value?: string): void;
     setAttributeNS(namespaceURI: string, qualifiedName: string, value: string): void;
     setAttributeNode(newAttr: Attr): Attr;
@@ -616,7 +641,6 @@ declare class HTMLElement extends Element {
     onerror: (ev: any) => void;
     onload: (ev: any) => void;
     onreadystatechange: (ev: any) => any;
-    scrollIntoView(top?: boolean): void;
     spellcheck: boolean;
     style: CSSStyleDeclaration;
 }
@@ -1511,3 +1535,4 @@ declare var self: any;
 declare var sessionStorage: Storage;
 declare var status: string;
 declare var top: any;
+declare function getSelection(): Selection | null;
