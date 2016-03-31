@@ -348,6 +348,37 @@ that uses these definitions in a typesafe manner will typecheck.</p>
 <p>Note that it is entirely up to the programmer to ensure that declared
 definitions actually exist, and have the correct types.</p>
 
+<h2>Mixins</h2>
+
+<p>You can declare a class which mixes in 1 or more other classes with the
+<code>mixins</code> keyword. Mixing class <code>B</code> into class <code>A</code> copies <code>B</code>&#39;s fields and
+methods into <code>A</code>. Note, however, that any fields or methods that <code>B</code> inherits
+are not copied over. Mixins are for code reuse, not for multiple inheritance.</p>
+<figure class="highlight"><pre><code><span class="comment line">// You can mixin more than one class</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">MyClass</span> <span class="normal T_EXTENDS">extends</span> <span class="type T_IDENTIFIER">Child</span> <span class="normal T_IDENTIFIER">mixins</span> <span class="type T_IDENTIFIER">MixinA</span><span class="normal T_COMMA">,</span> <span class="type T_IDENTIFIER">MixinB</span> <span class="type T_LCURLY">{</span><span class="type T_RCURLY">}</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">MixinA</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span>
+<span class="comment line">// Mixing in MixinB will NOT mix in MixinBase</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">MixinB</span> <span class="normal T_EXTENDS">extends</span> <span class="type T_IDENTIFIER">MixinBase</span> <span class="type T_LCURLY">{</span><span class="type T_RCURLY">}</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">MixinBase</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Child</span> <span class="normal T_EXTENDS">extends</span> <span class="type T_IDENTIFIER">Base</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span>
+  <span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span>
+<span class="normal T_DECLARE">declare</span> <span class="normal T_CLASS">class</span> <span class="normal T_IDENTIFIER">Base</span> <span class="type T_LCURLY">{</span>
+  <span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="type T_SEMICOLON">;</span>
+<span class="type T_RCURLY">}</span>
+
+<span class="normal T_VAR">var</span> <span class="normal T_IDENTIFIER">c</span> <span class="normal T_ASSIGN">=</span> <span class="normal T_NEW">new</span> <span class="normal T_IDENTIFIER">MyClass</span><span class="normal T_LPAREN">(</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">a</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// Both Child and MixinA provide `a`, so MixinA wins</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">b</span><span class="type T_COLON">:</span> <span class="type T_NUMBER_TYPE">number</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// The same principle holds for `b`, which Child inherits</span>
+<span class="normal T_LPAREN">(</span><span class="normal T_IDENTIFIER">c</span><span class="normal T_PERIOD">.</span><span class="normal T_IDENTIFIER">c</span><span class="type T_COLON">:</span> <span class="type T_STRING_TYPE">string</span><span class="normal T_RPAREN">)</span><span class="normal T_SEMICOLON">;</span> <span class="comment line">// mixins does not copy inherited properties,</span>
+               <span class="comment line">// so `c` comes from Child</span></code></pre></figure>
+
 <h2>Declaring types</h2>
 
 <p>It is similarly useful to declare types. Like other declarations, type
